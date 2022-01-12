@@ -1,0 +1,43 @@
+@import '../../../scss/variables';
+
+.item {
+  &:hover .item-tooltip {
+    display: block;
+    color: white;
+    text-shadow: $text-shadow;
+    text-align: center;
+    margin-top: 10px;
+    cursor: default;
+  }
+
+  &:hover .item-img-container {
+    display: none;
+  }
+
+  .item-quantity {
+    position: relative;
+    top: 15px;
+    left: 5px;
+    color: $text-yellow;
+    text-shadow: $text-shadow;
+  }
+
+  .item-tooltip {
+    display: none;
+  }
+
+  .item-img-container {
+    display: flex;
+    justify-content: center;
+    height: 40px;
+
+
+    img {
+      opacity: 0.5;
+
+      &.item-obtained {
+        opacity: 1;
+      }
+    }
+  }
+}

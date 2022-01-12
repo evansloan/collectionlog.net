@@ -1,0 +1,34 @@
+@import '~bootstrap/scss/bootstrap';
+@import './scss/variables';
+
+h1, h2, h3, h4, h5 {
+  color: $text-orange;
+  text-shadow: $text-shadow;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Runescape', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $bg-dark;
+}
+
+.text-green { 
+  color: $text-green !important;
+}
+
+.text-orange {
+  color: $text-orange !important;
+}
+
+.text-yellow {
+  color: $text-yellow !important;
+}
+
+.text-shadow {
+  text-shadow: 2px 2px 0px black;
+}

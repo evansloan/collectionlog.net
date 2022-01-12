@@ -1,0 +1,31 @@
+@import '../../../scss/variables';
+
+.log-list {
+  border-right: $log-border;
+  border-bottom: $log-border;
+  padding: 0 !important;
+  height: 550px;
+  overflow: scroll;
+
+  ul {
+    li {
+      color: $text-orange;
+      font-size: 20px;
+      text-shadow: $text-shadow;
+      padding: 0 0 0 3px;
+      cursor: pointer;
+
+      &:first-child {
+        box-shadow: $log-shadow;
+      }
+
+      &:nth-child(odd) {
+        background-color: $bg-light;
+
+        &:hover {
+          background-color: $bg-highlight;
+        }
+      }
+    }
+  }
+}

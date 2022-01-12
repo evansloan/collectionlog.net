@@ -1,0 +1,30 @@
+@import '../../../scss/variables';
+
+.log-tabs {
+  border-left: $log-border;
+  border-right: $log-border;
+  border-bottom: 1px solid $bg-lighter;
+  padding: 5px 0 0 0 !important;
+
+  ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+
+    li {
+      color: $text-orange;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: $text-shadow;
+      background-color: $bg-dark;
+      width: 18%;
+      border-top-right-radius: 5%;
+      border-top-left-radius: 5%;
+      border-top: 1px solid $bg-light;
+      border-left: 1px solid $bg-light;
+      border-right: 1px solid $bg-light;
+      cursor: pointer;
+    }
+  }
+}

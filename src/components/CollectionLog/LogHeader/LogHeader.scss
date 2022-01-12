@@ -1,0 +1,54 @@
+@import '../../../scss/variables';
+
+.log-header {
+  border: $log-border;
+  box-shadow: $log-shadow;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 !important;
+
+  form {
+    width: 30%;
+
+    input {
+      width: 75%;
+      height: 100%;
+      background-color: $bg-light;
+      border: none;
+      border-right: 4px solid $bg-darker;
+      box-shadow: none;
+      color: white;
+      text-shadow: $text-shadow;
+      padding-left: 10px;
+      font-size: 20px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    button {
+      margin-left: 5px;
+      padding: 10px;
+      background-color: $bg-primary;
+      border: 2px solid $bg-lighter;
+      font-size: 20px;
+      color: $text-orange;
+      text-shadow: $text-shadow;
+
+      &:hover {
+        background-color: $bg-highlight;
+      }
+    }
+  }
+
+  h4 {
+    margin: 3px;
+    position: relative;
+    left: 0;
+  }
+
+  .spacer {
+    width: 30%;
+  }
+}

@@ -1,0 +1,9 @@
+@import '../../../scss/variables';
+
+.log-body {
+  border-right: $log-border;
+  border-left: $log-border;
+  border-bottom: $log-border;
+  box-shadow: $log-shadow;
+  height: 550px;
+}

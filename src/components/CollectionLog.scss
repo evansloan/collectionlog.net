@@ -1,0 +1,17 @@
+@import '../scss/variables';
+
+.log-container {
+  background-color: $bg-primary;
+  max-height: 100vh;
+  margin-top: 15px;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li:hover {
+      background-color: $bg-highlight;
+    }
+  }
+}

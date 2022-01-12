@@ -1,0 +1,26 @@
+@import '../../../scss/variables';
+
+.log-item-container {
+  margin-bottom: 10px;
+  border-bottom: $log-border;
+  height: 550px;
+
+  .log-entry-info {
+    border-bottom: 1px solid $bg-lighter;
+    p {
+      margin: 0;
+      color: $text-orange;
+      text-shadow: $text-shadow;
+
+      span {
+        color: white;
+        text-shadow: $text-shadow;
+      }
+    }
+  }
+
+  .log-items {
+    max-height: 85%;
+    overflow: scroll;
+  }
+}
