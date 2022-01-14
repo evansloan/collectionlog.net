@@ -5,7 +5,7 @@ import './LogEntryList.scss';
 
 interface LogEntryListProps {
   entries: { [key: string]: any };
-  onEntryChangeHandler: (event: React.MouseEvent, entryName: string) => void;
+  onEntryChangeHandler: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 class LogEntryList extends React.Component<LogEntryListProps> {
@@ -53,7 +53,7 @@ class LogEntryList extends React.Component<LogEntryListProps> {
             b = b.replace(/^The /, '');
             return a.localeCompare(b);
           }).map((key, _i) => {
-            return <li id={key} onClick={(e) => this.props.onEntryChangeHandler(e, key)}>{key}</li>
+            return <li data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</li>
           })}
         </ul>
       </Col>

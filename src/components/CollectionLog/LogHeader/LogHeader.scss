@@ -48,7 +48,13 @@
     left: 0;
   }
 
-  .spacer {
+  .error-message {
+    font-size: 20px;
+    color: rgb(255, 108, 108);
+    text-shadow: $text-shadow;
+  }
+
+  .error-message, .spacer {
     width: 30%;
   }
 }

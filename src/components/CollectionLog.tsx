@@ -11,15 +11,16 @@ const withParams = (Component: typeof React.Component) => {
   return (props: any) => <Component {...props} params={useParams()} />;
 }
 
-type CollectionLogProps = {
+interface CollectionLogProps {
   params: any;
-};
+}
 
-type CollectionLogState = {
+interface CollectionLogState {
   collectionLogData: { [key: string]: any};
   activeTab: string;
   activeEntry: string;
   isLoaded: boolean;
+  error: string | null;
 }
 
 class CollectionLog extends React.Component<CollectionLogProps, CollectionLogState> {
@@ -33,6 +34,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       activeTab: '',
       activeEntry: '',
       isLoaded: false,
+      error: null,
     };
 
     if (username) {
@@ -45,12 +47,17 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       return;
     }
 
-    const apiUrl = `https://api.collectionlog.net/collectionlog/user/${username}`;
+    const baseUrl = process.env.API_URL;
+    const apiUrl = `${baseUrl}/collectionlog/user/${username}`;
     fetch(apiUrl)
       .then(res => res.json())
       .then(
         (result) => {
           if (result.error) {
+            this.setState({
+              ...this.state,
+              error: result.error,
+            });
             return;
           }
 
@@ -59,16 +66,19 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
             activeTab: 'Bosses',
             activeEntry: 'Abyssal Sire',
             isLoaded: true,
+            error: null,
           });
 
           const newUrl = `/${username}`
-          const nextState = { additionalInformation: 'Updated the URL with JS' };
 
-          window.history.pushState(nextState, '', newUrl);
-          window.history.replaceState(nextState, '', newUrl);
+          window.history.pushState({}, '', newUrl);
+          window.history.replaceState({}, '', newUrl);
         },
         (error) => {
-          console.log('Unable to find collection log for user ', username);
+          this.setState({
+            ...this.state,
+            error: 'Error contacting collectionlog.net API',
+          });
         }
       )
   }
@@ -86,7 +96,12 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     });
   }
 
-  onEntryChange = (event: React.MouseEvent, entryName: string) => {
+  onEntryChange = (event: React.MouseEvent<HTMLElement>) => {
+    const entryName = (event.target as HTMLElement).dataset.entryname;
+    if (!entryName) {
+      return;
+    }
+
     this.setState({
       ...this.state,
       activeEntry: entryName,
@@ -98,48 +113,56 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     this.updateCollectionLog(username);
   }
 
-  render() {
-    let obtained = 0;
-    let total = 0;
+  getUniqueItemsCount = (): string => {
     let unique = 0;
     let totalUnique = 0;
     let uniqueItemsList: Array<number> = [];
 
-    for (let tabName in this.state.collectionLogData) {
-      const entries = this.state.collectionLogData[tabName];
+    const tabs = this.state.collectionLogData.tabs;
+    for (let tabName in tabs) {
+      const entries = tabs[tabName];
       for (let entry in entries) {
         const items = entries[entry].items;
-        total += items.length;
         for (let item of items) {
-            if (uniqueItemsList.indexOf(item.id) == -1) {
-              uniqueItemsList.push(item.id);
-              unique = item.obtained ? unique + 1 : unique;
-              totalUnique += 1;
-            }
-            obtained = item.obtained ? obtained + 1 : obtained;
+          if (uniqueItemsList.indexOf(item.id) == -1) {
+            uniqueItemsList.push(item.id);
+            unique = item.obtained ? unique + 1 : unique;
+            totalUnique += 1;
+          }
         }
       }
     }
 
-    const totalCount = `${obtained}/${total}`;
-    const uniqueCount = `${unique}/${totalUnique}`;
+    return `${unique}/${totalUnique}`;
+  }
+
+  render() {
+    const totalObtained = this.state.collectionLogData.total_obtained;
+    const totalItems = this.state.collectionLogData.total_items;
+    const totalCount = `${totalObtained}/${totalItems}`;
+    const uniqueCount = this.getUniqueItemsCount();
 
     return (
       <Container>
         <Row>
           <Col md={{ span: 10, offset: 1 }} className='log-container'>
-            <LogHeader total={totalCount} unique={uniqueCount} onSearchHandler={this.onSearch} />
+            <LogHeader 
+              total={totalCount}
+              unique={uniqueCount}
+              onSearchHandler={this.onSearch}
+              errorMessage={this.state.error}
+            />
             {this.state.isLoaded &&
               <>
               <LogTabList onTabChangeHandler={this.onTabChange}/>
               <LogBody>
                 <LogEntryList
-                  entries={this.state.collectionLogData[this.state.activeTab]}
+                  entries={this.state.collectionLogData.tabs[this.state.activeTab]}
                   onEntryChangeHandler={this.onEntryChange}
                 />
                 <LogItems
                   entryName={this.state.activeEntry}
-                  data={this.state.collectionLogData[this.state.activeTab][this.state.activeEntry]}
+                  data={this.state.collectionLogData.tabs[this.state.activeTab][this.state.activeEntry]}
                 />
               </LogBody>
               </>

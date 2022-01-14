@@ -6,6 +6,7 @@ import './LogHeader.scss';
 interface LogHeaderProps {
   total: string;
   unique: string;
+  errorMessage: string | null;
   onSearchHandler: (event: React.FormEvent, username: string) => void;
 }
 
@@ -38,7 +39,11 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
             Collection Log
             <h5>Unique: <span className='text-white'>{this.props.unique}</span> Total: <span className='text-white'>{this.props.total}</span></h5>
           </h4>
-          <div className='spacer'></div>
+          {this.props.errorMessage ?
+            <div className='error-message'><p>{this.props.errorMessage}</p></div>
+            :
+            <div className='spacer'></div>
+          }
         </Col>
       </Row>
     );
