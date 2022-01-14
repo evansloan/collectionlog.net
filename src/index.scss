@@ -32,3 +32,20 @@ body {
 .text-shadow {
   text-shadow: 2px 2px 0px black;
 }
+
+#footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  p {
+    color: white;
+    text-shadow: $text-shadow;
+    margin: 0;
+
+    a {
+      color: $text-orange;
+      text-shadow: $text-shadow;
+    }
+  }
+}

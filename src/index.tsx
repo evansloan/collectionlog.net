@@ -10,10 +10,15 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<CollectionLog />} />
+        <Route path='/' element={<CollectionLog />} />
         <Route path='/:username' element={<CollectionLog />} />
       </Routes>
     </BrowserRouter>
+    <div id='footer'>
+      <p>Oldschool RuneScape is a trademark of <a href='https://www.jagex.com/en-GB/'>Jagex Ltd.</a></p>
+      <p>Install the <a href='https://runelite.net/plugin-hub/show/collection-log'>Collection Log plugin</a> on <a href='https://runelite.net'>Runelite</a></p>
+      <p>Have a problem? Submit an issue on <a href='https://github.com/evansloan/collectionlog.net/issues/new/choose'>GitHub</a></p>
+    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );
