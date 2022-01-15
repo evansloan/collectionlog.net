@@ -136,8 +136,8 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
   }
 
   render() {
-    const totalObtained = this.state.collectionLogData.total_obtained;
-    const totalItems = this.state.collectionLogData.total_items;
+    const totalObtained = this.state.collectionLogData.total_obtained ?? 0;
+    const totalItems = this.state.collectionLogData.total_items ?? 0;
     const totalCount = `${totalObtained}/${totalItems}`;
     const uniqueCount = this.getUniqueItemsCount();
 
