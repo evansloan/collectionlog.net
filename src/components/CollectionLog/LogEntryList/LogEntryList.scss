@@ -5,7 +5,8 @@
   border-bottom: $log-border;
   padding: 0 !important;
   height: 550px;
-  overflow: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   ul {
     li {

@@ -8,7 +8,7 @@ type LogItemProps = {
 };
 
 const LogItem = (props: LogItemProps) => (
-  <Col md='2' className='item'>
+  <div className='item'>
     <span className='item-quantity'>{props.item.quantity > 0 ? props.item.quantity : '\u00a0'}</span>
     <span className='item-tooltip'>{props.item.name}</span>
     <div className='item-img-container'>
@@ -17,7 +17,7 @@ const LogItem = (props: LogItemProps) => (
         src={`https://www.osrsbox.com/osrsbox-db/items-icons/${props.item.id}.png`}>
       </img>
     </div>
-  </Col>
+  </div>
 );
 
 export default LogItem;

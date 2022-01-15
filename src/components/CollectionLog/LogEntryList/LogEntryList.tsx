@@ -19,6 +19,7 @@ class LogEntryList extends React.Component<LogEntryListProps> {
     for (let key in this.props.entries) {
       let completed = true;
 
+      console.log(this.props.entries);
       for (let item of this.props.entries[key].items) {
         if (!item.obtained) {
           completed = false;
@@ -53,7 +54,7 @@ class LogEntryList extends React.Component<LogEntryListProps> {
             b = b.replace(/^The /, '');
             return a.localeCompare(b);
           }).map((key, _i) => {
-            return <li data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</li>
+            return <li id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</li>
           })}
         </ul>
       </Col>

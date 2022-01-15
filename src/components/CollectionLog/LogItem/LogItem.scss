@@ -1,6 +1,10 @@
 @import '../../../scss/variables';
 
 .item {
+  width: 20%;
+  height: 50px;
+  margin-bottom: 10px;
+
   &:hover .item-tooltip {
     display: block;
     color: white;
@@ -17,7 +21,7 @@
   .item-quantity {
     position: relative;
     top: 15px;
-    left: 5px;
+    left: 15px;
     color: $text-yellow;
     text-shadow: $text-shadow;
   }
@@ -29,7 +33,7 @@
   .item-img-container {
     display: flex;
     justify-content: center;
-    height: 40px;
+    height: 90%;
 
 
     img {
