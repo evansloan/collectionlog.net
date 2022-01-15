@@ -91,7 +91,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     this.setState({
       ...this.state,
       activeTab: tabName,
-      activeEntry: Object.keys(this.state.collectionLogData[tabName]).sort()[0],
+      activeEntry: Object.keys(this.state.collectionLogData.tabs[tabName]).sort()[0],
     });
   }
 
