@@ -47,8 +47,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       return;
     }
 
-    const baseUrl = process.env.API_URL;
-    const apiUrl = `${baseUrl}/collectionlog/user/${username}`;
+    const apiUrl = `https://api.collectionlog.net/collectionlog/user/${username}`;
     fetch(apiUrl)
       .then(res => res.json())
       .then(
