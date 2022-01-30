@@ -15,7 +15,7 @@ const LogItems = (props: LogItemsProps) => {
   }).length;
   const total = props.data['items'].length;
 
-  let obtainedClass = '';
+  let obtainedClass = 'text-yellow';
   if (obtained == total) {
     obtainedClass = 'text-green';
   } else if (obtained == 0) {
