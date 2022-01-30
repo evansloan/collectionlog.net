@@ -1,0 +1,13 @@
+@import '../../scss/variables';
+
+.faq-container {
+  ul {
+    padding: 15px;
+
+    li {
+      color: white;
+      text-shadow: $text-shadow;
+      font-size: 18px;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
-import { LogBody, LogEntryList, LogHeader, LogItems, LogTabList } from './CollectionLog/index';
+import { LogBody, LogEntryList, LogHeader, LogItems, LogTabList } from '../../components/CollectionLog/index';
 
 import './CollectionLog.scss';
 
