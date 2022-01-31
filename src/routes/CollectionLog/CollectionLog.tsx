@@ -101,6 +101,11 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       return;
     }
 
+    const logList = document.getElementById('log-list-container');
+    const logItems = document.getElementById('log-items-container')
+    logList?.classList.add('d-none');
+    logItems?.classList.remove('d-none');
+
     this.setState({
       ...this.state,
       activeEntry: entryName,

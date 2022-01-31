@@ -47,16 +47,16 @@ class LogEntryList extends React.Component<LogEntryListProps> {
 
   render() {
     return (
-      <Col md='4' className='log-list'>
-        <ul>
+      <Col md='4' id='log-list-container' className='d-none d-md-block'>
+        <div id='log-list' className='d-flex flex-column'>
           {Object.keys(this.props.entries).sort((a, b) => {
             a = a.replace(/^The /, '');
             b = b.replace(/^The /, '');
             return a.localeCompare(b);
           }).map((key, _i) => {
-            return <li id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</li>
+            return <p id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</p>
           })}
-        </ul>
+        </div>
       </Col>
     );
   }

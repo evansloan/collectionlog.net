@@ -1,6 +1,6 @@
 @import '../../../scss/variables';
 
-.log-list {
+#log-list-container {
   border-right: $log-border;
   border-bottom: $log-border;
   padding: 0 !important;
@@ -8,12 +8,13 @@
   overflow-y: auto;
   overflow-x: hidden;
 
-  ul {
-    li {
+  #log-list {
+    p {
       color: $text-orange;
       font-size: 20px;
       text-shadow: $text-shadow;
       padding: 0 0 0 3px;
+      margin: 0;
       cursor: pointer;
 
       &:first-child {
@@ -22,10 +23,10 @@
 
       &:nth-child(odd) {
         background-color: $bg-light;
+      }
 
-        &:hover {
-          background-color: $bg-highlight;
-        }
+      &:hover {
+        background-color: $bg-highlight;
       }
     }
   }

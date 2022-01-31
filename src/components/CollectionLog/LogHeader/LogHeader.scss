@@ -8,7 +8,7 @@
   form {
 
     input {
-      width: 75%;
+      width: 65%;
       height: 100%;
       background-color: $bg-light;
       border: none;
@@ -24,19 +24,8 @@
     }
 
     button {
-      width: 25%;
+      width: 35%;
       height: 100%;
-      padding: 10px;
-      background-color: $bg-primary;
-      border: none;
-      border-right: 2px solid $bg-lighter;
-      font-size: 20px;
-      color: $text-orange;
-      text-shadow: $text-shadow;
-
-      &:hover {
-        background-color: $bg-highlight;
-      }
     }
   }
 
