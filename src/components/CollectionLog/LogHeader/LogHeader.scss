@@ -5,8 +5,13 @@
   box-shadow: $log-shadow;
   padding: 0 !important;
 
-  form {
+  @media (min-width: 992px) {
+    form {
+      width: 30%;
+    }
+  }
 
+  form {
     input {
       width: 65%;
       height: 100%;
