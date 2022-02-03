@@ -40,8 +40,7 @@ body {
 .log-button {
   padding: 10px;
   background-color: $bg-primary;
-  border: none;
-  border-right: 2px solid $bg-lighter;
+  border: 2px solid $bg-lighter;
   font-size: 20px;
   color: $text-orange;
   text-shadow: $text-shadow;
