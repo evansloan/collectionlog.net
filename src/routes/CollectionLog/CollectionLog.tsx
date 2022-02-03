@@ -161,6 +161,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
               <LogTabList onTabChangeHandler={this.onTabChange}/>
               <LogBody>
                 <LogEntryList
+                  activeTab={this.state.activeTab}
                   entries={this.state.collectionLogData.tabs[this.state.activeTab]}
                   onEntryChangeHandler={this.onEntryChange}
                 />

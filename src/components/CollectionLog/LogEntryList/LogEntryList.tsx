@@ -3,7 +3,21 @@ import { Col } from 'react-bootstrap';
 
 import './LogEntryList.scss';
 
+const CLUE_TAB_ENTRY_ORDER = [
+  'Beginner Treasure Trails',
+  'Easy Treasure Trails',
+  'Medium Treasure Trails',
+  'Hard Treasure Trails',
+  'Elite Treasure Trails',
+  'Master Treasure Trails',
+  'Hard Treasure Trails (Rare)',
+  'Elite Treasure Trails (Rare)',
+  'Master Treasure Trails (Rare)',
+  'Shared Treasure Trail Rewards',
+];
+
 interface LogEntryListProps {
+  activeTab: string;
   entries: { [key: string]: any };
   onEntryChangeHandler: (event: React.MouseEvent<HTMLElement>) => void;
 }
@@ -45,17 +59,27 @@ class LogEntryList extends React.Component<LogEntryListProps> {
     this.setCompletedEntries();
   }
 
+  sortAlphabetical = () => {
+    return Object.keys(this.props.entries).sort((a, b) => {
+      a = a.replace(/^The /, '');
+      b = b.replace(/^The /, '');
+      return a.localeCompare(b);
+    });
+  }
+
   render() {
     return (
       <Col md='4' id='log-list-container' className='d-none d-md-block'>
         <div id='log-list' className='d-flex flex-column'>
-          {Object.keys(this.props.entries).sort((a, b) => {
-            a = a.replace(/^The /, '');
-            b = b.replace(/^The /, '');
-            return a.localeCompare(b);
-          }).map((key, _i) => {
-            return <p id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</p>
-          })}
+          {this.props.activeTab == 'Clues' ? 
+            CLUE_TAB_ENTRY_ORDER.map((key, _i) => {
+              return <p id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</p>
+            })
+            :
+            this.sortAlphabetical().map((key, _i) => {
+              return <p id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</p>
+            })
+          }
         </div>
       </Col>
     );
