@@ -1,6 +1,19 @@
 @import '../../scss/variables';
 
 .faq-container {
+  margin-bottom: 30px;
+
+  a {
+    color: $text-orange;
+    font-size: 30px;
+    text-align: center;
+
+    &.log-button {
+      padding: 10px;
+      margin-bottom: 50px;
+    }
+  }
+
   ul {
     padding: 15px;
 
@@ -8,6 +21,10 @@
       color: white;
       text-shadow: $text-shadow;
       font-size: 18px;
+
+      a {
+        font-size: 18px;
+      }
     }
   }
 }
