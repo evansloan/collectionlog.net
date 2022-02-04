@@ -6,6 +6,8 @@ import { LogBody, LogEntryList, LogHeader, LogItems, LogTabList } from '../../co
 
 import './CollectionLog.scss';
 
+import entryList from '../../data/entries.json';
+
 
 const withParams = (Component: typeof React.Component) => {
   return (props: any) => <Component {...props} params={useParams()} />;
@@ -19,6 +21,7 @@ interface CollectionLogState {
   collectionLogData: { [key: string]: any};
   activeTab: string;
   activeEntry: string;
+  username: string;
   isLoaded: boolean;
   error: string | null;
 }
@@ -29,10 +32,12 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     super(props);
 
     const username = this.props.params.username;
+
     this.state = {
       collectionLogData: {},
       activeTab: '',
       activeEntry: '',
+      username: '',
       isLoaded: false,
       error: null,
     };
@@ -40,6 +45,14 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     if (username) {
       this.updateCollectionLog(username);
     }
+  }
+
+  componentDidUpdate() {
+    if (!this.state.isLoaded) {
+      return;
+    }
+    
+    this.updateUrl();
   }
 
   updateCollectionLog = (username: string) => {
@@ -60,18 +73,30 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
             return;
           }
 
+          let tab = 'Bosses';
+          let entry = 'Abyssal Sire';
+
+          // If linked to a specific entry, find the tab that entry
+          // is in
+          if (this.props.params.entry) {
+            entry = this.props.params.entry;
+            for (let key in result.collection_log.tabs) {
+              if (entry in result.collection_log.tabs[key]) {
+                tab = key;
+                this.props.params.entry = null;
+                break;
+              }
+            }
+          }
+
           this.setState({
             collectionLogData: result.collection_log,
-            activeTab: 'Bosses',
-            activeEntry: 'Abyssal Sire',
+            activeTab: tab,
+            activeEntry: entry,
+            username: username,
             isLoaded: true,
-            error: null,
+            error: this.getMissingEntries(result.collection_log.tabs),
           });
-
-          const newUrl = `/${username}`
-
-          window.history.pushState({}, '', newUrl);
-          window.history.replaceState({}, '', newUrl);
         },
         (error) => {
           this.setState({
@@ -138,6 +163,38 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     }
 
     return `${unique}/${totalUnique}`;
+  }
+
+  updateUrl = () => {
+    const newUrl = `/${this.state.username}/${this.state.activeEntry}`
+
+    window.history.pushState({}, '', newUrl);
+    window.history.replaceState({}, '', newUrl);
+  }
+
+  getMissingEntries = (collectionLogData: any) => {
+    const loadedEntries = Object.keys(collectionLogData).map((tabName, _i) => {
+      return Object.keys(collectionLogData[tabName]).map((entryName, _i) => {
+        return entryName;
+      });
+    }).flat();
+
+    let diff = entryList.filter((leftValue) => {
+      return !loadedEntries.some((rightValue) => {
+        return leftValue == rightValue;
+      });
+    });
+
+    if (diff.length == 0) {
+      return null;
+    }
+
+    if (diff.length > 3) {
+      diff = diff.slice(0, 3);
+      diff.push('and more...')
+    }
+
+    return `Missing collection log entries:\n${diff.join(', ')}`
   }
 
   render() {

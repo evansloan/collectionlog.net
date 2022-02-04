@@ -13,6 +13,7 @@ ReactDOM.render(
       <Routes>
         <Route path='/' element={<CollectionLog />} />
         <Route path='/:username' element={<CollectionLog />} />
+        <Route path='/:username/:entry' element={<CollectionLog />} />
         <Route path='/faq' element={<FAQ />} />
       </Routes>
     </BrowserRouter>
