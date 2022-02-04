@@ -3,7 +3,7 @@ import { Col } from 'react-bootstrap';
 
 import './LogEntryList.scss';
 
-const CLUE_TAB_ENTRY_ORDER = [
+const CLUE_TAB_ENTRIES = [
   'Beginner Treasure Trails',
   'Easy Treasure Trails',
   'Medium Treasure Trails',
@@ -33,7 +33,6 @@ class LogEntryList extends React.Component<LogEntryListProps> {
     for (let key in this.props.entries) {
       let completed = true;
 
-      console.log(this.props.entries);
       for (let item of this.props.entries[key].items) {
         if (!item.obtained) {
           completed = false;
@@ -68,18 +67,16 @@ class LogEntryList extends React.Component<LogEntryListProps> {
   }
 
   render() {
+    let entries = this.sortAlphabetical();
+    if (this.props.activeTab == 'Clues') {
+      entries = CLUE_TAB_ENTRIES;
+    }
     return (
       <Col md='4' id='log-list-container' className='d-none d-md-block'>
         <div id='log-list' className='d-flex flex-column'>
-          {this.props.activeTab == 'Clues' ? 
-            CLUE_TAB_ENTRY_ORDER.map((key, _i) => {
-              return <p id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</p>
-            })
-            :
-            this.sortAlphabetical().map((key, _i) => {
-              return <p id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</p>
-            })
-          }
+          {entries.map((key, _i) => {
+            return <p id={key} data-entryname={key} onClick={(e) => this.props.onEntryChangeHandler(e)}>{key}</p>
+          })}
         </div>
       </Col>
     );
