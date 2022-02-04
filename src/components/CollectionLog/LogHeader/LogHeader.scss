@@ -9,6 +9,10 @@
     form {
       width: 30%;
     }
+
+    .error-message {
+      width: 30%;
+    }
   }
 
   form {
@@ -44,9 +48,14 @@
     font-size: 20px;
     color: rgb(255, 108, 108);
     text-shadow: $text-shadow;
+    text-align: center;
+
+    p {
+      margin: 0;
+    }
   }
 
-  .error-message, .spacer {
+  .spacer {
     width: 30%;
   }
 }
