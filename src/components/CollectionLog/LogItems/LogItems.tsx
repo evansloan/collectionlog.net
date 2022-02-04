@@ -7,7 +7,7 @@ import './LogItems.scss';
 
 interface LogItemsProps {
   entryName: string;
-  data: {[key: string]: any};
+  data: any;
 }
 
 class LogItems extends React.Component<LogItemsProps> {
@@ -23,10 +23,10 @@ class LogItems extends React.Component<LogItemsProps> {
   }
 
   render() {
-    const obtained = (this.props.data['items'] as Array<any>).filter((item, _i) => {
+    const obtained = (this.props.data.items as Array<any>).filter((item, _i) => {
       return item.obtained;
     }).length;
-    const total = this.props.data['items'].length;
+    const total = this.props.data.items.length;
 
     let obtainedClass = 'text-yellow';
     if (obtained == total) {
@@ -47,7 +47,7 @@ class LogItems extends React.Component<LogItemsProps> {
           })}
         </div>
         <div className='log-items'>
-          {(this.props.data['items'] as Array<any>).map((item, _i) => {
+          {(this.props.data.items as Array<any>).map((item, _i) => {
               return <LogItem item={item} />
           })}
         </div>
