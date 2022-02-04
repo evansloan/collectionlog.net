@@ -1,5 +1,17 @@
 @import '../../scss/variables';
 
+#discord-invite {
+  text-decoration: none;
+  margin-top: 10px;
+
+  img {
+    width: 30px;
+    color: white;
+    padding-right: 5px;
+    margin-top: -6px;
+  }
+}
+
 .log-container {
   background-color: $bg-primary;
   margin-top: 15px;

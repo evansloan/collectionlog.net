@@ -2,7 +2,6 @@ import './Footer.scss';
 
 const Footer = () => (
   <div id='footer' className='d-flex flex-column flex-sm-row justify-content-center justify-content-sm-around text-center'>
-    <p>Join the <a href='https://discord.gg/cFVa9BRSEN'>Log hunters Discord server!</a></p>
     <p>Oldschool RuneScape is a trademark of <a href='https://www.jagex.com/en-GB/'>Jagex Ltd.</a></p>
     <p>Images provided by <a href='https://www.osrsbox.com/'>OSRSBox</a></p>
     <p>Install the <a href='https://runelite.net/plugin-hub/show/collection-log'>Collection Log plugin</a> on <a href='https://runelite.net'>Runelite</a></p>

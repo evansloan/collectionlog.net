@@ -51,7 +51,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     if (!this.state.isLoaded) {
       return;
     }
-    
+
     this.updateUrl();
   }
 
@@ -205,6 +205,14 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
     return (
       <Container>
+        <Row className='d-none d-lg-flex'>
+          <Col className='d-flex justify-content-center'>
+            <a id='discord-invite' className='log-button' href='https://discord.gg/cFVa9BRSEN'>
+              <img src='/discord.svg'></img>
+              Join the Log Hunters Discord Server
+            </a>
+          </Col>
+        </Row>
         <Row>
           <Col md={{ span: 10, offset: 1 }} className='log-container'>
             <LogHeader 
