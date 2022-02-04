@@ -208,7 +208,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
         <Row className='d-none d-lg-flex'>
           <Col className='d-flex justify-content-center'>
             <a id='discord-invite' className='log-button' href='https://discord.gg/cFVa9BRSEN'>
-              <img src='/discord.svg'></img>
+              <img src='/img/discord.svg'></img>
               Join the Log Hunters Discord Server
             </a>
           </Col>
