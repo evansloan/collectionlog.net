@@ -9,7 +9,9 @@ type LogItemProps = {
 const LogItem = (props: LogItemProps) => (
   <div className='item'>
     <span className='item-quantity'>{props.item.quantity > 0 ? props.item.quantity : '\u00a0'}</span>
-    <span className='item-tooltip'>{props.item.name}</span>
+    <span className='item-tooltip'>
+      <a href={`https://oldschool.runescape.wiki/w/${props.item.name.replace(/ /g, '_')}`}>{props.item.name}</a>
+    </span>
     <div className='item-img-container'>
       <img
         className={props.item.obtained ? 'item-obtained' : ''}

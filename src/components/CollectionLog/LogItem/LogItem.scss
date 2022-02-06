@@ -7,11 +7,18 @@
 
   &:hover .item-tooltip {
     display: block;
-    color: white;
-    text-shadow: $text-shadow;
+    height: 100%;
     text-align: center;
-    margin-top: 10px;
-    cursor: default;
+
+    a {
+      display: block;
+      padding-top: 10px;
+      height: 100%;
+      width: 100%;
+      color: white;
+      text-shadow: $text-shadow;
+      text-decoration: none;
+    }
   }
 
   &:hover .item-img-container {
