@@ -1,24 +1,22 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
 
-import { LogBody, LogEntryList, LogHeader, LogItems, LogTabList } from '../../components/CollectionLog/index';
+import { getRequest } from '../../api/Client';
+import { LogBody, LogEntryList, LogHeader, LogRecentItems, LogItems, LogTabList } from '../../components/CollectionLog/index';
+import { updateUrl, withParams } from '../../utils/componentUtils';
 
 import './CollectionLog.scss';
 
 import entryList from '../../data/entries.json';
 
 
-const withParams = (Component: typeof React.Component) => {
-  return (props: any) => <Component {...props} params={useParams()} />;
-}
-
 interface CollectionLogProps {
   params: any;
 }
 
 interface CollectionLogState {
-  collectionLogData: { [key: string]: any};
+  collectionLogData: { [key: string]: any };
+  recentItems: any[];
   activeTab: string;
   activeEntry: string;
   username: string;
@@ -35,16 +33,18 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
     this.state = {
       collectionLogData: {},
+      recentItems: [],
       activeTab: '',
       activeEntry: '',
-      username: '',
+      username: username ?? '',
       isLoaded: false,
       error: null,
     };
+  }
 
-    if (username) {
-      this.updateCollectionLog(username);
-    }
+  componentDidMount() {
+    this.updateCollectionLog(this.state.username);
+    this.updateRecentItems(this.state.username);
   }
 
   componentDidUpdate() {
@@ -52,7 +52,8 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       return;
     }
 
-    this.updateUrl();
+    const newUrl = `/${this.state.username}/${this.state.activeEntry}`
+    updateUrl(newUrl);
   }
 
   updateCollectionLog = (username: string) => {
@@ -60,55 +61,56 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       return;
     }
 
-    const apiUrl = `https://api.collectionlog.net/collectionlog/user/${username}`;
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          if (result.error) {
-            this.setState({
-              ...this.state,
-              error: result.error,
-            });
-            return;
+    getRequest('collectionlog', ['user', username], (result) => {
+      if (result.error) {
+        this.setState({
+          ...this.state,
+          error: result.error,
+        });
+        return;
+      }
+
+      let tab = 'Bosses';
+      let entry = 'Abyssal Sire';
+
+      // If linked to a specific entry, find the tab that entry is in
+      if (this.props.params.entry) {
+        entry = this.props.params.entry;
+        for (let key in result.collection_log.tabs) {
+          if (entry in result.collection_log.tabs[key]) {
+            tab = key;
+            this.props.params.entry = null;
+            break;
           }
-
-          let tab = 'Bosses';
-          let entry = 'Abyssal Sire';
-
-          // If linked to a specific entry, find the tab that entry
-          // is in
-          if (this.props.params.entry) {
-            entry = this.props.params.entry;
-            for (let key in result.collection_log.tabs) {
-              if (entry in result.collection_log.tabs[key]) {
-                tab = key;
-                this.props.params.entry = null;
-                break;
-              }
-            }
-          }
-
-          this.setState({
-            collectionLogData: result.collection_log,
-            activeTab: tab,
-            activeEntry: entry,
-            username: username,
-            isLoaded: true,
-            error: this.getMissingEntries(result.collection_log.tabs),
-          });
-        },
-        (error) => {
-          this.setState({
-            ...this.state,
-            error: 'Error contacting collectionlog.net API',
-          });
         }
-      )
+      }
+
+      this.setState({
+        collectionLogData: result.collection_log,
+        activeTab: tab,
+        activeEntry: entry,
+        username: username,
+        isLoaded: true,
+        error: this.getMissingEntries(result.collection_log.tabs),
+      });
+    }, (error) => {
+      this.setState({
+        ...this.state,
+        error: 'Error contacting collectionlog.net API',
+      });
+    }, true);
   }
 
-  onTabChange = (event: React.MouseEvent<HTMLElement>) => {
-    const tabName = (event.target as HTMLElement).dataset.tabname;
+  updateRecentItems = (username: string) => {
+    getRequest('collectionlog', ['recent', username], (result) => {
+      this.setState({
+        ...this.state,
+        recentItems: result
+      });
+    }, (error) => {}, true);
+  }
+
+  onTabChange = (tabName: string) => {
     if (!tabName) {
       return;
     }
@@ -120,8 +122,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     });
   }
 
-  onEntryChange = (event: React.MouseEvent<HTMLElement>) => {
-    const entryName = (event.target as HTMLElement).dataset.entryname;
+  onEntryChange = (entryName: string) => {
     if (!entryName) {
       return;
     }
@@ -140,36 +141,19 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
   onSearch = (event: React.FormEvent, username: string) => {
     event.preventDefault();
     this.updateCollectionLog(username);
+    this.updateRecentItems(username);
   }
 
-  getUniqueItemsCount = (): string => {
-    let unique = 0;
-    let totalUnique = 0;
-    let uniqueItemsList: Array<number> = [];
-
-    const tabs = this.state.collectionLogData.tabs;
-    for (let tabName in tabs) {
-      const entries = tabs[tabName];
-      for (let entry in entries) {
-        const items = entries[entry].items;
-        for (let item of items) {
-          if (uniqueItemsList.indexOf(item.id) == -1) {
-            uniqueItemsList.push(item.id);
-            unique = item.obtained ? unique + 1 : unique;
-            totalUnique += 1;
-          }
-        }
-      }
+  getItemCounts = (unique: boolean): string => {
+    let key = 'total';
+    if (unique) {
+      key = 'unique';
     }
+    
+    const obtained = this.state.collectionLogData[`${key}_obtained`] ?? 0;
+    const total = this.state.collectionLogData[`${key}_items`] ?? 0;
 
-    return `${unique}/${totalUnique}`;
-  }
-
-  updateUrl = () => {
-    const newUrl = `/${this.state.username}/${this.state.activeEntry}`
-
-    window.history.pushState({}, '', newUrl);
-    window.history.replaceState({}, '', newUrl);
+    return `${obtained}/${total}`;
   }
 
   getMissingEntries = (collectionLogData: any) => {
@@ -198,21 +182,11 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
   }
 
   render() {
-    const totalObtained = this.state.collectionLogData.total_obtained ?? 0;
-    const totalItems = this.state.collectionLogData.total_items ?? 0;
-    const totalCount = `${totalObtained}/${totalItems}`;
-    const uniqueCount = this.getUniqueItemsCount();
+    const totalCount = this.getItemCounts(false);
+    const uniqueCount = this.getItemCounts(true);
 
     return (
       <Container>
-        <Row className='d-none d-lg-flex'>
-          <Col className='d-flex justify-content-center'>
-            <a id='discord-invite' className='log-button' href='https://discord.gg/cFVa9BRSEN'>
-              <img src='/img/discord.svg'></img>
-              Join the Log Hunters Discord Server
-            </a>
-          </Col>
-        </Row>
         <Row>
           <Col md={{ span: 10, offset: 1 }} className='log-container'>
             <LogHeader 
@@ -239,6 +213,9 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
             }
           </Col>
         </Row>
+        {this.state.isLoaded &&
+          <LogRecentItems items={this.state.recentItems} />
+        }
       </Container>
     );
   }
