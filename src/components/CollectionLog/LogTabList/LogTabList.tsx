@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import './LogTabList.scss';
 
 interface LogTabListProps {
-  onTabChangeHandler: (event: React.MouseEvent<HTMLElement>) => void;
+  onTabChangeHandler: (tabName: string) => void;
 }
 
 const TAB_LIST_VALUES = [
@@ -15,16 +15,20 @@ const TAB_LIST_VALUES = [
   'Other',
 ];
 
-const LogTabList = (props: LogTabListProps) => (
-  <Row>
-    <Col md='12' className='log-tabs'>
-      <ul>
+const LogTabList = (props: LogTabListProps) => {
+  return (
+    <Row>
+      <Col md='12' className='log-tabs'>
         {TAB_LIST_VALUES.map((tabName, _i) => {
-          return <li data-tabname={tabName} onClick={(e) => props.onTabChangeHandler(e)}>{tabName}</li>
+          return (
+            <div className='tab' key={tabName} onClick={() => props.onTabChangeHandler(tabName)}>
+              <span>{tabName}</span>
+            </div>
+          );
         })}
-      </ul>
-    </Col>
-  </Row>
-);
+      </Col>
+    </Row>
+  );
+};
 
 export default LogTabList;

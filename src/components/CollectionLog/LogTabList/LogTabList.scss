@@ -1,30 +1,37 @@
 @import '../../../scss/variables';
 
 .log-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
   border-left: $log-border;
   border-right: $log-border;
   border-bottom: 1px solid $bg-lighter;
   padding: 5px 0 0 0 !important;
 
-  ul {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+  .tab {
+    background-color: $bg-dark;
+    flex-grow: 1;
+    min-width: 100px;
+    max-width: 18%;
+    padding: 0 5px 0 5px;
+    border-top-right-radius: 5%;
+    border-top-left-radius: 5%;
+    border: 1px solid $bg-light;
+    border-bottom: none;
+    cursor: pointer;
 
-    li {
+    &:hover {
+      background-color: $bg-highlight;
+    }
+
+    span {
+      display: block;
       color: $text-orange;
+      text-shadow: $text-shadow;
+      text-align: center;;
       font-size: 20px;
       font-weight: bold;
-      text-align: center;
-      text-shadow: $text-shadow;
-      background-color: $bg-dark;
-      width: 18%;
-      border-top-right-radius: 5%;
-      border-top-left-radius: 5%;
-      border-top: 1px solid $bg-light;
-      border-left: 1px solid $bg-light;
-      border-right: 1px solid $bg-light;
-      cursor: pointer;
     }
   }
 }
