@@ -98,7 +98,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
         ...this.state,
         error: 'Error contacting collectionlog.net API',
       });
-    }, true);
+    });
   }
 
   updateRecentItems = (username: string) => {
@@ -107,7 +107,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
         ...this.state,
         recentItems: result
       });
-    }, (error) => {}, true);
+    }, (error) => {});
   }
 
   onTabChange = (tabName: string) => {

@@ -34,7 +34,6 @@ class LogItems extends React.Component<LogItemsProps> {
     } else if (obtained == 0) {
       obtainedClass = 'text-red';
     }
-
     return (
       <Col xs='12' md='8' id='log-items-container'>
         <button id='log-list-button' className='log-button d-md-none' type='button' onClick={this.showEntries}>Show Entries</button>

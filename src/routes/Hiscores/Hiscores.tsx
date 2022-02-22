@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 
 import { getRequest } from '../../api/Client';
 import { HiscoresHeader, HiscoresList } from '../../components/Hiscores';
@@ -70,7 +70,7 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
         error: 'Error contacting collectionlog.net API',
         isLoaded: false,
       });
-    }, true);
+    });
   }
 
   onPageChange = (page: number) => {

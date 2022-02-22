@@ -5,11 +5,11 @@ const withParams = (Component: typeof React.Component) => {
   return (props: any) => <Component {...props} params={useParams()} />;
 }
 
-const updateUrl = (newUrl: string) => {
+const updateUrl = (newUrl: string): void => {
   window.history.replaceState({}, '', newUrl);
 }
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string): string => {
   const date = new Date(Date.parse(dateString));
   const offset = date.getTimezoneOffset();
 
@@ -17,4 +17,9 @@ const formatDate = (dateString: string) => {
   return `${tzDate.getMonth() + 1}/${tzDate.getDate()}/${tzDate.getFullYear()}`;
 }
 
-export { formatDate, updateUrl, withParams };
+const capitalize = (s: string): string => {
+  s = s.toLowerCase();
+  return s[0].toUpperCase() + s.slice(1);
+}
+
+export { capitalize, formatDate, updateUrl, withParams };
