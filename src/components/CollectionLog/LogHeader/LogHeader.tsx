@@ -37,7 +37,7 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
           </form>
           <h4 className='text-orange text-shadow text-center font-weight-bold'>
             Collection Log
-            <h5>Unique: <span className='text-white'>{this.props.unique}</span> Total: <span className='text-white'>{this.props.total}</span></h5>
+            <p>Unique: <span className='text-white'>{this.props.unique}</span> Total: <span className='text-white'>{this.props.total}</span></p>
           </h4>
           {this.props.errorMessage ?
             <div className='error-message'><p>{this.props.errorMessage}</p></div>
