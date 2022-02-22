@@ -1,0 +1,35 @@
+@import '../../../scss/variables';
+
+.hiscores-list {
+  background-color: $bg-primary;
+  border-left: $log-border;
+  border-right: $log-border;
+  border-bottom: $log-border;
+  text-align: center;
+
+  .hiscore {
+
+    &:nth-child(even) {
+      background-color: $bg-light;
+    }
+
+    p {
+      color: $text-orange;
+      text-shadow: $text-shadow;
+      margin: 0;
+      font-size: 24px;
+
+      &.rank {
+        color: white;
+      }
+
+      &.counts {
+        color: $text-yellow;
+      }
+
+      a {
+        color: $text-orange;
+      }
+    }
+  }
+}
