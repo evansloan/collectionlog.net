@@ -42,13 +42,13 @@ class LogItems extends React.Component<LogItemsProps> {
           <h5>{this.props.entryName}</h5>
           <p>Obtained: <span className={obtainedClass}>{obtained}/{total}</span></p>
           {this.props.data['kill_count'] != undefined &&
-          (this.props.data['kill_count'] as Array<string>).map((kc, _i) => {
-            return <p>{`${kc.split(': ')[0]}`}: <span>{kc.split(': ')[1]}</span></p>
+          (this.props.data['kill_count'] as Array<any>).map((kc) => {
+            return <p key={kc.name}>{`${kc.name}`}: <span>{kc.amount}</span></p>
           })}
         </div>
         <div className='log-items'>
           {(this.props.data.items as Array<any>).map((item, _i) => {
-              return <LogItem item={item} />
+              return <LogItem key={_i} item={item} />
           })}
         </div>
       </Col>

@@ -6,6 +6,10 @@
   flex-direction: column;
   height: 550px;
 
+  #log-list-button {
+    margin-top: 10px;
+  }
+
   .log-entry-info {
     border-bottom: 1px solid $bg-lighter;
 
