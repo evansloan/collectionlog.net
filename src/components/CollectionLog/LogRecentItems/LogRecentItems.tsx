@@ -14,9 +14,9 @@ const LogRecentItems = (props: LogRecentItemsProps) => (
     <Col md={{ span: 10, offset: 1 }} className='recent-items-container'>
       <h3 className='text-center'>Recent Obtained Items</h3>
       <div className='recent-items'>
-        {props.items.map((item) => {
+        {props.items.map((item, i) => {
           return (
-            <div className='d-flex' key={item.itemId}>
+            <div className='d-flex' key={`${item.itemId}${i}`}>
               <LogItem item={item} />
               <div className='description'>
                 <p>{item.name}</p>
