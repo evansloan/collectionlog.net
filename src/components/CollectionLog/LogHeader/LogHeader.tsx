@@ -29,6 +29,11 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
   }
 
   render() {
+    let username = this.props.data.username;
+    if (username) {
+      username = username.charAt(username.length - 1).toLowerCase() == 's' ? `${username}'` : `${username}'s`;
+    }
+
     return (
       <Row>
         <Col md='12' className='log-header d-flex flex-column flex-lg-row justify-content-start justify-content-lg-between'>
@@ -40,8 +45,8 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
             {this.props.data.accountType && this.props.data.accountType != 'NORMAL' &&
               <img src={`https://oldschool.runescape.wiki/images/${capitalize(this.props.data.accountType)}_chat_badge.png`} />
             }
-            {this.props.data.username &&
-              `${this.props.data.username}'s `
+            {username &&
+              `${username} `
             }
             Collection Log
             <p>Unique: <span className='text-white'>{this.props.data.unique}</span> Total: <span className='text-white'>{this.props.data.total}</span></p>
