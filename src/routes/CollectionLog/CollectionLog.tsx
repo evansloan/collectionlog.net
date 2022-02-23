@@ -112,7 +112,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
         });
         return;
       }
-      
+
       this.setState({
         ...this.state,
         recentItems: result
@@ -195,13 +195,21 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     const totalCount = this.getItemCounts(false);
     const uniqueCount = this.getItemCounts(true);
 
+    const headerData = {
+      total: totalCount,
+      unique: uniqueCount,
+      accountType: this.state.collectionLogData.account_type,
+      username: this.state.collectionLogData.username,
+    };
+
+    console.log(this.state.collectionLogData);
+
     return (
       <Container>
         <Row>
           <Col md={{ span: 10, offset: 1 }} className='log-container'>
             <LogHeader 
-              total={totalCount}
-              unique={uniqueCount}
+              data={headerData}
               onSearchHandler={this.onSearch}
               errorMessage={this.state.error}
             />

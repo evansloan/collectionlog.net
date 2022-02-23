@@ -42,8 +42,14 @@
 
   h4 {
     margin: 3px;
-    position: relative;
-    left: 0;
+    flex-grow: 1;
+
+    img {
+      height: 35%;
+      filter: $account-type-shadow;
+      margin-right: 5px;
+      margin-top: -10px;
+    }
 
     p {
       color: $text-orange;
