@@ -65,6 +65,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       if (result.error) {
         this.setState({
           ...this.state,
+          isLoaded: false,
           error: result.error,
         });
         return;
@@ -103,6 +104,15 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
   updateRecentItems = (username: string) => {
     getRequest('collectionlog', ['recent', username], (result) => {
+      if (result.error) {
+        this.setState({
+          ...this.state,
+          isLoaded: false,
+          error: result.error,
+        });
+        return;
+      }
+      
       this.setState({
         ...this.state,
         recentItems: result
