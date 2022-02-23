@@ -9,7 +9,6 @@ import './CollectionLog.scss';
 
 import entryList from '../../data/entries.json';
 
-
 interface CollectionLogProps {
   params: any;
 }
@@ -26,12 +25,14 @@ interface CollectionLogState {
 
 class CollectionLog extends React.Component<CollectionLogProps, CollectionLogState> {
 
+  initialState: CollectionLogState;
+
   constructor(props: CollectionLogProps) {
     super(props);
 
     const username = this.props.params.username;
 
-    this.state = {
+    this.initialState = {
       collectionLogData: {},
       recentItems: [],
       activeTab: '',
@@ -40,9 +41,14 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       isLoaded: false,
       error: null,
     };
+
+    this.state = this.initialState;
   }
 
   componentDidMount() {
+    if (this.state.username == '') {
+      return;
+    }
     this.updateCollectionLog(this.state.username);
     this.updateRecentItems(this.state.username);
   }
@@ -64,8 +70,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     getRequest('collectionlog', ['user', username], (result) => {
       if (result.error) {
         this.setState({
-          ...this.state,
-          isLoaded: false,
+          ...this.initialState,
           error: result.error,
         });
         return;
@@ -96,7 +101,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       });
     }, (error) => {
       this.setState({
-        ...this.state,
+        ...this.initialState,
         error: 'Error contacting collectionlog.net API',
       });
     });
@@ -201,8 +206,6 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       accountType: this.state.collectionLogData.account_type,
       username: this.state.collectionLogData.username,
     };
-
-    console.log(this.state.collectionLogData);
 
     return (
       <Container>

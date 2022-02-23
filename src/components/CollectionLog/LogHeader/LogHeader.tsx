@@ -37,7 +37,7 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
             <button className='log-button' type='submit'>Search</button>
           </form>
           <h4 className='text-orange text-shadow text-center font-weight-bold'>
-            {this.props.data.accountType &&
+            {this.props.data.accountType && this.props.data.accountType != 'NORMAL' &&
               <img src={`https://oldschool.runescape.wiki/images/${capitalize(this.props.data.accountType)}_chat_badge.png`} />
             }
             {this.props.data.username &&
