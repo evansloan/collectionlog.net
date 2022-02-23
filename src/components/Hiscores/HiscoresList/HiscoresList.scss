@@ -16,8 +16,7 @@
     img {
       height: 60%;
       margin-right: 5px;
-      filter: drop-shadow(1px 1px 0 black) 
-              drop-shadow(-1px -1px 0 black);
+      filter: $account-type-shadow;
     }
 
     p {
