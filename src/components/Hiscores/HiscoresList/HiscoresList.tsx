@@ -15,24 +15,13 @@ const HiscoresList = (props: HiscoresListProps) => {
 
   return (
     <Col md={{span: 8, offset: 2}} className='hiscores-list'>
-      <Row>
-        <Col>
-          <h3>Rank</h3>
-        </Col>
-        <Col>
-          <h3>Username</h3>
-        </Col>
-        <Col>
-          <h3>Totals</h3>
-        </Col>
-      </Row>
       {props.data.map((user: any, index: number) => {
         return (
-          <Row key={`${user.username}${index}`} className='hiscore'>
-            <Col>
+          <Row key={`${user.username}${index}`} className='hiscore justify-content-space-between'>
+            <Col xs='auto' sm={4}>
               <p className='rank'>{(pageLimit * (props.page - 1)) + (index + 1)}.</p>
             </Col>
-            <Col className='d-flex justify-content-center align-items-center'>
+            <Col xs='auto' sm={4} className='d-flex justify-content-center align-items-center'>
               {user.account_type && user.account_type != 'NORMAL' &&
                 <img src={`https://oldschool.runescape.wiki/images/${capitalize(user.account_type)}_chat_badge.png`} />
               }
@@ -40,7 +29,7 @@ const HiscoresList = (props: HiscoresListProps) => {
                 <a href={`/${user.username}`}>{user.username}</a>
               </p>
             </Col>
-            <Col>
+            <Col xs='auto' sm={4}>
               <p className='counts'>{user.obtained}/{user.total}</p>
             </Col>
           </Row>
