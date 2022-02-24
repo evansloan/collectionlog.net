@@ -15,9 +15,20 @@ const HiscoresList = (props: HiscoresListProps) => {
 
   return (
     <Col md={{span: 8, offset: 2}} className='hiscores-list'>
+      <Row className='d-none d-sm-flex justify-content-between'>
+        <Col xs='auto' sm={4}>
+          <h3>Rank</h3>
+        </Col>
+        <Col xs='auto' sm={4}>
+          <h3>Username</h3>
+        </Col>
+        <Col xs='auto' sm={4}>
+          <h3>Totals</h3>
+        </Col>
+      </Row>
       {props.data.map((user: any, index: number) => {
         return (
-          <Row key={`${user.username}${index}`} className='hiscore justify-content-space-between'>
+          <Row key={`${user.username}${index}`} className='hiscore justify-content-between'>
             <Col xs='auto' sm={4}>
               <p className='rank'>{(pageLimit * (props.page - 1)) + (index + 1)}.</p>
             </Col>
