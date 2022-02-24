@@ -14,6 +14,7 @@ interface HiscoresProps {
 interface HiscoresState {
   type: string;
   page: number;
+  filter: string;
   data: Array<any>;
   error: string | null;
   isLoaded: boolean;
@@ -37,6 +38,7 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
     this.state = {
       type: hiscoreType,
       page: page,
+      filter: 'all',
       data: [],
       error: null,
       isLoaded: false,
@@ -57,7 +59,15 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
   }
 
   updateHiscores = () => {
-    getRequest('hiscores', [this.state.type, this.state.page], (result) => {
+    const pathParams = [this.state.type ,this.state.page];
+    let queryParams = null;
+    if (this.state.filter != 'all') {
+      queryParams = {
+        accountType: this.state.filter.toUpperCase(),
+      };
+    }
+
+    getRequest('hiscores', pathParams, queryParams, (result) => {
       this.setState({
         ...this.state,
         data: result,
@@ -80,20 +90,36 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
       page: page,
     }, () => {
       this.updateHiscores();
-    })
+    });
+  }
+
+  onFilterChange = (filter: string) => {
+    const prevFilterLinkId = `filter-${this.state.filter.replace(/_/g, '-')}`;
+    const filterLinkId = `filter-${filter}`;
+    const accountType = filter.replace(/-/g, '_');
+
+    document.getElementById(prevFilterLinkId)?.classList.remove('filter-active');
+    document.getElementById(filterLinkId)?.classList.add('filter-active');
+
+    this.setState({
+      ...this.state,
+      filter: accountType,
+      isLoaded: false,
+    }, () => {
+      this.updateHiscores();
+    });
   }
 
   render() {
     return (
       <Container className='hiscores-container'>
-        <Row>
-          <HiscoresHeader
-            type={this.state.type}
-            page={this.state.page}
-            pageLength={this.state.data.length}
-            onPageChangeHandler={this.onPageChange}
-          />
-        </Row>
+        <HiscoresHeader
+          type={this.state.type}
+          page={this.state.page}
+          pageLength={this.state.data.length}
+          onPageChangeHandler={this.onPageChange}
+          onFilterChangeHandler={this.onFilterChange}
+        />
         <Row>
           <HiscoresList page={this.state.page} data={this.state.data} isLoaded={this.state.isLoaded} />
         </Row>

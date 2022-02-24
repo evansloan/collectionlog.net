@@ -67,7 +67,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       return;
     }
 
-    getRequest('collectionlog', ['user', username], (result) => {
+    getRequest('collectionlog', ['user', username], null, (result) => {
       if (result.error) {
         this.setState({
           ...this.initialState,
@@ -108,7 +108,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
   }
 
   updateRecentItems = (username: string) => {
-    getRequest('collectionlog', ['recent', username], (result) => {
+    getRequest('collectionlog', ['recent', username], null, (result) => {
       if (result.error) {
         this.setState({
           ...this.state,

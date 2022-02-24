@@ -22,4 +22,28 @@
       cursor: pointer;
     }
   }
+
+  .hiscores-filters {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+    a {
+      color: $text-orange;
+      text-shadow: $text-shadow;
+      font-size: 20px;
+      text-decoration: underline;
+      font-weight: bold;
+      cursor: pointer;
+
+      &.filter-active {
+        color: white;
+      }
+
+      &:hover {
+        color: white;
+        text-decoration: underline;
+      }
+    }
+  }
 }
