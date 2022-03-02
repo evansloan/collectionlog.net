@@ -30,6 +30,18 @@
       &:focus {
         outline: none;
       }
+
+      /** 
+       * stupid way to get around chrome autofill background
+       * color bug
+       */
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover, 
+      &:-webkit-autofill:focus {
+        box-shadow: 0 0 0 50px $bg-light inset;
+        -webkit-box-shadow: 0 0 0 50px $bg-light inset;
+        -webkit-text-fill-color: white;
+      }
     }
 
     button {
