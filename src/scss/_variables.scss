@@ -22,3 +22,9 @@ $log-shadow: inset 0px 2px 0px 0px rgba(0,0,0,0.2);
   font-family: 'Runescape';
   src: local('Runescape'), url('../fonts/runescape.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: 'Runescape';
+  src: local('Runescape'), url('../fonts/runescape-bold.ttf') format('truetype');
+  font-weight: bold;
+}
