@@ -30,8 +30,8 @@ const HiscoresHeader = (props: HiscoresHeaderProps) => (
         <a id='filter-all' className='filter-active' onClick={() => props.onFilterChangeHandler('all')}>All</a>
         <a id='filter-ironman' onClick={() => props.onFilterChangeHandler('ironman')}>Ironman</a>
         <a id='filter-hardcore-ironman' onClick={() => props.onFilterChangeHandler('hardcore-ironman')}>Hardcore Ironman</a>
-        <a id='filter-group-ironman' onClick={() => props.onFilterChangeHandler('group-ironman')}>Group Ironman</a>
         <a id='filter-ultimate-ironman' onClick={() => props.onFilterChangeHandler('ultimate-ironman')}>Ultimate Ironman</a>
+        <a id='filter-group-ironman' onClick={() => props.onFilterChangeHandler('group-ironman')}>Group Ironman</a>
         <a id='filter-normal' onClick={() => props.onFilterChangeHandler('normal')}>Normal</a>
       </div>
     </Col>
