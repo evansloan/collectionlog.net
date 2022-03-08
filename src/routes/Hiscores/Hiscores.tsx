@@ -1,9 +1,10 @@
 import React from 'react';
 import { Container, Row } from 'react-bootstrap';
+import DocumentMeta from 'react-document-meta';
 
 import { getRequest } from '../../api/Client';
 import { HiscoresHeader, HiscoresList } from '../../components/Hiscores';
-import { updateUrl, withParams } from '../../utils/componentUtils';
+import { capitalize, updateUrl, withParams } from '../../utils/componentUtils';
 
 import './Hiscores.scss';
 
@@ -104,6 +105,7 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
     this.setState({
       ...this.state,
       filter: accountType,
+      page: 1,
       isLoaded: false,
     }, () => {
       this.updateHiscores();
@@ -111,8 +113,12 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
   }
 
   render() {
+    const meta = {
+      title: `${capitalize(this.state.type)} Hiscores | Page ${this.state.page}`,
+    };
     return (
       <Container className='hiscores-container'>
+        <DocumentMeta {...meta} />
         <HiscoresHeader
           type={this.state.type}
           page={this.state.page}

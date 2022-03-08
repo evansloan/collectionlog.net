@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
+import DocumentMeta from 'react-document-meta';
 
 import { getRequest } from '../../api/Client';
 import { LogBody, LogEntryList, LogHeader, LogRecentItems, LogItems, LogTabList } from '../../components/CollectionLog/index';
@@ -207,8 +208,15 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       username: this.state.collectionLogData.username,
     };
 
+    let pageTitle = 'Collection Log';
+
+    const meta = {
+      title: this.state.username != '' ? `${this.state.username} | ${pageTitle}` : pageTitle,
+    };
+
     return (
       <Container>
+        <DocumentMeta {...meta} />
         <Row>
           <Col md={{ span: 10, offset: 1 }} className='log-container'>
             <LogHeader 
