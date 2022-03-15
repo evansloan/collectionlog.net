@@ -210,8 +210,12 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
     let pageTitle = 'Collection Log';
 
-    const meta = {
-      title: this.state.username != '' ? `${this.state.username} | ${pageTitle}` : pageTitle,
+    let meta = {
+      title: pageTitle,
+    };
+
+    if (this.state.collectionLogData.username) {
+      meta.title = `${this.state.collectionLogData.username} | ${pageTitle}`;
     };
 
     return (
