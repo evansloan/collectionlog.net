@@ -41,7 +41,7 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
             <input type='text' name='activeUser' placeholder='Enter username...' onChange={(e) => this.onUsernameChange(e)}></input>
             <button className='log-button' type='submit'>Search</button>
           </form>
-          <h4 className='text-orange text-shadow text-center font-weight-bold'>
+          <h1 className='text-orange text-shadow text-center font-weight-bold'>
             {this.props.data.accountType && this.props.data.accountType != 'NORMAL' &&
               <img src={`https://oldschool.runescape.wiki/images/${capitalize(this.props.data.accountType)}_chat_badge.png`} />
             }
@@ -50,7 +50,7 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
             }
             Collection Log
             <p>Unique: <span className='text-white'>{this.props.data.unique}</span> Total: <span className='text-white'>{this.props.data.total}</span></p>
-          </h4>
+          </h1>
           {this.props.errorMessage ?
             <div className='error-message'><p>{this.props.errorMessage}</p></div>
             :
