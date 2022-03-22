@@ -41,16 +41,18 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
             <input type='text' name='activeUser' placeholder='Enter username...' onChange={(e) => this.onUsernameChange(e)}></input>
             <button className='log-button' type='submit'>Search</button>
           </form>
-          <h1 className='text-orange text-shadow text-center font-weight-bold'>
-            {this.props.data.accountType && this.props.data.accountType != 'NORMAL' &&
-              <img src={`https://oldschool.runescape.wiki/images/${capitalize(this.props.data.accountType)}_chat_badge.png`} />
-            }
-            {username &&
-              `${username} `
-            }
-            Collection Log
-            <p>Unique: <span className='text-white'>{this.props.data.unique}</span> Total: <span className='text-white'>{this.props.data.total}</span></p>
-          </h1>
+          <div className='page-title'>
+            <h1 className='text-orange text-shadow text-center'>
+              {this.props.data.accountType && this.props.data.accountType != 'NORMAL' &&
+                <img src={`https://oldschool.runescape.wiki/images/${capitalize(this.props.data.accountType)}_chat_badge.png`} />
+              }
+              {username &&
+                `${username} `
+              }
+              Collection Log
+            </h1>
+            <p className='text-orange text-shadow text-center fw-bold'>Unique: <span className='text-white'>{this.props.data.unique}</span> Total: <span className='text-white'>{this.props.data.total}</span></p>
+          </div>
           {this.props.errorMessage ?
             <div className='error-message'><p>{this.props.errorMessage}</p></div>
             :

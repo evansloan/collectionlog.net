@@ -52,20 +52,22 @@
     }
   }
 
-  h1 {
+  .page-title {
     margin: 3px;
     flex-grow: 1;
-    font-size: 24px;
 
-    img {
-      height: 35%;
-      filter: $account-type-shadow;
-      margin-right: 5px;
-      margin-top: -10px;
+    h1 {
+      font-size: 24px;
+
+      img {
+        height: 35%;
+        filter: $account-type-shadow;
+        margin-right: 5px;
+        margin-top: -10px;
+      }
     }
 
     p {
-      color: $text-orange;
       font-size: 20px;
       margin: 0;
     }
