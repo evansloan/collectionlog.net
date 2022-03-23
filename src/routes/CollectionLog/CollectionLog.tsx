@@ -212,6 +212,13 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
     let meta = {
       title: pageTitle,
+      property: {
+        'og:title': pageTitle,
+        'twitter:title': pageTitle,
+      },
+      auto: {
+        ograph: true,
+      }
     };
 
     if (this.state.collectionLogData.username) {
