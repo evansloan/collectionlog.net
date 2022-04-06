@@ -33,8 +33,8 @@ const HiscoresList = (props: HiscoresListProps) => {
               <p className='rank'>{(pageLimit * (props.page - 1)) + (index + 1)}.</p>
             </Col>
             <Col xs='auto' sm={4} className='d-flex justify-content-center align-items-center'>
-              {user.account_type && user.account_type != 'NORMAL' &&
-                <img src={`https://oldschool.runescape.wiki/images/${capitalize(user.account_type)}_chat_badge.png`} />
+              {user.accountType && user.accountType != 'NORMAL' &&
+                <img src={`https://oldschool.runescape.wiki/images/${capitalize(user.accountType)}_chat_badge.png`} />
               }
               <p className='username'>
                 <a href={`/${user.username}`}>{user.username}</a>
