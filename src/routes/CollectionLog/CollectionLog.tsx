@@ -121,7 +121,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
       this.setState({
         ...this.state,
-        recentItems: result
+        recentItems: result.items,
       });
     }, (error) => {});
   }
