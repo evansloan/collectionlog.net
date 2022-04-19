@@ -1,5 +1,7 @@
 @import '../../../scss/variables';
 
+$tab-active: #3E3529;
+
 .log-tabs {
   display: flex;
   flex-wrap: wrap;
@@ -23,6 +25,10 @@
 
     &:hover {
       background-color: $bg-highlight;
+    }
+
+    &.active {
+      background-color: $tab-active;
     }
 
     span {

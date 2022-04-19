@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import './LogTabList.scss';
 
 interface LogTabListProps {
-  onTabChangeHandler: (tabName: string) => void;
+  onTabChangeHandler: (e: React.MouseEvent<HTMLDivElement>, tabName: string) => void;
 }
 
 const TAB_LIST_VALUES = [
@@ -19,9 +19,9 @@ const LogTabList = (props: LogTabListProps) => {
   return (
     <Row>
       <Col md='12' className='log-tabs'>
-        {TAB_LIST_VALUES.map((tabName, _i) => {
+        {TAB_LIST_VALUES.map((tabName, i) => {
           return (
-            <div className='tab' key={tabName} onClick={() => props.onTabChangeHandler(tabName)}>
+            <div className={i == 0 ? 'tab active' : 'tab'} key={tabName} onClick={(e) => props.onTabChangeHandler(e, tabName)}>
               <span>{tabName}</span>
             </div>
           );

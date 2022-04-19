@@ -19,7 +19,7 @@ const CLUE_TAB_ENTRIES = [
 interface LogEntryListProps {
   activeTab: string;
   entries: { [key: string]: any };
-  onEntryChangeHandler: (entryName: string) => void;
+  onEntryChangeHandler: (e: React.MouseEvent<HTMLParagraphElement>, entryName: string) => void;
 }
 
 class LogEntryList extends React.Component<LogEntryListProps> {
@@ -42,9 +42,8 @@ class LogEntryList extends React.Component<LogEntryListProps> {
       
       let entry = document.getElementById(key);
       if (entry) {
-        entry.className = '';
         if (completed) {
-          entry.className = 'text-green';
+          entry.classList.add('text-green');
         }
       }
     }
@@ -74,8 +73,8 @@ class LogEntryList extends React.Component<LogEntryListProps> {
     return (
       <Col md='4' id='log-list-container' className='d-none d-md-block'>
         <div id='log-list' className='d-flex flex-column'>
-          {entries.map((entryName) => {
-            return <p id={entryName} key={entryName} onClick={() => this.props.onEntryChangeHandler(entryName)}>{entryName}</p>
+          {entries.map((entryName, i) => {
+            return <p id={entryName} className={i == 0 ? 'entry active' : 'entry'} key={entryName} onClick={(e) => this.props.onEntryChangeHandler(e, entryName)}>{entryName}</p>
           })}
         </div>
       </Col>

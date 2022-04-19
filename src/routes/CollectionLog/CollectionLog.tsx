@@ -126,10 +126,16 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     }, (error) => {});
   }
 
-  onTabChange = (tabName: string) => {
+  onTabChange = (e: React.MouseEvent<HTMLElement>, tabName: string) => {
     if (!tabName) {
       return;
     }
+
+    Array.from(document.getElementsByClassName('tab')).forEach((tab: Element) => {
+      tab.classList.remove('active');
+    });
+
+    e.currentTarget.classList.add('active');
 
     this.setState({
       ...this.state,
@@ -138,10 +144,16 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     });
   }
 
-  onEntryChange = (entryName: string) => {
+  onEntryChange = (e: React.MouseEvent<HTMLParagraphElement>, entryName: string) => {
     if (!entryName) {
       return;
     }
+
+    Array.from(document.getElementsByClassName('entry')).forEach((element: Element) => {
+      element.classList.remove('active');
+    });
+
+    e.currentTarget.classList.add('active');
 
     const logList = document.getElementById('log-list-container');
     const logItems = document.getElementById('log-items-container')
