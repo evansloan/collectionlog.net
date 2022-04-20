@@ -21,7 +21,7 @@ const LogTabList = (props: LogTabListProps) => {
       <Col md='12' className='log-tabs'>
         {TAB_LIST_VALUES.map((tabName, i) => {
           return (
-            <div className={i == 0 ? 'tab active' : 'tab'} key={tabName} onClick={(e) => props.onTabChangeHandler(e, tabName)}>
+            <div id={tabName} className='tab' key={tabName} onClick={(e) => props.onTabChangeHandler(e, tabName)}>
               <span>{tabName}</span>
             </div>
           );

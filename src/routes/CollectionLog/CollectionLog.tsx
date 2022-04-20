@@ -61,6 +61,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
     const newUrl = `/${this.state.username}/${this.state.activeEntry}`
     updateUrl(newUrl);
+    this.setActive();
   }
 
   updateCollectionLog = (username: string) => {
@@ -131,18 +132,6 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       return;
     }
 
-    Array.from(document.getElementsByClassName('tab')).forEach((tab: Element) => {
-      tab.classList.remove('active');
-    });
-
-    const entries = Array.from(document.getElementsByClassName('entry'));
-    entries.forEach((entry) => {
-      entry.classList.remove('active');
-    })
-
-    e.currentTarget.classList.add('active');
-    entries[0].classList.add('active');
-
     this.setState({
       ...this.state,
       activeTab: tabName,
@@ -154,12 +143,6 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     if (!entryName) {
       return;
     }
-
-    Array.from(document.getElementsByClassName('entry')).forEach((element: Element) => {
-      element.classList.remove('active');
-    });
-
-    e.currentTarget.classList.add('active');
 
     const logList = document.getElementById('log-list-container');
     const logItems = document.getElementById('log-items-container')
@@ -213,6 +196,24 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     }
 
     return `Missing collection log entries:\n${diff.join(', ')}`
+  }
+
+  setActive = () => {
+    if (this.state.activeTab == '' || this.state.activeEntry == '') {
+      return;
+    }
+    const tabs = Array.from(document.getElementsByClassName('tab'));
+    const entries = Array.from(document.getElementsByClassName('entry'));
+
+    tabs.forEach((tab) => {
+      tab.classList.remove('active');
+    });
+    document.getElementById(this.state.activeTab)?.classList.add('active');
+
+    entries.forEach((entry) => {
+      entry.classList.remove('active');
+    });
+    document.getElementById(this.state.activeEntry)?.classList.add('active');
   }
 
   render() {

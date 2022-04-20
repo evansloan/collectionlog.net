@@ -74,7 +74,7 @@ class LogEntryList extends React.Component<LogEntryListProps> {
       <Col md='4' id='log-list-container' className='d-none d-md-block'>
         <div id='log-list' className='d-flex flex-column'>
           {entries.map((entryName, i) => {
-            return <p id={entryName} className={i == 0 ? 'entry active' : 'entry'} key={entryName} onClick={(e) => this.props.onEntryChangeHandler(e, entryName)}>{entryName}</p>
+            return <p id={entryName} className='entry' key={entryName} onClick={(e) => this.props.onEntryChangeHandler(e, entryName)}>{entryName}</p>
           })}
         </div>
       </Col>
