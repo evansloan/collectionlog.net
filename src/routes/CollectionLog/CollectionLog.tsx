@@ -135,7 +135,13 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       tab.classList.remove('active');
     });
 
+    const entries = Array.from(document.getElementsByClassName('entry'));
+    entries.forEach((entry) => {
+      entry.classList.remove('active');
+    })
+
     e.currentTarget.classList.add('active');
+    entries[0].classList.add('active');
 
     this.setState({
       ...this.state,
