@@ -61,6 +61,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
     const newUrl = `/${this.state.username}/${this.state.activeEntry}`
     updateUrl(newUrl);
+    this.setActive();
   }
 
   updateCollectionLog = (username: string) => {
@@ -126,7 +127,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     }, (error) => {});
   }
 
-  onTabChange = (tabName: string) => {
+  onTabChange = (e: React.MouseEvent<HTMLElement>, tabName: string) => {
     if (!tabName) {
       return;
     }
@@ -138,7 +139,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     });
   }
 
-  onEntryChange = (entryName: string) => {
+  onEntryChange = (e: React.MouseEvent<HTMLParagraphElement>, entryName: string) => {
     if (!entryName) {
       return;
     }
@@ -195,6 +196,24 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     }
 
     return `Missing collection log entries:\n${diff.join(', ')}`
+  }
+
+  setActive = () => {
+    if (this.state.activeTab == '' || this.state.activeEntry == '') {
+      return;
+    }
+    const tabs = Array.from(document.getElementsByClassName('tab'));
+    const entries = Array.from(document.getElementsByClassName('entry'));
+
+    tabs.forEach((tab) => {
+      tab.classList.remove('active');
+    });
+    document.getElementById(this.state.activeTab)?.classList.add('active');
+
+    entries.forEach((entry) => {
+      entry.classList.remove('active');
+    });
+    document.getElementById(this.state.activeEntry)?.classList.add('active');
   }
 
   render() {
