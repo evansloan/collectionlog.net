@@ -110,7 +110,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
   }
 
   updateRecentItems = (username: string) => {
-    getRequest('collectionlog', ['recent', username], null, (result) => {
+    getRequest('items', ['recent', username], null, (result) => {
       if (result.error) {
         this.setState({
           ...this.state,
@@ -162,10 +162,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
   }
 
   getItemCounts = (unique: boolean): string => {
-    let key = 'total';
-    if (unique) {
-      key = 'unique';
-    }
+    const key = unique ? 'unique' : 'total';
     
     const obtained = this.state.collectionLogData[`${key}_obtained`] ?? 0;
     const total = this.state.collectionLogData[`${key}_items`] ?? 0;
