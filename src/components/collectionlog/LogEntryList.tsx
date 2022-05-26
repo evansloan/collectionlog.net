@@ -30,15 +30,13 @@ class LogEntryList extends React.Component<LogEntryListProps> {
 
   setCompletedEntries = () => {
     for (let key in this.props.entries) {
-      let completed = true;
 
-      for (let item of this.props.entries[key].items) {
-        if (!item.obtained) {
-          completed = false;
-          break;
-        }
-      }
-      
+      const itemCount = this.props.entries[key].items.length;
+      const obtainedCount = this.props.entries[key].items.filter((item: any) => {
+        return item.obtained;
+      }).length;
+      const completed = obtainedCount == itemCount;
+
       let entry = document.getElementById(key);
       entry?.classList.remove('!text-green');
       if (completed) {
