@@ -1,6 +1,6 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import { CollectionLog, FAQ, Hiscores } from './routes/index';
+import { CollectionLog, FAQ, Hiscores } from '@routes/index';
 
 const Router = () => (
   <BrowserRouter>

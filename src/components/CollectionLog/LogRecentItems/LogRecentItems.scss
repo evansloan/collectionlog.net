@@ -1,17 +1,7 @@
 @import '../../../scss/variables';
 
 .recent-items-container {
-  background-color: $bg-primary;
-  border: $log-border;
-  border-top: none;
-  padding: 10px;
-
   .recent-items {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    margin-top: 20px;
-
     .item {
       width: auto;
 
@@ -29,16 +19,6 @@
 
       &:hover .item-img-container {
         display: block;
-      }
-    }
-
-    .description {
-      color: white;
-      text-shadow: $text-shadow;
-      font-size: 18px;
-
-      p {
-        margin: 0;
       }
     }
   }

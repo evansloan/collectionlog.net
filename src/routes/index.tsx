@@ -1,6 +1,6 @@
-import CollectionLog from './CollectionLog/CollectionLog';
-import FAQ from './FAQ/FAQ';
-import Hiscores from './Hiscores/Hiscores';
+import CollectionLog from './collectionlog/CollectionLog';
+import FAQ from './faq/FAQ';
+import Hiscores from './hiscores/Hiscores';
 
 export {
   CollectionLog,
