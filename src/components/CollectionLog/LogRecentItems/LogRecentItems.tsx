@@ -1,4 +1,4 @@
-import { LogItem } from '@components/CollectionLog';
+import { LogItem } from '@components/collectionlog';
 import { formatDate } from '@utils/format';
 
 import './LogRecentItems.scss';

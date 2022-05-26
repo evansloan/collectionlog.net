@@ -12,7 +12,7 @@ import {
   LogRecentItems,
   LogItems,
   LogTabList
-} from '@components/CollectionLog';
+} from '@components/collectionlog';
 import { updateUrl, withParams } from '@utils/components';
 
 import entryList from '../../data/entries.json';

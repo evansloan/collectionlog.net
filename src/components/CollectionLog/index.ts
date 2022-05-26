@@ -1,9 +1,9 @@
-import LogEntryList from './LogEntryList/LogEntryList';
-import LogHeader from './LogHeader/LogHeader';
+import LogEntryList from './LogEntryList';
+import LogHeader from './LogHeader';
 import LogItem from './LogItem/LogItem';
-import LogItems from './LogItems/LogItems';
+import LogItems from './LogItems';
 import LogRecentItems from './LogRecentItems/LogRecentItems';
-import LogTabList from './LogTabList/LogTabList';
+import LogTabList from './LogTabList';
 
 export {
   LogEntryList,

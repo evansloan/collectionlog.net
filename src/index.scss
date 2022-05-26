@@ -61,6 +61,8 @@ body {
 }
 
 input {
+  text-shadow: $text-shadow;
+
   /** 
   * stupid way to get around chrome autofill background
   * color bug
@@ -71,6 +73,10 @@ input {
     box-shadow: 0 0 0 50px $bg-light inset;
     -webkit-box-shadow: 0 0 0 50px $bg-light inset;
     -webkit-text-fill-color: white;
+  }
+
+  &::placeholder {
+    text-shadow: $text-shadow;
   }
 }
 

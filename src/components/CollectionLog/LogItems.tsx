@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LogItem from '../LogItem/LogItem';
+import LogItem from './LogItem/LogItem';
 
 import { FlexSection } from '@components/ui';
 
