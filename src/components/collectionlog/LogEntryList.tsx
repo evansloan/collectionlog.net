@@ -40,9 +40,9 @@ class LogEntryList extends React.Component<LogEntryListProps> {
       }
       
       let entry = document.getElementById(key);
-      entry?.classList.remove('text-green');
+      entry?.classList.remove('!text-green');
       if (completed) {
-        entry?.classList.add('text-green');
+        entry?.classList.add('!text-green');
       }
     }
   }
@@ -78,6 +78,7 @@ class LogEntryList extends React.Component<LogEntryListProps> {
             }
             return (
               <ActiveElement
+                id={entryName}
                 tagName='p'
                 className={className}
                 name='log-entry'

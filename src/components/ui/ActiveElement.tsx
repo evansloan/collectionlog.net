@@ -7,6 +7,7 @@ interface ActiveElementProps {
   children?: React.ReactNode;
   className?: string;
   clickHandler?: ((...args: any) => void);
+  id?: string;
   isActive?: boolean;
   name: string;
   tagName: string;
@@ -38,7 +39,7 @@ const ActiveElement = (props: ActiveElementProps) => {
   }
 
   return (
-    <ActiveTagName key={props.name} name={props.name} className={className} onClick={(e) => setActive(e)}>
+    <ActiveTagName id={props.id ?? ''} key={props.name} name={props.name} className={className} onClick={(e) => setActive(e)}>
       {props.children}
     </ActiveTagName>
   );
