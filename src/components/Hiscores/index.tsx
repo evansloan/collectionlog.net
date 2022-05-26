@@ -1,7 +1,7 @@
-import HiscoresHeader from './HiscoresHeader/HiscoresHeader';
-import HiscoresList from './HiscoresList/HiscoresList';
+import HiscoresList from './HiscoresList';
+import HiscoresNav from './HiscoresNav';
 
 export {
-  HiscoresHeader,
   HiscoresList,
-}
+  HiscoresNav,
+};

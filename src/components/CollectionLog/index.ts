@@ -1,4 +1,3 @@
-import LogBody from './LogBody/LogBody';
 import LogEntryList from './LogEntryList/LogEntryList';
 import LogHeader from './LogHeader/LogHeader';
 import LogItem from './LogItem/LogItem';
@@ -7,7 +6,6 @@ import LogRecentItems from './LogRecentItems/LogRecentItems';
 import LogTabList from './LogTabList/LogTabList';
 
 export {
-  LogBody,
   LogEntryList,
   LogHeader,
   LogItem,

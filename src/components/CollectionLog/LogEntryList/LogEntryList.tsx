@@ -1,7 +1,5 @@
+import { ActiveElement } from '@components/ui';
 import React from 'react';
-import { Col } from 'react-bootstrap';
-
-import './LogEntryList.scss';
 
 const CLUE_TAB_ENTRIES = [
   'Beginner Treasure Trails',
@@ -17,9 +15,10 @@ const CLUE_TAB_ENTRIES = [
 ];
 
 interface LogEntryListProps {
+  activeEntry: string;
   activeTab: string;
   entries: { [key: string]: any };
-  onEntryChangeHandler: (e: React.MouseEvent<HTMLParagraphElement>, entryName: string) => void;
+  onEntryChangeHandler: (entryName: string) => void;
 }
 
 class LogEntryList extends React.Component<LogEntryListProps> {
@@ -70,13 +69,28 @@ class LogEntryList extends React.Component<LogEntryListProps> {
       entries = CLUE_TAB_ENTRIES;
     }
     return (
-      <Col md='4' id='log-list-container' className='d-none d-md-block'>
-        <div id='log-list' className='d-flex flex-column'>
+      <div id='log-list-container' className='w-full md:w-1/2 p-0 hidden md:block border-black border-0 border-r-4 overflow-y-auto overflow-x-hidden'>
+        <div id='log-list' className='flex flex-col'>
           {entries.map((entryName, i) => {
-            return <p id={entryName} className='entry' key={entryName} onClick={(e) => this.props.onEntryChangeHandler(e, entryName)}>{entryName}</p>
+            let className = 'm-0 p-0 pl-[3px] hover:bg-highlight text-orange text-[20px] hover:cursor-pointer entry first:shadow-log';
+            if (i % 2 != 0) {
+              className = `${className} bg-light`;
+            }
+            return (
+              <ActiveElement
+                tagName='p'
+                className={className}
+                name='log-entry'
+                activeClass='!bg-highlight'
+                clickHandler={() => this.props.onEntryChangeHandler(entryName)}
+                isActive={entryName == this.props.activeEntry}
+              >
+                {entryName}
+              </ActiveElement>
+            );
           })}
         </div>
-      </Col>
+      </div>
     );
   }
 }

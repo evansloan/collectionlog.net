@@ -1,9 +1,7 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
 
-import { capitalize } from '../../../utils/componentUtils';
-
-import './LogHeader.scss';
+import { FlexSection, LogButton, LogInput } from '@components/ui';
+import { capitalize } from '@utils/format';
 
 interface LogHeaderProps {
   data: any;
@@ -35,31 +33,48 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
     }
 
     return (
-      <Row>
-        <Col md='12' className='log-header d-flex flex-column flex-lg-row justify-content-start justify-content-lg-between'>
-          <form onSubmit={(e) => this.props.onSearchHandler(e, this.state.username)}>
-            <input type='text' name='activeUser' placeholder='Enter username...' onChange={(e) => this.onUsernameChange(e)}></input>
-            <button className='log-button' type='submit'>Search</button>
-          </form>
-          <div className='page-title'>
-            <h1 className='text-orange text-shadow text-center'>
-              {this.props.data.accountType && this.props.data.accountType != 'NORMAL' &&
-                <img src={`https://oldschool.runescape.wiki/images/${capitalize(this.props.data.accountType)}_chat_badge.png`} />
-              }
-              {username &&
-                `${username} `
-              }
-              Collection Log
-            </h1>
-            <p className='text-orange text-shadow text-center fw-bold'>Unique: <span className='text-white'>{this.props.data.unique}</span> Total: <span className='text-white'>{this.props.data.total}</span></p>
+      <FlexSection
+        direction='flex-col lg:flex-row'
+        justify='justify-start lg:justify-between'
+        width='w-full'
+        padding='p-0'
+      >
+        <form className='lg:w-[30%]' onSubmit={(e) => this.props.onSearchHandler(e, this.state.username)}>
+          <LogInput
+            className='h-[100%] w-[65%]'
+            changeHandler={this.onUsernameChange}
+            name='activeUser'
+            placeholder='Enter username...'
+            type='text'
+          />
+          <LogButton className='h-[100%] w-[35%] border-b-0 border-t-0' type='submit'>Search</LogButton>
+        </form>
+        <div className='m-[3px] grow page-title'>
+          <h1>
+            {this.props.data.accountType && this.props.data.accountType != 'NORMAL' &&
+              <img
+                className='inline-block w-[20px] mr-[5px] mt-[-10px] shadow-icon'
+                src={`https://oldschool.runescape.wiki/images/${capitalize(this.props.data.accountType)}_chat_badge.png`}
+              />
+            }
+            {username &&
+              `${username} `
+            }
+            Collection Log
+          </h1>
+          <p className='m-0 text-[20px] text-orange text-shadow text-center font-bold'>
+            Unique: <span className='text-white'>{this.props.data.unique} </span>
+            Total: <span className='text-white'>{this.props.data.total}</span>
+          </p>
+        </div>
+        {this.props.errorMessage ?
+          <div className='lg:w-[30%] px-2 text-[20px] text-error text-center'>
+            <p className='m-0'>{this.props.errorMessage}</p>
           </div>
-          {this.props.errorMessage ?
-            <div className='error-message'><p>{this.props.errorMessage}</p></div>
-            :
-            <div className='spacer d-none d-lg-block'></div>
-          }
-        </Col>
-      </Row>
+          :
+          <div className='spacer hidden lg:block'></div>
+        }
+      </FlexSection>
     );
   }
 }

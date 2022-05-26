@@ -1,17 +1,29 @@
 import React from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import DocumentMeta from 'react-document-meta';
 
 import { getRequest } from '../../api/Client';
-import { LogBody, LogEntryList, LogHeader, LogRecentItems, LogItems, LogTabList } from '../../components/CollectionLog/index';
-import { updateUrl, withParams } from '../../utils/componentUtils';
 
-import './CollectionLog.scss';
+import { Container } from '@components/layout';
+import { FlexSection } from '@components/ui';
+
+import {
+  LogEntryList,
+  LogHeader,
+  LogRecentItems,
+  LogItems,
+  LogTabList
+} from '@components/CollectionLog';
+import { updateUrl, withParams } from '@utils/components';
 
 import entryList from '../../data/entries.json';
 
+interface CollectionLogParams {
+  entry?: string;
+  username?: string;
+}
+
 interface CollectionLogProps {
-  params: any;
+  params: CollectionLogParams;
 }
 
 interface CollectionLogState {
@@ -61,7 +73,6 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
 
     const newUrl = `/${this.state.username}/${this.state.activeEntry}`
     updateUrl(newUrl);
-    this.setActive();
   }
 
   updateCollectionLog = (username: string) => {
@@ -84,10 +95,10 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       // If linked to a specific entry, find the tab that entry is in
       if (this.props.params.entry) {
         entry = this.props.params.entry;
-        for (let key in result.collection_log.tabs) {
-          if (entry in result.collection_log.tabs[key]) {
-            tab = key;
-            this.props.params.entry = null;
+        for (let tabName in result.collection_log.tabs) {
+          if (entry in result.collection_log.tabs[tabName]) {
+            tab = tabName;
+            this.props.params.entry = undefined;
             break;
           }
         }
@@ -127,7 +138,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     }, (error) => {});
   }
 
-  onTabChange = (e: React.MouseEvent<HTMLElement>, tabName: string) => {
+  onTabChange = (tabName: string) => {
     if (!tabName) {
       return;
     }
@@ -139,15 +150,16 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     });
   }
 
-  onEntryChange = (e: React.MouseEvent<HTMLParagraphElement>, entryName: string) => {
+  onEntryChange = (entryName: string) => {
     if (!entryName) {
       return;
     }
 
+    // Handle hiding/showing of entry list and items for mobile layout
     const logList = document.getElementById('log-list-container');
     const logItems = document.getElementById('log-items-container')
-    logList?.classList.add('d-none');
-    logItems?.classList.remove('d-none');
+    logList?.classList.add('hidden');
+    logItems?.classList.remove('hidden');
 
     this.setState({
       ...this.state,
@@ -161,7 +173,7 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     this.updateRecentItems(username);
   }
 
-  getItemCounts = (unique: boolean): string => {
+  getItemCounts = (unique?: boolean): string => {
     const key = unique ? 'unique' : 'total';
     
     const obtained = this.state.collectionLogData[`${key}_obtained`] ?? 0;
@@ -195,26 +207,8 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     return `Missing collection log entries:\n${diff.join(', ')}`
   }
 
-  setActive = () => {
-    if (this.state.activeTab == '' || this.state.activeEntry == '') {
-      return;
-    }
-    const tabs = Array.from(document.getElementsByClassName('tab'));
-    const entries = Array.from(document.getElementsByClassName('entry'));
-
-    tabs.forEach((tab) => {
-      tab.classList.remove('active');
-    });
-    document.getElementById(this.state.activeTab)?.classList.add('active');
-
-    entries.forEach((entry) => {
-      entry.classList.remove('active');
-    });
-    document.getElementById(this.state.activeEntry)?.classList.add('active');
-  }
-
   render() {
-    const totalCount = this.getItemCounts(false);
+    const totalCount = this.getItemCounts();
     const uniqueCount = this.getItemCounts(true);
 
     const headerData = {
@@ -242,33 +236,33 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     };
 
     return (
-      <Container>
+      <Container bgColor='bg-primary'>
         <DocumentMeta {...meta} />
-        <Row>
-          <Col md={{ span: 10, offset: 1 }} className='log-container'>
-            <LogHeader 
-              data={headerData}
-              onSearchHandler={this.onSearch}
-              errorMessage={this.state.error}
+        <LogHeader 
+          data={headerData}
+          onSearchHandler={this.onSearch}
+          errorMessage={this.state.error}
+        />
+        {this.state.isLoaded &&
+          <>
+          <LogTabList activeTab={this.state.activeTab} onTabChangeHandler={this.onTabChange}/>
+          <FlexSection
+            height='h-[550px]'
+            borderStyle='border-4 border-black border-t-0'
+          >
+            <LogEntryList
+              activeEntry={this.state.activeEntry}
+              activeTab={this.state.activeTab}
+              entries={this.state.collectionLogData.tabs[this.state.activeTab]}
+              onEntryChangeHandler={this.onEntryChange}
             />
-            {this.state.isLoaded &&
-              <>
-              <LogTabList onTabChangeHandler={this.onTabChange}/>
-              <LogBody>
-                <LogEntryList
-                  activeTab={this.state.activeTab}
-                  entries={this.state.collectionLogData.tabs[this.state.activeTab]}
-                  onEntryChangeHandler={this.onEntryChange}
-                />
-                <LogItems
-                  entryName={this.state.activeEntry}
-                  data={this.state.collectionLogData.tabs[this.state.activeTab][this.state.activeEntry]}
-                />
-              </LogBody>
-              </>
-            }
-          </Col>
-        </Row>
+            <LogItems
+              entryName={this.state.activeEntry}
+              data={this.state.collectionLogData.tabs[this.state.activeTab][this.state.activeEntry]}
+            />
+          </FlexSection>
+          </>
+        }
         {this.state.isLoaded &&
           <LogRecentItems items={this.state.recentItems} />
         }

@@ -1,12 +1,36 @@
-@import '~bootstrap/scss/bootstrap';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import './scss/variables';
 
 h1, h2, h3, h4, h5 {
   color: $text-orange;
-  text-shadow: $text-shadow;
+  text-align: center;
   font-weight: bold;
   margin: 0;
   padding: 0;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+h3 {
+  font-size: 20px;
+}
+
+a {
+  text-decoration: underline;
+  color: $text-orange;
+
+  &:hover {
+    color: white;
+  }
 }
 
 body {
@@ -15,26 +39,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $bg-dark;
-}
-
-.text-green { 
-  color: $text-green !important;
-}
-
-.text-orange {
-  color: $text-orange !important;
-}
-
-.text-red {
-  color: $text-red !important;
-}
-
-.text-yellow {
-  color: $text-yellow !important;
-}
-
-.text-shadow {
-  text-shadow: 2px 2px 0px black;
+  text-shadow: $text-shadow;
 }
 
 .log-button {
@@ -53,4 +58,22 @@ body {
 
 .spacer {
   width: 30%;
+}
+
+input {
+  /** 
+  * stupid way to get around chrome autofill background
+  * color bug
+  */
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus {
+    box-shadow: 0 0 0 50px $bg-light inset;
+    -webkit-box-shadow: 0 0 0 50px $bg-light inset;
+    -webkit-text-fill-color: white;
+  }
+}
+
+.shadow-icon {
+  filter: $account-type-shadow;
 }

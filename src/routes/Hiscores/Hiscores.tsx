@@ -1,22 +1,26 @@
 import React from 'react';
-import { Container, Row } from 'react-bootstrap';
 import DocumentMeta from 'react-document-meta';
 
 import { getRequest } from '../../api/Client';
-import { HiscoresHeader, HiscoresList } from '../../components/Hiscores';
-import { capitalize, updateUrl, withParams } from '../../utils/componentUtils';
+import { HiscoresList, HiscoresNav } from '@components/hiscores';
+import { Container } from '@components/layout';
+import { updateUrl, withParams } from '@utils/components';
+import { capitalize } from '@utils/format';
 
-import './Hiscores.scss';
+interface HiscoresParams {
+  type: string;
+  page: string;
+}
 
 interface HiscoresProps {
-  params: any;
+  params: HiscoresParams;
 };
 
 interface HiscoresState {
   type: string;
   page: number;
   filter: string;
-  data: Array<any>;
+  data: any[];
   error: string | null;
   isLoaded: boolean;
 }
@@ -95,12 +99,7 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
   }
 
   onFilterChange = (filter: string) => {
-    const prevFilterLinkId = `filter-${this.state.filter.replace(/_/g, '-')}`;
-    const filterLinkId = `filter-${filter}`;
-    const accountType = filter.replace(/-/g, '_');
-
-    document.getElementById(prevFilterLinkId)?.classList.remove('filter-active');
-    document.getElementById(filterLinkId)?.classList.add('filter-active');
+    const accountType = filter.replace(/ /g, '_');
 
     this.setState({
       ...this.state,
@@ -117,18 +116,27 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
       title: `${capitalize(this.state.type)} Hiscores | Page ${this.state.page}`,
     };
     return (
-      <Container className='hiscores-container'>
+      <Container>
         <DocumentMeta {...meta} />
-        <HiscoresHeader
+        <HiscoresNav
           type={this.state.type}
           page={this.state.page}
           pageLength={this.state.data.length}
           onPageChangeHandler={this.onPageChange}
           onFilterChangeHandler={this.onFilterChange}
+          showFilters={true}
+          showTitle={true}
         />
-        <Row>
-          <HiscoresList page={this.state.page} data={this.state.data} isLoaded={this.state.isLoaded} />
-        </Row>
+        <HiscoresList page={this.state.page} data={this.state.data} isLoaded={this.state.isLoaded} />
+        <HiscoresNav
+          type={this.state.type}
+          page={this.state.page}
+          pageLength={this.state.data.length}
+          onPageChangeHandler={this.onPageChange}
+          onFilterChangeHandler={this.onFilterChange}
+          showFilters={false}
+          showTitle={false}
+        />
       </Container>
     );
   }
