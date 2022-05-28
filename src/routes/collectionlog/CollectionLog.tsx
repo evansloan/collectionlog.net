@@ -1,8 +1,6 @@
-import React from 'react';
+import { useEffect } from 'react';
 import DocumentMeta from 'react-document-meta';
-
-import { Container } from '@components/layout';
-import { FlexSection } from '@components/ui';
+import { useParams } from 'react-router';
 
 import {
   LogEntryList,
@@ -11,14 +9,16 @@ import {
   LogItems,
   LogTabList
 } from '@components/collectionlog';
+import { Container } from '@components/layout';
+import { FlexSection } from '@components/ui';
+
+import { fetchCollectionLog, updateActiveTab } from '@store/collectionlog/actions';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { setActiveEntry } from '@store/collectionlog/slice';
+import { RootState } from '@store/store';
 
 import entryList from '../../data/entries.json';
-import { useAppDispatch, useAppSelector } from 'src/store/hooks';
-import { fetchCollectionLog, updateActiveTab } from 'src/store/collectionlog/actions';
-import { setActiveEntry } from 'src/store/collectionlog/slice';
-import { RootState } from 'src/store/store';
-import { useEffect } from 'react';
-import { useParams } from 'react-router';
+import Spinner from '@components/ui/Spinner';
 
 const CollectionLog = () => {
   const dispatch = useAppDispatch();
@@ -105,6 +105,14 @@ const CollectionLog = () => {
     <Container bgColor='bg-primary'>
       <DocumentMeta {...meta} />
       <LogHeader />
+      {state.isLoading &&
+        <FlexSection
+          height='h-[550px]'
+          borderStyle='border-4 border-black border-t-0'
+        >
+          <Spinner />
+        </FlexSection>
+      }
       {state.isLoaded &&
         <>
         <LogTabList activeTab={state.activeTab} onTabChangeHandler={onTabChange}/>

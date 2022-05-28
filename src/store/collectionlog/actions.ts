@@ -1,6 +1,6 @@
 import { CollectionLogAPI } from 'src/api/CollectionLogAPI';
 import { AppDispatch } from '../store';
-import { setActiveEntry, setActiveTab, setData, setError } from './slice';
+import { setActiveEntry, setActiveTab, setData, setError, setIsLoading } from './slice';
 
 
 export const fetchCollectionLog = (username: string, entry?: string) => {
@@ -8,6 +8,8 @@ export const fetchCollectionLog = (username: string, entry?: string) => {
     if (entry) {
       dispatch(setActiveEntry(entry));
     }
+
+    dispatch(setIsLoading(true));
 
     const api = new CollectionLogAPI();
     const res = await api.getCollectionLog(username);

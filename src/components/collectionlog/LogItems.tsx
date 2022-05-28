@@ -1,10 +1,9 @@
-import React from 'react';
-
-import LogItem from './LogItem/LogItem';
-
+import { LogItem } from '@components/collectionlog';
 import { FlexSection } from '@components/ui';
-import { useAppSelector } from 'src/store/hooks';
-import { RootState } from 'src/store/store';
+
+import { useAppSelector } from '@store/hooks';
+import { RootState } from '@store/store';
+
 import { CollectionLogItemData } from 'src/models/CollectionLog';
 
 const LogItems = () => {

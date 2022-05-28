@@ -9,11 +9,13 @@ export interface CollectionLogState {
   activeEntry?: string;
   username?: string;
   isLoaded: boolean,
+  isLoading: boolean,
   error?: string;
 }
 
 const initialState: CollectionLogState = {
   isLoaded: false,
+  isLoading: false,
 };
 
 const collectionLogSlice = createSlice({
@@ -49,6 +51,7 @@ const collectionLogSlice = createSlice({
       state.activeEntry = activeEntry;
       state.activeTab = activeTab;
       state.isLoaded = true;
+      state.isLoading = false;
       state.error = undefined;
 
       updateUrl(`/${collectionLogData.username}/${activeEntry}`);
@@ -56,9 +59,14 @@ const collectionLogSlice = createSlice({
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
       state.isLoaded = false;
+      state.isLoading = false;
     },
     setIsLoaded: (state, action: PayloadAction<boolean>) => {
       state.isLoaded = action.payload;
+    },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoaded = false;
+      state.isLoading = action.payload;
     },
     setRecentItems: (state, action: PayloadAction<any[]>) => {
       state.recentItems = action.payload;
@@ -75,6 +83,7 @@ export const {
   setData,
   setError,
   setIsLoaded,
+  setIsLoading,
   setUsername,
 } = collectionLogSlice.actions;
 
