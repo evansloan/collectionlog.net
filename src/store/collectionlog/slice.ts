@@ -47,7 +47,6 @@ const collectionLogSlice = createSlice({
       }
 
       state.data = collectionLogData;
-      state.recentItems = undefined;
       state.username = collectionLogData.username;
       state.activeEntry = activeEntry;
       state.activeTab = activeTab;
