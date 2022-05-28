@@ -1,7 +1,7 @@
 import React from 'react';
 import DocumentMeta from 'react-document-meta';
 
-import { getRequest } from '../../api/Client';
+import { CollectionLogAPI } from '../../api/CollectionLogAPI';
 import { HiscoresList, HiscoresNav } from '@components/hiscores';
 import { Container } from '@components/layout';
 import { updateUrl, withParams } from '@utils/components';
@@ -63,28 +63,15 @@ class Hiscores extends React.Component<HiscoresProps, HiscoresState> {
     updateUrl(newUrl);
   }
 
-  updateHiscores = () => {
-    const pathParams = [this.state.type ,this.state.page];
-    let queryParams = null;
-    if (this.state.filter != 'all') {
-      queryParams = {
-        accountType: this.state.filter.toUpperCase(),
-      };
-    }
+  updateHiscores = async() => {
+    const api = new CollectionLogAPI();
 
-    getRequest('hiscores', pathParams, queryParams, (result) => {
-      this.setState({
-        ...this.state,
-        data: result,
-        error: null,
-        isLoaded: true,
-      });
-    }, (error) => {
-      this.setState({
-        ...this.state,
-        error: 'Error contacting collectionlog.net API',
-        isLoaded: false,
-      });
+    const res = await api.getHiscores(this.state.type, this.state.page, this.state.filter);
+    this.setState({
+      ...this.state,
+      data: res.data,
+      error: null,
+      isLoaded: true,
     });
   }
 

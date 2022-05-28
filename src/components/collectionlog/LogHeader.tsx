@@ -53,7 +53,7 @@ class LogHeader extends React.Component<LogHeaderProps, LogHeaderState> {
           <h1>
             {this.props.data.accountType && this.props.data.accountType != 'NORMAL' &&
               <img
-                className='inline-block w-[20px] mr-[5px] mt-[-10px] shadow-icon'
+                className='inline-block w-[20px] mr-[5px] mt-[-10px] icon-shadow'
                 src={`https://oldschool.runescape.wiki/images/${capitalize(this.props.data.accountType)}_chat_badge.png`}
               />
             }

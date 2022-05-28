@@ -9,7 +9,7 @@ interface LogButtonProps {
 };
 
 const LogButton = (props: LogButtonProps) => {
-  let className = 'p-[10px] bg-primary hover:bg-highlight text-orange text-[20px] border-2 border-lighter';
+  let className = 'p-[10px] bg-primary hover:bg-highlight text-orange text-[20px] text-shadow border-2 border-lighter';
   if (props.className) {
     className = `${className} ${props.className}`;
   }

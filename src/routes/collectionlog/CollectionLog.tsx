@@ -1,7 +1,7 @@
 import React from 'react';
 import DocumentMeta from 'react-document-meta';
 
-import { getRequest } from '../../api/Client';
+import { CollectionLogAPI } from '../../api/CollectionLogAPI';
 
 import { Container } from '@components/layout';
 import { FlexSection } from '@components/ui';
@@ -16,6 +16,10 @@ import {
 import { updateUrl, withParams } from '@utils/components';
 
 import entryList from '../../data/entries.json';
+import type { CollectionLogData } from 'src/models/CollectionLog';
+import { useAppDispatch, useAppSelector } from 'src/store/hooks';
+import { fetchCollectionLog } from 'src/store/collectionlog/actions';
+import { CollectionLogState } from 'src/store/collectionlog/slice';
 
 interface CollectionLogParams {
   entry?: string;
@@ -26,44 +30,54 @@ interface CollectionLogProps {
   params: CollectionLogParams;
 }
 
-interface CollectionLogState {
-  collectionLogData: { [key: string]: any };
-  recentItems: any[];
-  activeTab: string;
-  activeEntry: string;
-  username: string;
-  isLoaded: boolean;
-  error: string | null;
-}
+// interface CollectionLogState {
+//   data?: CollectionLogData;
+//   recentItems: any[];
+//   activeTab: string;
+//   activeEntry: string;
+//   username: string;
+//   isLoaded: boolean;
+//   error: string | null;
+// }
 
-class CollectionLog extends React.Component<CollectionLogProps, CollectionLogState> {
-
-  initialState: CollectionLogState;
+class CollectionLog extends React.Component<CollectionLogProps> {
+  // private api: CollectionLogAPI;
+  // private initialState: CollectionLogState;
+  private dispatch = useAppDispatch();
+  state: CollectionLogState;
 
   constructor(props: CollectionLogProps) {
     super(props);
 
-    const username = this.props.params.username;
+    this.state = useAppSelector((state) => state.collectionLog);
 
-    this.initialState = {
-      collectionLogData: {},
-      recentItems: [],
-      activeTab: '',
-      activeEntry: '',
-      username: username ?? '',
-      isLoaded: false,
-      error: null,
-    };
+    // const username = this.props.params.username;
 
-    this.state = this.initialState;
+    // this.api = new CollectionLogAPI();
+    // this.initialState = {
+    //   recentItems: [],
+    //   activeTab: '',
+    //   activeEntry: '',
+    //   username: username ?? '',
+    //   isLoaded: false,
+    //   error: null,
+    // };
+
+    // this.state = this.initialState;
   }
 
   componentDidMount() {
-    if (this.state.username == '') {
+    const username = this.props.params.username;
+    const tab = this.props.params;
+    const entry = this.props.params.entry;
+    if (!username) {
       return;
     }
-    this.updateCollectionLog(this.state.username);
-    this.updateRecentItems(this.state.username);
+
+    this.dispatch(fetchCollectionLog(username, entry));
+
+    // this.updateCollectionLog(this.state.username);
+    // this.updateRecentItems(this.state.username);
   }
 
   componentDidUpdate() {
@@ -75,78 +89,75 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     updateUrl(newUrl);
   }
 
-  updateCollectionLog = (username: string) => {
+  updateCollectionLog = async(username: string) => {
     if (username.length < 1) {
       return;
     }
 
-    getRequest('collectionlog', ['user', username], null, (result) => {
-      if (result.error) {
-        this.setState({
-          ...this.initialState,
-          error: result.error,
-        });
-        return;
-      }
+    const res = await this.api.getCollectionLog(username);
 
-      let tab = 'Bosses';
-      let entry = 'Abyssal Sire';
-
-      // If linked to a specific entry, find the tab that entry is in
-      if (this.props.params.entry) {
-        entry = this.props.params.entry;
-        for (let tabName in result.collection_log.tabs) {
-          if (entry in result.collection_log.tabs[tabName]) {
-            tab = tabName;
-            this.props.params.entry = undefined;
-            break;
-          }
-        }
-      }
-
-      this.setState({
-        collectionLogData: result.collection_log,
-        activeTab: tab,
-        activeEntry: entry,
-        username: username,
-        isLoaded: true,
-        error: this.getMissingEntries(result.collection_log.tabs),
-      });
-    }, (error) => {
+    if (res.data.error) {
       this.setState({
         ...this.initialState,
-        error: 'Error contacting collectionlog.net API',
+        error: res.data.error,
       });
+      return;
+    }
+
+    const collectionLogData: CollectionLogData = res.data.collection_log;
+
+    let tab = 'Bosses';
+    let entry = 'Abyssal Sire';
+
+    // If linked to a specific entry, find the tab that entry is in
+    if (this.props.params.entry) {
+      entry = this.props.params.entry;
+      for (let tabName in collectionLogData.tabs) {
+        if (entry in collectionLogData.tabs[tabName]) {
+          tab = tabName;
+          this.props.params.entry = undefined;
+          break;
+        }
+      }
+    }
+
+    this.setState({
+      data: collectionLogData,
+      activeTab: tab,
+      activeEntry: entry,
+      username: username,
+      isLoaded: true,
+      error: this.getMissingEntries(collectionLogData.tabs),
     });
   }
 
-  updateRecentItems = (username: string) => {
-    getRequest('items', ['recent', username], null, (result) => {
-      if (result.error) {
-        this.setState({
-          ...this.state,
-          isLoaded: false,
-          error: result.error,
-        });
-        return;
-      }
+  updateRecentItems = async(username: string) => {
+    const res = await this.api.getRecentItems(username);
 
+    if (res.data.error) {
       this.setState({
         ...this.state,
-        recentItems: result.items,
+        isLoaded: false,
+        error: res.data.error,
       });
-    }, (error) => {});
+      return;
+    }
+
+    this.setState({
+      ...this.state,
+      recentItems: res.data.items,
+    });
   }
 
   onTabChange = (tabName: string) => {
-    if (!tabName) {
+    if (!tabName || !this.state.data) {
       return;
     }
 
     this.setState({
       ...this.state,
       activeTab: tabName,
-      activeEntry: Object.keys(this.state.collectionLogData.tabs[tabName]).sort()[0],
+      activeEntry: Object.keys(this.state.data.tabs[tabName]).sort()[0],
     });
   }
 
@@ -174,10 +185,14 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
   }
 
   getItemCounts = (unique?: boolean): string => {
+    if (!this.state.data) {
+      return `${0}/${0}`;
+    }
+
     const key = unique ? 'unique' : 'total';
     
-    const obtained = this.state.collectionLogData[`${key}_obtained`] ?? 0;
-    const total = this.state.collectionLogData[`${key}_items`] ?? 0;
+    const obtained = this.state.data[`${key}_obtained`];
+    const total = this.state.data[`${key}_items`];
 
     return `${obtained}/${total}`;
   }
@@ -214,8 +229,8 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
     const headerData = {
       total: totalCount,
       unique: uniqueCount,
-      accountType: this.state.collectionLogData.account_type,
-      username: this.state.collectionLogData.username,
+      accountType: this.state.data?.account_type,
+      username: this.state.data?.username,
     };
 
     let pageTitle = 'Collection Log';
@@ -231,8 +246,8 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
       }
     };
 
-    if (this.state.collectionLogData.username) {
-      meta.title = `${this.state.collectionLogData.username} | ${pageTitle}`;
+    if (this.state.data?.username) {
+      meta.title = `${this.state.data.username} | ${pageTitle}`;
     };
 
     return (
@@ -253,12 +268,12 @@ class CollectionLog extends React.Component<CollectionLogProps, CollectionLogSta
             <LogEntryList
               activeEntry={this.state.activeEntry}
               activeTab={this.state.activeTab}
-              entries={this.state.collectionLogData.tabs[this.state.activeTab]}
+              entries={this.state.data?.tabs[this.state.activeTab]}
               onEntryChangeHandler={this.onEntryChange}
             />
             <LogItems
               entryName={this.state.activeEntry}
-              data={this.state.collectionLogData.tabs[this.state.activeTab][this.state.activeEntry]}
+              data={this.state.data?.tabs[this.state.activeTab][this.state.activeEntry]}
             />
           </FlexSection>
           </>

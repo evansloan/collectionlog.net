@@ -1,0 +1,11 @@
+@import './variables';
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: $text-shadow;
+  }
+
+  .icon-shadow {
+    filter: $account-type-shadow;
+  }
+}

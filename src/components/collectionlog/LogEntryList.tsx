@@ -17,7 +17,7 @@ const CLUE_TAB_ENTRIES = [
 interface LogEntryListProps {
   activeEntry: string;
   activeTab: string;
-  entries: { [key: string]: any };
+  entries?: CollectionLogEntryData;
   onEntryChangeHandler: (entryName: string) => void;
 }
 
@@ -54,6 +54,10 @@ class LogEntryList extends React.Component<LogEntryListProps> {
   }
 
   sortAlphabetical = () => {
+    if (!this.props.entries) {
+      return;
+    }
+
     return Object.keys(this.props.entries).sort((a, b) => {
       a = a.replace(/^The /, '');
       b = b.replace(/^The /, '');
@@ -69,7 +73,7 @@ class LogEntryList extends React.Component<LogEntryListProps> {
     return (
       <div id='log-list-container' className='w-full md:w-1/2 p-0 hidden md:block border-black border-0 border-r-4 overflow-y-auto overflow-x-hidden'>
         <div id='log-list' className='flex flex-col'>
-          {entries.map((entryName, i) => {
+          {entries?.map((entryName, i) => {
             let className = 'm-0 p-0 pl-[3px] hover:bg-highlight text-orange text-[20px] hover:cursor-pointer entry first:shadow-log';
             if (i % 2 != 0) {
               className = `${className} bg-light`;
