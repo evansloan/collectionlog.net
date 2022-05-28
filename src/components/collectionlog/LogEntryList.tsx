@@ -1,8 +1,9 @@
 import { ActiveElement } from '@components/ui';
 
-import { setActiveEntry } from '@store/collectionlog/slice';
+import { setActiveEntry, setNonFatalError } from '@store/collectionlog/slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { RootState } from '@store/store';
+import { getMissingEntries } from '@utils/collectionlog';
 import { useState } from 'react';
 
 import { CollectionLogEntryData } from 'src/models/CollectionLog';
@@ -29,7 +30,6 @@ const LogEntryList = () => {
   let completedEntries: string[] = [];
   let sortedEntries: string[] = [];
 
-  
   const onEntryChange = (entryName: string) => {
     if (!entryName) {
       return;
@@ -56,6 +56,11 @@ const LogEntryList = () => {
     if (completed) {
       completedEntries.push(entryName);
     }
+  }
+
+  const missingEntries = getMissingEntries(state.data);
+  if (missingEntries) {
+    dispatch(setNonFatalError(missingEntries));
   }
 
   // Sort entries alphabetical for display purposes

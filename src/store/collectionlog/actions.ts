@@ -14,6 +14,11 @@ export const fetchCollectionLog = (username: string, entry?: string) => {
     const api = new CollectionLogAPI();
     const res = await api.getCollectionLog(username);
 
+    if (!res) {
+      dispatch(setError('Error connection to collection log API'));
+      return;
+    }
+
     if (res.data.error) {
       dispatch(setError(res.data.error));
       return;

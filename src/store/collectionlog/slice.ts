@@ -58,15 +58,19 @@ const collectionLogSlice = createSlice({
     },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
+      state.data = undefined;
+      state.username = undefined;
       state.isLoaded = false;
       state.isLoading = false;
-    },
-    setIsLoaded: (state, action: PayloadAction<boolean>) => {
-      state.isLoaded = action.payload;
+
+      updateUrl('/');
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoaded = false;
       state.isLoading = action.payload;
+    },
+    setNonFatalError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
     },
     setRecentItems: (state, action: PayloadAction<any[]>) => {
       state.recentItems = action.payload;
@@ -82,8 +86,8 @@ export const {
   setActiveTab,
   setData,
   setError,
-  setIsLoaded,
   setIsLoading,
+  setNonFatalError,
   setUsername,
 } = collectionLogSlice.actions;
 

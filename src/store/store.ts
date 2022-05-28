@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import collectionLogReducer from './collectionlog/slice';
+import hiscoresReducer from './hiscores/slice';
 
 export const store = configureStore({
   reducer: {
     collectionLog: collectionLogReducer,
+    hiscores: hiscoresReducer,
   }
 });
 
