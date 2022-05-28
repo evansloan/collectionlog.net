@@ -1,7 +1,7 @@
 import './LogItem.scss';
 
 import icons from '../../../data/item-icons.json';
-import { CollectionLogItemData } from 'src/models/CollectionLog';
+import { CollectionLogItemData } from '@models/CollectionLog';
 
 type LogItemProps = {
   item: CollectionLogItemData | any;

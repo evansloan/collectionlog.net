@@ -1,5 +1,5 @@
 import { capitalize } from '@utils/format';
-import { HiscoresData } from 'src/models/Hiscores';
+import { HiscoresData } from '@models/Hiscores';
 
 interface HiscoresListProps {
   page: number;

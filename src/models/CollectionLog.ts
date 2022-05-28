@@ -9,6 +9,7 @@ export interface CollectionLogItemData {
   quantity: number;
   obtained: boolean;
   sequence: number;
+  obtainedAt?: string;
 };
 
 export interface CollectionLogEntryData {
@@ -31,4 +32,21 @@ export interface CollectionLogData {
   unique_obtained: number;
   unique_items: number;
 };
+
+// TODO: fix recent items endpoint in api to return
+// result inline with collection log endpoint so 
+// CollectionLogItemData is reusable here
+export interface RecentItemData {
+  itemId: number;
+  name: string;
+  quantity: number;
+  obtained: boolean;
+  obtainedAt: string;
+}
+
+export interface RecentItemsData {
+  username: string;
+  account_type: string;
+  items: RecentItemData[];
+}
 

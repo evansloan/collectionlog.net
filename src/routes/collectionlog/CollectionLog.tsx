@@ -12,7 +12,7 @@ import {
 import { Container } from '@components/layout';
 import { FlexSection } from '@components/ui';
 
-import { fetchCollectionLog } from '@store/collectionlog/actions';
+import { fetchCollectionLog, fetchRecentItems } from '@store/collectionlog/actions';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { RootState } from '@store/store';
 
@@ -33,6 +33,7 @@ const CollectionLog = () => {
     }
   
     dispatch(fetchCollectionLog(username, entry));
+    dispatch(fetchRecentItems(username));
   }, [dispatch, state.isLoaded, state.username, params.username, params.entry]);
 
   let pageTitle = 'Collection Log';

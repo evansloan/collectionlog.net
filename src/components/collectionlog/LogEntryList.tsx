@@ -4,9 +4,8 @@ import { setActiveEntry, setNonFatalError } from '@store/collectionlog/slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { RootState } from '@store/store';
 import { getMissingEntries } from '@utils/collectionlog';
-import { useState } from 'react';
 
-import { CollectionLogEntryData } from 'src/models/CollectionLog';
+import { CollectionLogEntryData } from '@models/CollectionLog';
 
 const CLUE_TAB_ENTRIES = [
   'Beginner Treasure Trails',

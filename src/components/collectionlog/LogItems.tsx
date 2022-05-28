@@ -4,7 +4,7 @@ import { FlexSection } from '@components/ui';
 import { useAppSelector } from '@store/hooks';
 import { RootState } from '@store/store';
 
-import { CollectionLogItemData } from 'src/models/CollectionLog';
+import { CollectionLogItemData } from '@models/CollectionLog';
 
 const LogItems = () => {
   const state = useAppSelector((state: RootState) => state.collectionLog);

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { updateUrl } from '@utils/components';
-import { HiscoresData } from 'src/models/Hiscores';
+import { HiscoresData } from '@models/Hiscores';
 
 export type HiscoresType = 'total' | 'unique';
 

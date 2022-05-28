@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { updateUrl } from '@utils/components';
-import { CollectionLogData } from 'src/models/CollectionLog';
+import { CollectionLogData, RecentItemData } from '@models/CollectionLog';
 
 export interface CollectionLogState {
   data?: CollectionLogData,
-  recentItems?: any[];
+  recentItems?: RecentItemData[];
   activeTab?: string;
   activeEntry?: string;
   username?: string;
@@ -88,6 +88,7 @@ export const {
   setError,
   setIsLoading,
   setNonFatalError,
+  setRecentItems,
   setUsername,
 } = collectionLogSlice.actions;
 
