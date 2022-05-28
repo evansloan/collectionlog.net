@@ -1,5 +1,6 @@
 import { ActiveElement } from '@components/ui';
 import React from 'react';
+import { CollectionLogEntryData } from 'src/models/CollectionLog';
 
 const CLUE_TAB_ENTRIES = [
   'Beginner Treasure Trails',
@@ -15,8 +16,8 @@ const CLUE_TAB_ENTRIES = [
 ];
 
 interface LogEntryListProps {
-  activeEntry: string;
-  activeTab: string;
+  activeEntry?: string;
+  activeTab?: string;
   entries?: CollectionLogEntryData;
   onEntryChangeHandler: (entryName: string) => void;
 }

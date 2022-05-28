@@ -3,7 +3,7 @@ import React from 'react';
 import { ActiveElement } from '@components/ui';
 
 interface LogTabListProps {
-  activeTab: string;
+  activeTab?: string;
   onTabChangeHandler: (tabName: string) => void;
 }
 

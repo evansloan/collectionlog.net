@@ -1,3 +1,8 @@
+export interface CollectionLogKillCountData {
+  name: string;
+  amount: number;
+}
+
 export interface CollectionLogItemData {
   id: number;
   name: string;
@@ -9,7 +14,7 @@ export interface CollectionLogItemData {
 export interface CollectionLogEntryData {
   [entryName: string]: {
     items: CollectionLogItemData[],
-    kill_count: string[] | undefined,
+    kill_count: CollectionLogKillCountData[] | undefined,
   }
 };
 

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 
 type RequestCallback = (response: AxiosResponse) => void;
 
@@ -17,7 +17,11 @@ class CollectionLogAPI {
   }
 
   private getRequest = async(url: string, queryParams?: any) => {
-    return await this.instance.get(url, { params: queryParams });
+    try {
+      return await this.instance.get(url, { params: queryParams });
+    } catch (error: any) {
+      return error.response;
+    }
   }
 
   getCollectionLog = async(username: string) => {
