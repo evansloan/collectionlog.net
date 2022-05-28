@@ -1,9 +1,7 @@
 import { ActiveElement } from '@components/ui';
 
 import { fetchHiscores } from '@store/hiscores/actions';
-import { setFilter, setPage } from '@store/hiscores/slice';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { useEffect } from 'react';
 
 const HISCORES_FILTERS = [
   'all',

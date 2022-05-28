@@ -10,14 +10,12 @@ import {
   LogTabList
 } from '@components/collectionlog';
 import { Container } from '@components/layout';
-import { FlexSection } from '@components/ui';
+import { FlexSection, Spinner } from '@components/ui';
 
 import { fetchCollectionLog, fetchRecentItems } from '@store/collectionlog/actions';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { RootState } from '@store/store';
 
-import entryList from '../../data/entries.json';
-import Spinner from '@components/ui/Spinner';
 
 const CollectionLog = () => {
   const dispatch = useAppDispatch();

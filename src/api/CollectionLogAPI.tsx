@@ -1,6 +1,4 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-
-type RequestCallback = (response: AxiosResponse) => void;
+import axios, { AxiosInstance } from 'axios';
 
 class CollectionLogAPI {
   private static readonly BASE_URL = 'https://api.collectionlog.net';
