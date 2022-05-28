@@ -24,6 +24,7 @@ export const fetchCollectionLog = (username: string, entry?: string) => {
       return;
     }
 
+    dispatch(fetchRecentItems(username));
     dispatch(setData(res.data.collection_log));
   }
 }
@@ -42,8 +43,6 @@ export const fetchRecentItems = (username: string) => {
       dispatch(setNonFatalError(res.data.error));
       return;
     }
-
-    console.log(res);
 
     dispatch(setRecentItems(res.data.items));
   }

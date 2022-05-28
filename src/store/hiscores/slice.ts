@@ -33,7 +33,6 @@ const hiscoresSlice = createSlice({
       updateUrl(`/hiscores/${state.type}/${1}`);
     },
     setPage: (state, action: PayloadAction<number>) => {
-      console.log('setPage', action.payload);
       state.page = action.payload;
       updateUrl(`/hiscores/${state.type}/${action.payload}`);
     },

@@ -31,7 +31,6 @@ const CollectionLog = () => {
     }
   
     dispatch(fetchCollectionLog(username, entry));
-    dispatch(fetchRecentItems(username));
   }, [dispatch, state.isLoaded, state.username, params.username, params.entry]);
 
   let pageTitle = 'Collection Log';

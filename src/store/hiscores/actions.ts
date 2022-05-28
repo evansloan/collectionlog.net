@@ -11,8 +11,6 @@ export const fetchHiscores = (type: HiscoresType, page: number, filter: string) 
     const api = new CollectionLogAPI();
     const res = await api.getHiscores(type, page, filter);
 
-    console.log(res);
-
     if (res.data.error) {
       return;
     }

@@ -17,7 +17,6 @@ const Hiscores = () => {
   useEffect(() => {
     const hiscoresType = params.type as HiscoresType;
     let page = parseInt(params.page as string);
-    console.log('effect page', page);
   
     if (!page) {
       page = 1;
