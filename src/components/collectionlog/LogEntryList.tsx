@@ -1,5 +1,11 @@
 import { ActiveElement } from '@components/ui';
-import React from 'react';
+
+import { setActiveEntry, setNonFatalError } from '@store/collectionlog/slice';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+import { RootState } from '@store/store';
+import { getMissingEntries } from '@utils/collectionlog';
+
+import { CollectionLogEntryData } from '@models/CollectionLog';
 
 const CLUE_TAB_ENTRIES = [
   'Beginner Treasure Trails',
@@ -14,84 +20,88 @@ const CLUE_TAB_ENTRIES = [
   'Shared Treasure Trail Rewards',
 ];
 
-interface LogEntryListProps {
-  activeEntry: string;
-  activeTab: string;
-  entries: { [key: string]: any };
-  onEntryChangeHandler: (entryName: string) => void;
-}
+const LogEntryList = () => {
+  const dispatch = useAppDispatch();
+  const state = useAppSelector((state: RootState) => state.collectionLog);
+  const activeTab = state.activeTab as string;
+  const activeEntry = state.activeEntry as string;
+  const entries = state.data?.tabs[activeTab] as CollectionLogEntryData;
+  let completedEntries: string[] = [];
+  let sortedEntries: string[] = [];
 
-class LogEntryList extends React.Component<LogEntryListProps> {
+  const onEntryChange = (entryName: string) => {
+    if (!entryName) {
+      return;
+    }
 
-  constructor(props: LogEntryListProps) {
-    super(props);
-    this.setCompletedEntries();
+    // Handle hiding/showing of entry list and items for mobile layout
+    const logList = document.getElementById('log-list-container');
+    const logItems = document.getElementById('log-items-container')
+    logList?.classList.add('hidden');
+    logItems?.classList.remove('hidden');
+
+    dispatch(setActiveEntry(entryName));
   }
 
-  setCompletedEntries = () => {
-    for (let key in this.props.entries) {
+  // Build a list of completed entries
+  for (const entryName in entries) {
+    const itemCount = entries[entryName].items.length;
+    const obtainedCount = entries[entryName].items.filter((item) => {
+      return item.obtained;
+    }).length;
 
-      const itemCount = this.props.entries[key].items.length;
-      const obtainedCount = this.props.entries[key].items.filter((item: any) => {
-        return item.obtained;
-      }).length;
-      const completed = obtainedCount == itemCount;
+    const completed = obtainedCount == itemCount;
 
-      let entry = document.getElementById(key);
-      entry?.classList.remove('!text-green');
-      if (completed) {
-        entry?.classList.add('!text-green');
-      }
+    if (completed) {
+      completedEntries.push(entryName);
     }
   }
 
-  componentDidMount() {
-    this.setCompletedEntries();
+  const missingEntries = getMissingEntries(state.data);
+  if (missingEntries) {
+    dispatch(setNonFatalError(missingEntries));
   }
 
-  componentDidUpdate(prevProps: LogEntryListProps) {
-    this.setCompletedEntries();
+  // Sort entries alphabetical for display purposes
+  sortedEntries = Object.keys(entries).sort((a, b) => {
+    a = a.replace(/^The /, '');
+    b = b.replace(/^The /, '');
+    return a.localeCompare(b);
+  });
+  
+  // Override sorting with pre-defined sort for clues
+  if (activeTab == 'Clues') {
+    sortedEntries = CLUE_TAB_ENTRIES;
   }
 
-  sortAlphabetical = () => {
-    return Object.keys(this.props.entries).sort((a, b) => {
-      a = a.replace(/^The /, '');
-      b = b.replace(/^The /, '');
-      return a.localeCompare(b);
-    });
-  }
-
-  render() {
-    let entries = this.sortAlphabetical();
-    if (this.props.activeTab == 'Clues') {
-      entries = CLUE_TAB_ENTRIES;
-    }
-    return (
-      <div id='log-list-container' className='w-full md:w-1/2 p-0 hidden md:block border-black border-0 border-r-4 overflow-y-auto overflow-x-hidden'>
-        <div id='log-list' className='flex flex-col'>
-          {entries.map((entryName, i) => {
-            let className = 'm-0 p-0 pl-[3px] hover:bg-highlight text-orange text-[20px] hover:cursor-pointer entry first:shadow-log';
-            if (i % 2 != 0) {
-              className = `${className} bg-light`;
-            }
-            return (
-              <ActiveElement
-                id={entryName}
-                tagName='p'
-                className={className}
-                name='log-entry'
-                activeClass='!bg-highlight'
-                clickHandler={() => this.props.onEntryChangeHandler(entryName)}
-                isActive={entryName == this.props.activeEntry}
-              >
-                {entryName}
-              </ActiveElement>
-            );
-          })}
-        </div>
+  return (
+    <div id='log-list-container' className='w-full md:w-1/2 p-0 hidden md:block border-black border-0 border-r-4 overflow-y-auto overflow-x-hidden'>
+      <div id='log-list' className='flex flex-col'>
+        {sortedEntries.map((entryName, i) => {
+          let className = 'm-0 p-0 pl-[3px] hover:bg-highlight text-orange text-[20px] hover:cursor-pointer entry first:shadow-log';
+          if (i % 2 != 0) {
+            className = `${className} bg-light`;
+          }
+          if (completedEntries.includes(entryName)) {
+            className = `${className} !text-green`;
+          }
+          return (
+            <ActiveElement
+              id={entryName}
+              tagName='p'
+              className={className}
+              name='log-entry'
+              activeClass='!bg-highlight'
+              clickHandler={() => onEntryChange(entryName)}
+              isActive={entryName == activeEntry}
+            >
+              {entryName}
+            </ActiveElement>
+          );
+        })}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default LogEntryList;

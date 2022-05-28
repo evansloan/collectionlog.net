@@ -1,9 +1,10 @@
 import './LogItem.scss';
 
 import icons from '../../../data/item-icons.json';
+import { CollectionLogItemData } from '@models/CollectionLog';
 
 type LogItemProps = {
-  item: any;
+  item: CollectionLogItemData | any;
 };
 
 const LogItem = (props: LogItemProps) => {

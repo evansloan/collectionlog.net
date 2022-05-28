@@ -1,9 +1,9 @@
 import { capitalize } from '@utils/format';
+import { HiscoresData } from '@models/Hiscores';
 
 interface HiscoresListProps {
   page: number;
-  data: any[];
-  isLoaded: boolean;
+  data?: HiscoresData[];
 }
 
 const HiscoresList = (props: HiscoresListProps) => {
@@ -17,11 +17,11 @@ const HiscoresList = (props: HiscoresListProps) => {
   return (
     <div className='bg-primary text-center border-4 border-black border-t-0'>
       <div className='flex justify-around'>
-        {headers.map((header) => {
-          return <h2 className='w-1/3'>{header}</h2>
+        {headers.map((header, i) => {
+          return <h2 key={`${header}-${i}`} className='w-1/3'>{header}</h2>
         })}
       </div>
-      {props.data.map((user: any, i: number) => {
+      {props.data?.map((user, i) => {
         let className = 'flex justify-around';
         if (i % 2 == 0) {
           className = `${className} bg-light`;
@@ -34,7 +34,7 @@ const HiscoresList = (props: HiscoresListProps) => {
             <div className='flex justify-center items-center w-1/3'>
               {user.accountType && user.accountType != 'NORMAL' &&
                 <img
-                  className='h-[20px] mr-[5px] shadow-icon'
+                  className='h-[20px] mr-[5px] icon-shadow'
                   src={`https://oldschool.runescape.wiki/images/${capitalize(user.accountType)}_chat_badge.png`}
                 />
               }
