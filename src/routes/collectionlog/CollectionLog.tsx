@@ -36,29 +36,6 @@ const CollectionLog = () => {
     dispatch(fetchCollectionLog(username, entry));
   });
 
-  const onTabChange = (tabName: string) => {
-    if (!tabName || !state.data) {
-      return;
-    }
-
-    const entryName = Object.keys(state.data.tabs[tabName]).sort()[0];
-    dispatch(updateActiveTab(tabName, entryName));
-  }
-
-  const onEntryChange = (entryName: string) => {
-    if (!entryName) {
-      return;
-    }
-
-    // Handle hiding/showing of entry list and items for mobile layout
-    const logList = document.getElementById('log-list-container');
-    const logItems = document.getElementById('log-items-container')
-    logList?.classList.add('hidden');
-    logItems?.classList.remove('hidden');
-
-    dispatch(setActiveEntry(entryName));
-  }
-
   const getMissingEntries = (collectionLogData: any) => {
     const loadedEntries = Object.keys(collectionLogData).map((tabName, _i) => {
       return Object.keys(collectionLogData[tabName]).map((entryName, _i) => {
@@ -115,17 +92,12 @@ const CollectionLog = () => {
       }
       {state.isLoaded &&
         <>
-        <LogTabList activeTab={state.activeTab} onTabChangeHandler={onTabChange}/>
+        <LogTabList />
         <FlexSection
           height='h-[550px]'
           borderStyle='border-4 border-black border-t-0'
         >
-          <LogEntryList
-            activeEntry={state.activeEntry}
-            activeTab={state.activeTab}
-            entries={state.data?.tabs[state.activeTab as string]}
-            onEntryChangeHandler={onEntryChange}
-          />
+          <LogEntryList />
           <LogItems />
         </FlexSection>
         </>
