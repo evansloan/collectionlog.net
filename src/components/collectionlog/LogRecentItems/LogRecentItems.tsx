@@ -1,10 +1,11 @@
 import { LogItem } from '@components/collectionlog';
+import { RecentItemData } from '@models/CollectionLog';
 import { formatDate } from '@utils/format';
 
 import './LogRecentItems.scss';
 
 interface LogRecentItemsProps {
-  items?: any[];
+  items?: RecentItemData[];
 }
 
 const LogRecentItems = (props: LogRecentItemsProps) => (
