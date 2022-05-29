@@ -26,7 +26,7 @@ const CollectionLog = () => {
     const username = params.username;
     const entry = params.entry;
 
-    if (!username || state.username || state.isLoaded) {
+    if (!username || state.username || state.isLoaded || state.error) {
       return;
     }
   

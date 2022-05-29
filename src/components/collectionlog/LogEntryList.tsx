@@ -30,12 +30,12 @@ const LogEntryList = () => {
   let completedEntries: string[] = [];
   let sortedEntries: string[] = [];
 
-  // useEffect(() => {
-  //   const missingEntries = getMissingEntries(state.data);
-  //   if (missingEntries) {
-  //     dispatch(setNonFatalError(missingEntries));
-  //   }
-  // })
+  useEffect(() => {
+    const missingEntries = getMissingEntries(state.data);
+    if (missingEntries) {
+      dispatch(setNonFatalError(missingEntries));
+    }
+  })
 
   const onEntryChange = (entryName: string) => {
     if (!entryName) {
