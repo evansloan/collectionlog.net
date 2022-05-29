@@ -6,6 +6,7 @@ import { RootState } from '@store/store';
 import { getMissingEntries } from '@utils/collectionlog';
 
 import { CollectionLogEntryData } from '@models/CollectionLog';
+import { useEffect } from 'react';
 
 const CLUE_TAB_ENTRIES = [
   'Beginner Treasure Trails',
@@ -28,6 +29,13 @@ const LogEntryList = () => {
   const entries = state.data?.tabs[activeTab] as CollectionLogEntryData;
   let completedEntries: string[] = [];
   let sortedEntries: string[] = [];
+
+  // useEffect(() => {
+  //   const missingEntries = getMissingEntries(state.data);
+  //   if (missingEntries) {
+  //     dispatch(setNonFatalError(missingEntries));
+  //   }
+  // })
 
   const onEntryChange = (entryName: string) => {
     if (!entryName) {
@@ -55,11 +63,6 @@ const LogEntryList = () => {
     if (completed) {
       completedEntries.push(entryName);
     }
-  }
-
-  const missingEntries = getMissingEntries(state.data);
-  if (missingEntries) {
-    dispatch(setNonFatalError(missingEntries));
   }
 
   // Sort entries alphabetical for display purposes

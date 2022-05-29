@@ -29,6 +29,8 @@ const CollectionLog = () => {
     if (!username || state.username || state.isLoaded) {
       return;
     }
+
+    console.log('useeffect');
   
     dispatch(fetchCollectionLog(username, entry));
   }, [dispatch, state.isLoaded, state.username, params.username, params.entry]);
@@ -50,6 +52,7 @@ const CollectionLog = () => {
     meta.title = `${state.data.username} | ${pageTitle}`;
   };
 
+  console.log('render');
   return (
     <Container bgColor='bg-primary'>
       <DocumentMeta {...meta} />

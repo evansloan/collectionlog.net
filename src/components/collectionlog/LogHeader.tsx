@@ -24,7 +24,7 @@ const LogHeader = () => {
       return;
     }
 
-    dispatch(fetchCollectionLog(username));
+    dispatch(fetchCollectionLog(username, 'Abyssal Sire'));
   }
 
   const getItemCounts = (type: 'total' | 'unique'): string => {
