@@ -14,11 +14,11 @@ const LogRecentItems = (props: LogRecentItemsProps) => (
     <div className='recent-items flex flex-wrap justify-around mt-[20px]'>
       {props.items?.map((item, i) => {
         return (
-          <div className='flex' key={`${item.itemId}${i}`}>
+          <div className='flex' key={`${item.id}${i}`}>
             <LogItem item={item} />
             <div className='text-[18px] text-white'>
               <p>{item.name}</p>
-              <p>{formatDate(item.obtainedAt)}</p>
+              <p>{formatDate(item.obtained_at)}</p>
             </div>
           </div>
         );

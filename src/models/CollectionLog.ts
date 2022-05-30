@@ -37,11 +37,11 @@ export interface CollectionLogData {
 // result inline with collection log endpoint so 
 // CollectionLogItemData is reusable here
 export interface RecentItemData {
-  itemId: number;
+  id: number;
   name: string;
   quantity: number;
   obtained: boolean;
-  obtainedAt: string;
+  obtained_at: string;
 }
 
 export interface RecentItemsData {
