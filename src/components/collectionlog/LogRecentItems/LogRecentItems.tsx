@@ -1,11 +1,11 @@
 import { LogItem } from '@components/collectionlog';
-import { RecentItemData } from '@models/CollectionLog';
+import { CollectionLogItemData } from '@models/CollectionLog';
 import { formatDate } from '@utils/format';
 
 import './LogRecentItems.scss';
 
 interface LogRecentItemsProps {
-  items?: RecentItemData[];
+  items?: CollectionLogItemData[];
 }
 
 const LogRecentItems = (props: LogRecentItemsProps) => (
@@ -18,7 +18,7 @@ const LogRecentItems = (props: LogRecentItemsProps) => (
             <LogItem item={item} />
             <div className='text-[18px] text-white'>
               <p>{item.name}</p>
-              <p>{formatDate(item.obtained_at)}</p>
+              <p>{formatDate(item.obtained_at ?? '')}</p>
             </div>
           </div>
         );

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { updateUrl } from '@utils/components';
-import { CollectionLogData, RecentItemData } from '@models/CollectionLog';
+import { CollectionLogData, CollectionLogItemData } from '@models/CollectionLog';
 
 export interface CollectionLogState {
   data?: CollectionLogData,
-  recentItems?: RecentItemData[];
+  recentItems?: CollectionLogItemData[];
   activeTab?: string;
   activeEntry?: string;
   username?: string;

@@ -8,7 +8,6 @@ type LogItemProps = {
 };
 
 const LogItem = (props: LogItemProps) => {
-  const itemId = typeof props.item.id == 'number' ? props.item.id : props.item.itemId;
   return (
     <div className='item h-[50px] w-[16.6%] mb-[10px]'>
       <span className='item-quantity'>{props.item.quantity > 0 ? props.item.quantity : '\u00a0'}</span>
@@ -18,7 +17,7 @@ const LogItem = (props: LogItemProps) => {
       <div className='item-img-container'>
         <img
           className={props.item.obtained ? 'item-obtained' : ''}
-          src={`data:image/jpeg;charset=utf-8;base64,${(icons as {[key: string]: string})[itemId]}`}>
+          src={`data:image/jpeg;charset=utf-8;base64,${(icons as {[key: string]: string})[props.item.id]}`}>
         </img>
       </div>
     </div>
