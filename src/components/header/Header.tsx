@@ -3,7 +3,7 @@ const Header = () => (
     <a href='/'>Home</a>
     <a href='/hiscores/unique/1'>Unique Hiscores</a>
     <a href='/hiscores/total/1'>Total Hiscores</a>
-    <a id='discord-invite' href='https://discord.gg/cFVa9BRSEN'>
+    <a id='discord-invite' href='https://discord.gg/loghunters'>
       <img className='inline-block w-[30px] mt-[-6px] pr-[5px] ' src='/img/discord.svg'></img>
       Join the Log Hunters Discord Server
     </a>
