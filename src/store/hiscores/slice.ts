@@ -30,11 +30,9 @@ const hiscoresSlice = createSlice({
     },
     setFilter: (state, action: PayloadAction<string>) => {
       state.filter = action.payload;
-      updateUrl(`/hiscores/${state.type}/${1}`);
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
-      updateUrl(`/hiscores/${state.type}/${action.payload}`);
     },
     setType: (state, action: PayloadAction<HiscoresType>) => {
       state.type = action.payload;
