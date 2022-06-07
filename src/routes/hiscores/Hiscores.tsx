@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import DocumentMeta from 'react-document-meta';
+import { useParams } from 'react-router';
 
 import { HiscoresList, HiscoresNav } from '@components/hiscores';
 import { Container } from '@components/layout';
 import { capitalize } from '@utils/format';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
-import { useParams } from 'react-router';
 import { fetchHiscores } from '@store/hiscores/actions';
 import { HiscoresType } from '@store/hiscores/slice';
 
@@ -23,7 +23,7 @@ const Hiscores = () => {
     }
 
     dispatch(fetchHiscores(hiscoresType, page, 'ALL'));
-  }, [dispatch, params.type, params.page]);
+  }, []);
 
   const meta = {
     title: `${capitalize(state.type ?? '')} Hiscores | Page ${state.page ?? 1}`,

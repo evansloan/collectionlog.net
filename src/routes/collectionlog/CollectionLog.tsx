@@ -25,12 +25,12 @@ const CollectionLog = () => {
     const username = params.username;
     const entry = params.entry;
 
-    if (!username || state.username || state.isLoaded || state.error) {
+    if (!username) {
       return;
     }
 
     dispatch(fetchCollectionLog(username, entry));
-  }, [dispatch, state.isLoaded, state.username, params.username, params.entry]);
+  }, []);
 
   const pageTitle = 'Collection Log';
 
