@@ -12,10 +12,9 @@ import {
 import { Container } from '@components/layout';
 import { FlexSection, Spinner } from '@components/ui';
 
-import { fetchCollectionLog, fetchRecentItems } from '@store/collectionlog/actions';
+import { fetchCollectionLog } from '@store/collectionlog/actions';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { RootState } from '@store/store';
-
 
 const CollectionLog = () => {
   const dispatch = useAppDispatch();
@@ -29,13 +28,13 @@ const CollectionLog = () => {
     if (!username || state.username || state.isLoaded || state.error) {
       return;
     }
-  
+
     dispatch(fetchCollectionLog(username, entry));
   }, [dispatch, state.isLoaded, state.username, params.username, params.entry]);
 
-  let pageTitle = 'Collection Log';
+  const pageTitle = 'Collection Log';
 
-  let meta = {
+  const meta = {
     title: pageTitle,
     property: {
       'og:title': pageTitle,
@@ -64,14 +63,14 @@ const CollectionLog = () => {
       }
       {state.isLoaded &&
         <>
-        <LogTabList />
-        <FlexSection
-          height='h-[550px]'
-          borderStyle='border-4 border-black border-t-0'
-        >
-          <LogEntryList />
-          <LogItems />
-        </FlexSection>
+          <LogTabList />
+          <FlexSection
+            height='h-[550px]'
+            borderStyle='border-4 border-black border-t-0'
+          >
+            <LogEntryList />
+            <LogItems />
+          </FlexSection>
         </>
       }
       {state.isLoaded &&

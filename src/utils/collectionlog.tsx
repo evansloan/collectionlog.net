@@ -6,8 +6,8 @@ const getMissingEntries = (data?: CollectionLogData) => {
     return null;
   }
 
-  const loadedEntries = Object.keys(data.tabs).map((tabName, _i) => {
-    return Object.keys(data.tabs[tabName]).map((entryName, _i) => {
+  const loadedEntries = Object.keys(data.tabs).map((tabName) => {
+    return Object.keys(data.tabs[tabName]).map((entryName) => {
       return entryName;
     });
   }).flat();

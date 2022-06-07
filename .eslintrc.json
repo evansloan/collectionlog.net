@@ -41,6 +41,7 @@
     "@typescript-eslint/no-unused-vars": ["error"],
 
     "react/display-name": ["off"],
+    "react/no-unescaped-entities": ["off"],
     "react/react-in-jsx-scope": ["off"]
   },
   "settings": {

@@ -26,8 +26,10 @@ const HiscoresNav = (props: HiscoresNavProps) => {
 
   let className = 'bg-primary border-4 border-black';
 
-  // if not showing title, element is probably the footer nav
-  // remove top border
+  /*
+   * if not showing title, element is probably the footer nav
+   * remove top border
+   */
   if (!props.showTitle) {
     className = `${className} border-t-0`;
   }
