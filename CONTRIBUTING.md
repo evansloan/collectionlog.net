@@ -1,5 +1,11 @@
 # Contributing
 
+## Project setup
+1. Install the [Yarn package manager](https://classic.yarnpkg.com/lang/en/docs/install/)
+2. Clone the repository `git clone https://github.com/evansloan/collectionlog.net && cd collectionlog.net`
+3. Install dependencies `yarn install`
+4. Run the project `yarn start`
+
 ## Code style/standards
 * ESLint is configured to try to keep things in a uniform style. Before committing or submitting a PR, make sure to run `yarn run lint` and `yarn run lint:fix` to catch and correct any style issues.
 * If using VSCode, the [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) is highly recommended. It will show any style inconsistencies as errors to make them easier to find/fix.
