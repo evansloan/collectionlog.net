@@ -17,7 +17,7 @@ export const fetchHiscores = (type: HiscoresType, page: number, filter: string) 
     }
 
     dispatch(setData(res.data));
-    
+
     updateUrl(`/hiscores/${type}/${page}`);
   }
 }

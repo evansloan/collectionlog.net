@@ -31,7 +31,7 @@ const LogHeader = () => {
     if (!state.data) {
       return `${0}/${0}`;
     }
-    
+
     const obtained = state.data[`${type}_obtained`];
     const total = state.data[`${type}_items`];
 

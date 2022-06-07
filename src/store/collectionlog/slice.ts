@@ -35,7 +35,7 @@ const collectionLogSlice = createSlice({
       let activeTab = state.activeTab;
 
       if (activeEntry) {
-        for (let tabName in collectionLogData.tabs) {
+        for (const tabName in collectionLogData.tabs) {
           if (activeEntry in collectionLogData.tabs[tabName]) {
             activeTab = tabName;
             break;

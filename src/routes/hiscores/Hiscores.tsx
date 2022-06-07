@@ -13,14 +13,14 @@ const Hiscores = () => {
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.hiscores);
   const params = useParams();
-  
+
   useEffect(() => {
     const hiscoresType = params.type as HiscoresType;
-    let page = Number(params.page as string);
-  
+    let page = parseInt(params.page as string);
+
     if (!page) {
       page = 1;
-    } 
+    }
 
     dispatch(fetchHiscores(hiscoresType, page, 'ALL'));
   }, []);

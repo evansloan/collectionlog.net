@@ -22,7 +22,6 @@ const LogItems = () => {
     logItems?.classList.add('hidden');
   }
 
-  
   const obtained = (items).filter((item) => {
     return item.obtained;
   }).length;
@@ -54,7 +53,7 @@ const LogItems = () => {
       </div>
       <div className='flex flex-row flex-wrap grow content-start max-w-full overflow-y-auto px-2'>
         {items.map((item, i) => {
-            return <LogItem key={`${i}-${item.id}`} item={item} />
+          return <LogItem key={`${i}-${item.id}`} item={item} />
         })}
       </div>
     </FlexSection>

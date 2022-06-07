@@ -27,7 +27,7 @@ const LogEntryList = () => {
   const activeTab = state.activeTab as string;
   const activeEntry = state.activeEntry as string;
   const entries = state.data?.tabs[activeTab] as CollectionLogEntryData;
-  let completedEntries: string[] = [];
+  const completedEntries: string[] = [];
   let sortedEntries: string[] = [];
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const LogEntryList = () => {
     b = b.replace(/^The /, '');
     return a.localeCompare(b);
   });
-  
+
   // Override sorting with pre-defined sort for clues
   if (activeTab == 'Clues') {
     sortedEntries = CLUE_TAB_ENTRIES;
@@ -90,6 +90,7 @@ const LogEntryList = () => {
           }
           return (
             <ActiveElement
+              key={`${entryName}-${i}`}
               id={entryName}
               tagName='p'
               className={className}
