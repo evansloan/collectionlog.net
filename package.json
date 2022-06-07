@@ -31,7 +31,7 @@
     "test": "craco test",
     "eject": "craco eject",
     "lint": "eslint src/**/*.{ts,tsx}",
-    "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'"
+    "lint:fix": "eslint --fix src/**/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
