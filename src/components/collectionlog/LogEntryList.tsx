@@ -35,7 +35,7 @@ const LogEntryList = () => {
     if (missingEntries) {
       dispatch(setNonFatalError(missingEntries));
     }
-  })
+  });
 
   const onEntryChange = (entryName: string) => {
     if (!entryName) {
@@ -44,12 +44,12 @@ const LogEntryList = () => {
 
     // Handle hiding/showing of entry list and items for mobile layout
     const logList = document.getElementById('log-list-container');
-    const logItems = document.getElementById('log-items-container')
+    const logItems = document.getElementById('log-items-container');
     logList?.classList.add('hidden');
     logItems?.classList.remove('hidden');
 
     dispatch(setActiveEntry(entryName));
-  }
+  };
 
   // Build a list of completed entries
   for (const entryName in entries) {
@@ -106,6 +106,6 @@ const LogEntryList = () => {
       </div>
     </div>
   );
-}
+};
 
 export default LogEntryList;

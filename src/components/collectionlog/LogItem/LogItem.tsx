@@ -17,7 +17,7 @@ const LogItem = (props: LogItemProps) => {
       <div className='item-img-container'>
         <img
           className={props.item.obtained ? 'item-obtained' : ''}
-          src={`data:image/jpeg;charset=utf-8;base64,${(icons as {[key: string]: string})[props.item.id]}`}>
+          src={`data:image/jpeg;charset=utf-8;base64,${(icons as {[key: string]: string })[props.item.id]}`}>
         </img>
       </div>
     </div>

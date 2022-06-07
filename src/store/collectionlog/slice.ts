@@ -3,13 +3,13 @@ import { updateUrl } from '@utils/components';
 import { CollectionLogData, CollectionLogItemData } from '@models/CollectionLog';
 
 export interface CollectionLogState {
-  data?: CollectionLogData,
+  data?: CollectionLogData;
   recentItems?: CollectionLogItemData[];
   activeTab?: string;
   activeEntry?: string;
   username?: string;
-  isLoaded: boolean,
-  isLoading: boolean,
+  isLoaded: boolean;
+  isLoading: boolean;
   error?: string;
 }
 
@@ -77,8 +77,8 @@ const collectionLogSlice = createSlice({
     },
     setUsername: (state, action: PayloadAction<string>) => {
       state.username = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const {

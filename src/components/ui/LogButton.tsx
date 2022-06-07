@@ -6,7 +6,7 @@ interface LogButtonProps {
   children: React.ReactNode;
   className?: string;
   type: ButtonType;
-};
+}
 
 const LogButton = (props: LogButtonProps) => {
   let className = 'p-[10px] bg-primary hover:bg-highlight text-orange text-[20px] text-shadow border-2 border-lighter';

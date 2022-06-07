@@ -25,7 +25,7 @@ const defaultProps: FlexSectionProps = {
   margin: '',
   padding: '',
   borderStyle: 'border-4 border-black',
-}
+};
 
 const FlexSection = (props: FlexSectionProps) => {
   return (

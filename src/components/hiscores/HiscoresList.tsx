@@ -18,7 +18,7 @@ const HiscoresList = (props: HiscoresListProps) => {
     <div className='bg-primary text-center border-4 border-black border-t-0'>
       <div className='flex justify-around'>
         {headers.map((header, i) => {
-          return <h2 key={`${header}-${i}`} className='w-1/3'>{header}</h2>
+          return <h2 key={`${header}-${i}`} className='w-1/3'>{header}</h2>;
         })}
       </div>
       {props.data?.map((user, i) => {
@@ -50,6 +50,6 @@ const HiscoresList = (props: HiscoresListProps) => {
       })}
     </div>
   );
-}
+};
 
 export default HiscoresList;

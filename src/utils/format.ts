@@ -4,12 +4,12 @@ const formatDate = (dateString: string): string => {
 
   const tzDate = new Date(date.getTime() - offset);
   return `${tzDate.getMonth() + 1}/${tzDate.getDate()}/${tzDate.getFullYear()}`;
-}
+};
 
 const capitalize = (s: string): string => {
   s = s.toLowerCase();
   return s[0].toUpperCase() + s.slice(1);
-}
+};
 
 export {
   capitalize,

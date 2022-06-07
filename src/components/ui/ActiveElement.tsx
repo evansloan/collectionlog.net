@@ -11,7 +11,7 @@ interface ActiveElementProps {
   isActive?: boolean;
   name: string;
   tagName: string;
-};
+}
 
 const defaultProps = {
   className: '',

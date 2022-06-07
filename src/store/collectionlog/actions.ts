@@ -3,7 +3,7 @@ import { AppDispatch } from '../store';
 import { setActiveEntry, setActiveTab, setData, setError, setIsLoading, setNonFatalError, setRecentItems } from './slice';
 
 export const fetchCollectionLog = (username: string, entry?: string) => {
-  return async(dispatch: AppDispatch) => {
+  return async (dispatch: AppDispatch) => {
     if (entry) {
       dispatch(setActiveEntry(entry));
     }
@@ -25,11 +25,11 @@ export const fetchCollectionLog = (username: string, entry?: string) => {
 
     dispatch(fetchRecentItems(username));
     dispatch(setData(res.data.collection_log));
-  }
-}
+  };
+};
 
 export const fetchRecentItems = (username: string) => {
-  return async(dispatch: AppDispatch) => {
+  return async (dispatch: AppDispatch) => {
     const api = new CollectionLogAPI();
     const res = await api.getRecentItems(username);
 
@@ -44,12 +44,12 @@ export const fetchRecentItems = (username: string) => {
     }
 
     dispatch(setRecentItems(res.data.items));
-  }
-}
+  };
+};
 
 export const updateActiveTab = (tabName: string, entryName: string) => {
-  return async(dispatch: AppDispatch) => {
+  return async (dispatch: AppDispatch) => {
     dispatch(setActiveTab(tabName));
     dispatch(setActiveEntry(entryName));
-  }
-}
+  };
+};

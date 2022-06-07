@@ -10,18 +10,18 @@ export interface CollectionLogItemData {
   obtained: boolean;
   sequence: number;
   obtained_at?: string;
-};
+}
 
 export interface CollectionLogEntryData {
   [entryName: string]: {
-    items: CollectionLogItemData[],
-    kill_count: CollectionLogKillCountData[] | undefined,
-  }
-};
+    items: CollectionLogItemData[];
+    kill_count: CollectionLogKillCountData[] | undefined;
+  };
+}
 
 export interface CollectionLogTabData {
-  [tabName: string]: CollectionLogEntryData
-};
+  [tabName: string]: CollectionLogEntryData;
+}
 
 export interface CollectionLogData {
   tabs: CollectionLogTabData;
@@ -31,7 +31,7 @@ export interface CollectionLogData {
   total_items: number;
   unique_obtained: number;
   unique_items: number;
-};
+}
 
 export interface RecentItemsData {
   username: string;

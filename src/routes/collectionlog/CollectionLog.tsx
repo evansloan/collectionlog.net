@@ -7,7 +7,7 @@ import {
   LogHeader,
   LogRecentItems,
   LogItems,
-  LogTabList
+  LogTabList,
 } from '@components/collectionlog';
 import { Container } from '@components/layout';
 import { FlexSection, Spinner } from '@components/ui';
@@ -42,12 +42,12 @@ const CollectionLog = () => {
     },
     auto: {
       ograph: true,
-    }
+    },
   };
 
   if (state.data?.username) {
     meta.title = `${state.data.username} | ${pageTitle}`;
-  };
+  }
 
   return (
     <Container bgColor='bg-primary'>
@@ -78,6 +78,6 @@ const CollectionLog = () => {
       }
     </Container>
   );
-}
+};
 
 export default CollectionLog;

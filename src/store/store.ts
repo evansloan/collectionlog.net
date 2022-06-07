@@ -7,7 +7,7 @@ export const store = configureStore({
   reducer: {
     collectionLog: collectionLogReducer,
     hiscores: hiscoresReducer,
-  }
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

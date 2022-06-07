@@ -4,7 +4,7 @@ import { HiscoresData } from '@models/Hiscores';
 export type HiscoresType = 'total' | 'unique';
 
 export interface HiscoresState {
-  type: HiscoresType
+  type: HiscoresType;
   page: number;
   filter: string;
   data?: any[];
@@ -35,8 +35,8 @@ const hiscoresSlice = createSlice({
     },
     setType: (state, action: PayloadAction<HiscoresType>) => {
       state.type = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const {

@@ -36,12 +36,12 @@ const HiscoresNav = (props: HiscoresNavProps) => {
 
   const onPageChange = (page: number) => {
     dispatch(fetchHiscores(state.type, page, state.filter));
-  }
+  };
 
   const onFilterChange = (filter: string) => {
     const accountType = filter.replace(/ /g, '_');
     dispatch(fetchHiscores(state.type, 1, accountType));
-  }
+  };
 
   return (
     <div className={className}>

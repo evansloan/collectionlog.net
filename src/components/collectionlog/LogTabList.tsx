@@ -23,7 +23,7 @@ const LogTabList = () => {
 
     const entryName = Object.keys(state.data.tabs[tabName]).sort()[0];
     dispatch(updateActiveTab(tabName, entryName));
-  }
+  };
 
   return (
     <div className='flex flex-wrap justify-around p-0 pt-[5px] border-l-4 border-l-black border-r-4 border-r-black border-b border-b-light'>

@@ -3,4 +3,4 @@ export interface HiscoresData {
   accountType: string;
   obtained: number;
   total: number;
-};
+}

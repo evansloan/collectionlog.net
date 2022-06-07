@@ -20,7 +20,7 @@ const LogItems = () => {
     const logItems = document.getElementById('log-items-container');
     logList?.classList.remove('hidden');
     logItems?.classList.add('hidden');
-  }
+  };
 
   const obtained = (items).filter((item) => {
     return item.obtained;
@@ -48,16 +48,16 @@ const LogItems = () => {
         <h3 className='text-left'>{activeEntry}</h3>
         <p className='m-0 text-orange'>Obtained: <span className={obtainedClass}>{obtained}/{total}</span></p>
         {killCounts?.map((kc, i) => {
-          return <p key={`${i}-${kc.name}`} className='m-0 text-orange'>{`${kc.name}`}: <span className='text-white'>{kc.amount}</span></p>
+          return <p key={`${i}-${kc.name}`} className='m-0 text-orange'>{`${kc.name}`}: <span className='text-white'>{kc.amount}</span></p>;
         })}
       </div>
       <div className='flex flex-row flex-wrap grow content-start max-w-full overflow-y-auto px-2'>
         {items.map((item, i) => {
-          return <LogItem key={`${i}-${item.id}`} item={item} />
+          return <LogItem key={`${i}-${item.id}`} item={item} />;
         })}
       </div>
     </FlexSection>
   );
-}
+};
 
 export default LogItems;

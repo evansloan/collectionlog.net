@@ -24,10 +24,10 @@ const getMissingEntries = (data?: CollectionLogData) => {
 
   if (diff.length > 3) {
     diff = diff.slice(0, 3);
-    diff.push('and more...')
+    diff.push('and more...');
   }
 
-  return `Missing collection log entries:\n${diff.join(', ')}`
-}
+  return `Missing collection log entries:\n${diff.join(', ')}`;
+};
 
 export { getMissingEntries };

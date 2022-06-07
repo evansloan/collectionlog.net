@@ -44,6 +44,6 @@ const Hiscores = () => {
       />
     </Container>
   );
-}
+};
 
 export default Hiscores;

@@ -15,7 +15,7 @@ const LogHeader = () => {
 
   const onUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     username = e.target.value;
-  }
+  };
 
   const onSearch = (event: React.FormEvent, username: string) => {
     event.preventDefault();
@@ -25,7 +25,7 @@ const LogHeader = () => {
     }
 
     dispatch(fetchCollectionLog(username, 'Abyssal Sire'));
-  }
+  };
 
   const getItemCounts = (type: 'total' | 'unique'): string => {
     if (!state.data) {
@@ -36,7 +36,7 @@ const LogHeader = () => {
     const total = state.data[`${type}_items`];
 
     return `${obtained}/${total}`;
-  }
+  };
 
   return (
     <FlexSection
@@ -81,7 +81,7 @@ const LogHeader = () => {
         <div className='spacer hidden lg:block'></div>
       }
     </FlexSection>
-  )
-}
+  );
+};
 
 export default LogHeader;
