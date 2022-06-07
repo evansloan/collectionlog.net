@@ -31,8 +31,7 @@
     "test": "craco test",
     "eject": "craco eject",
     "lint": "eslint src/**/*.{ts,tsx}",
-    "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'",
-    "format": "prettier --write 'src/**/*.{ts,tsx}' --config ./.prettierrc"
+    "lint:fix": "eslint --fix 'src/**/*.{ts,tsx}'"
   },
   "eslintConfig": {
     "extends": [
@@ -61,10 +60,8 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.30.0",
     "postcss": "^8.4.13",
-    "prettier": "^2.6.2",
     "tailwindcss": "^3.0.24"
   }
 }
