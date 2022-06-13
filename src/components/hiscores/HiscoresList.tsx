@@ -28,10 +28,10 @@ const HiscoresList = (props: HiscoresListProps) => {
         }
         return (
           <div key={`${user.username}${i}`} className={className}>
-            <p className='w-1/4 m-0 text-[24px] text-white text-center'>
+            <p className='w-1/3 m-0 text-[24px] text-white text-center'>
               {user.pos}.
             </p>
-            <div className='flex justify-center items-center w-1/4'>
+            <div className='flex justify-center items-center w-1/3'>
               {user.accountType && user.accountType != 'NORMAL' &&
                 <img
                   className='h-[20px] mr-[5px] icon-shadow'
@@ -42,11 +42,8 @@ const HiscoresList = (props: HiscoresListProps) => {
                 <a href={`/${user.username}`}>{user.username}</a>
               </p>
             </div>
-            <p className='w-1/4 m-0 text-[24px] text-white text-center'>
+            <p className='w-1/3 m-0 text-[24px] text-yellow'>
               {user.obtained}/{user.total}
-            </p>
-            <p className='w-1/4 m-0 text-[24px] text-white text-center'>
-              {user.recent_obtained}
             </p>
           </div>
         );
