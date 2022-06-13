@@ -11,7 +11,6 @@ const HiscoresList = (props: HiscoresListProps) => {
     'Rank',
     'Username',
     'Counts',
-    'Recent',
   ];
 
   return (
