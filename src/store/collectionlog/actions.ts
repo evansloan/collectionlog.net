@@ -1,6 +1,6 @@
 import { CollectionLogAPI } from 'src/api/CollectionLogAPI';
 import { AppDispatch } from '../store';
-import { setActiveEntry, setActiveTab, setData, setError, setIsLoading, setNonFatalError, setRecentItems } from './slice';
+import { setActiveEntry, setActiveTab, setData, setError, setIsLoading, setNonFatalError, setRanks, setRecentItems } from './slice';
 
 export const fetchCollectionLog = (username: string, entry?: string) => {
   return async (dispatch: AppDispatch) => {
@@ -23,8 +23,28 @@ export const fetchCollectionLog = (username: string, entry?: string) => {
       return;
     }
 
+    dispatch(fetchRanks(username));
     dispatch(fetchRecentItems(username));
     dispatch(setData(res.data.collection_log));
+  };
+};
+
+export const fetchRanks = (username: string) => {
+  return async (dispatch: AppDispatch) => {
+    const api = new CollectionLogAPI();
+    const res = await api.getRankByUsername(username);
+
+    if (!res) {
+      dispatch(setError('Error connecting to collection log API'));
+      return;
+    }
+
+    const update = {
+      total: res.data.ranks.total,
+      unique: res.data.ranks.unique,
+    };
+
+    dispatch(setRanks(update));
   };
 };
 

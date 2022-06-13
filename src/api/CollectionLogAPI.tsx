@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 class CollectionLogAPI {
-  private static readonly BASE_URL = 'https://api.collectionlog.net';
+  private static readonly BASE_URL = 'http://localhost:3001';
   private static readonly COLLECTION_LOG_ENDPOINT = 'collectionlog';
   private static readonly HISCORES_ENDPOINT = 'hiscores';
   private static readonly ITEMS_ENDPOINT = 'items';
@@ -39,6 +39,11 @@ class CollectionLogAPI {
       queryParams = { accountType: filter };
     }
     return await this.getRequest(url, queryParams);
+  };
+
+  getRankByUsername = async (username: string) => {
+    const url = `${CollectionLogAPI.HISCORES_ENDPOINT}/rank/${username}`;
+    return await this.getRequest(url);
   };
 }
 

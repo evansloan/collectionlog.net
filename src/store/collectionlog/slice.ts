@@ -11,6 +11,12 @@ export interface CollectionLogState {
   isLoaded: boolean;
   isLoading: boolean;
   error?: string;
+  ranks?: RankData;
+}
+
+interface RankData {
+  total: number;
+  unique: number;
 }
 
 const initialState: CollectionLogState = {
@@ -72,6 +78,9 @@ const collectionLogSlice = createSlice({
     setNonFatalError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
+    setRanks: (state, action: PayloadAction<RankData>) => {
+      state.ranks = action.payload;
+    },
     setRecentItems: (state, action: PayloadAction<any[]>) => {
       state.recentItems = action.payload;
     },
@@ -88,6 +97,7 @@ export const {
   setError,
   setIsLoading,
   setNonFatalError,
+  setRanks,
   setRecentItems,
   setUsername,
 } = collectionLogSlice.actions;

@@ -7,18 +7,18 @@ interface HiscoresListProps {
 }
 
 const HiscoresList = (props: HiscoresListProps) => {
-  const pageLimit = 25;
   const headers = [
     'Rank',
     'Username',
     'Counts',
+    'Recent',
   ];
 
   return (
     <div className='bg-primary text-center border-4 border-black border-t-0'>
       <div className='flex justify-around'>
         {headers.map((header, i) => {
-          return <h2 key={`${header}-${i}`} className='w-1/3'>{header}</h2>;
+          return <h2 key={`${header}-${i}`} className='w-1/4'>{header}</h2>;
         })}
       </div>
       {props.data?.map((user, i) => {
@@ -28,22 +28,25 @@ const HiscoresList = (props: HiscoresListProps) => {
         }
         return (
           <div key={`${user.username}${i}`} className={className}>
-            <p className='w-1/3 m-0 text-[24px] text-white text-center'>
-              {(pageLimit * (props.page - 1)) + (i + 1)}.
+            <p className='w-1/4 m-0 text-[24px] text-white text-center'>
+              {user.pos}.
             </p>
-            <div className='flex justify-center items-center w-1/3'>
+            <div className='flex justify-center items-center w-1/4'>
               {user.accountType && user.accountType != 'NORMAL' &&
                 <img
                   className='h-[20px] mr-[5px] icon-shadow'
                   src={`https://oldschool.runescape.wiki/images/${capitalize(user.accountType)}_chat_badge.png`}
                 />
               }
-              <p className='m-0 text-[24px] text-orange text-center'>
+              <p className='m-0 text-[24px] text-center'>
                 <a href={`/${user.username}`}>{user.username}</a>
               </p>
             </div>
-            <p className='w-1/3 m-0 text-[24px] text-yellow text-center'>
+            <p className='w-1/4 m-0 text-[24px] text-white text-center'>
               {user.obtained}/{user.total}
+            </p>
+            <p className='w-1/4 m-0 text-[24px] text-white text-center'>
+              {user.recent_obtained}
             </p>
           </div>
         );

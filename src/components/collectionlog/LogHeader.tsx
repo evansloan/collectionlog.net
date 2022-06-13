@@ -69,8 +69,18 @@ const LogHeader = () => {
           Collection Log
         </h1>
         <p className='m-0 text-[20px] text-orange text-shadow text-center font-bold'>
-          Unique: <span className='text-white'>{getItemCounts('unique')} </span>
-          Total: <span className='text-white'>{getItemCounts('total')}</span>
+          Unique: <span className='text-white'>
+            {getItemCounts('unique')}{' '}
+            <span className='text-[16px]'>
+              (#{state.ranks?.unique})
+            </span>
+          </span>{' '}
+          Total: <span className='text-white'>
+            {getItemCounts('total')}{' '}
+            <span className='text-[16px]'>
+              (#{state.ranks?.total})
+            </span>
+          </span>
         </p>
       </div>
       {state.error ?
