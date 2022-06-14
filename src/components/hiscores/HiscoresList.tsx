@@ -31,10 +31,10 @@ const HiscoresList = (props: HiscoresListProps) => {
               {user.pos}.
             </p>
             <div className='flex justify-center items-center w-1/3'>
-              {user.accountType && user.accountType != 'NORMAL' &&
+              {user.account_type && user.account_type != 'NORMAL' &&
                 <img
                   className='h-[20px] mr-[5px] icon-shadow'
-                  src={`https://oldschool.runescape.wiki/images/${capitalize(user.accountType)}_chat_badge.png`}
+                  src={`https://oldschool.runescape.wiki/images/${capitalize(user.account_type)}_chat_badge.png`}
                 />
               }
               <p className='m-0 text-[24px] text-center'>
