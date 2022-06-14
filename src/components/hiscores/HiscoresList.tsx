@@ -28,7 +28,7 @@ const HiscoresList = (props: HiscoresListProps) => {
         return (
           <div key={`${user.username}${i}`} className={className}>
             <p className='w-1/3 m-0 text-[24px] text-white text-center'>
-              {user.pos}.
+              {user.rank}.
             </p>
             <div className='flex justify-center items-center w-1/3'>
               {user.account_type && user.account_type != 'NORMAL' &&

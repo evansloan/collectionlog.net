@@ -1,5 +1,5 @@
 export interface HiscoresData {
-  pos: number;
+  rank: number;
   username: string;
   account_type: string;
   obtained: number;
