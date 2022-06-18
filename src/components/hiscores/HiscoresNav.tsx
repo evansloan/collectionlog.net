@@ -1,4 +1,4 @@
-import { ActiveElement } from '@components/ui';
+import { ActiveElement, DropDown } from '@components/ui';
 
 import { fetchHiscores } from '@store/hiscores/actions';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
@@ -8,6 +8,7 @@ const HISCORES_FILTERS = [
   'ironman',
   'hardcore ironman',
   'ultimate ironman',
+  'hardcore group ironman',
   'group ironman',
   'normal',
 ];
@@ -61,14 +62,18 @@ const HiscoresNav = (props: HiscoresNavProps) => {
         </h2>
       </div>
       {props.showFilters &&
-        <div className='hiscores-filters flex flex-wrap justify-around'>
+        <DropDown title='Filter by account type'>
           {HISCORES_FILTERS.map((filter, i) => {
+            let bg = 'bg-primary';
+            if (i % 2 == 0) {
+              bg = 'bg-light';
+            }
             return (
               <ActiveElement
                 key={`${filter}-${i}`}
                 tagName='a'
                 activeClass='!text-white'
-                className='text-orange text-[20px] font-bold capitalize cursor-pointer hover:text-white'
+                className={`px-3 text-orange text-[20px] font-bold capitalize cursor-pointer hover:text-white ${bg}`}
                 name='hiscores-filter'
                 clickHandler={() => onFilterChange(filter)}
                 isActive={i == 0}
@@ -77,7 +82,7 @@ const HiscoresNav = (props: HiscoresNavProps) => {
               </ActiveElement>
             );
           })}
-        </div>
+        </DropDown>
       }
     </div>
   );

@@ -39,7 +39,7 @@ const HiscoresList = (props: HiscoresListProps) => {
                   src={`https://oldschool.runescape.wiki/images/${capitalize(user.account_type)}_chat_badge.png`}
                 />
               }
-              <p className='m-0 text-[24px] text-center'>
+              <p className='m-0 text-[24px] text-center whitespace-nowrap'>
                 <a href={`/${user.username}`}>{user.username}</a>
               </p>
             </div>
