@@ -81,7 +81,7 @@ const collectionLogSlice = createSlice({
     setRanks: (state, action: PayloadAction<RankData>) => {
       state.ranks = action.payload;
     },
-    setRecentItems: (state, action: PayloadAction<any[]>) => {
+    setRecentItems: (state, action: PayloadAction<CollectionLogItemData[]>) => {
       state.recentItems = action.payload;
     },
     setUsername: (state, action: PayloadAction<string>) => {

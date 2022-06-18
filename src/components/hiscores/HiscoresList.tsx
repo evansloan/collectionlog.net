@@ -1,5 +1,7 @@
-import { capitalize } from '@utils/format';
+import { AccountType } from '@models/CollectionLog';
 import { HiscoresData } from '@models/Hiscores';
+
+import { capitalize } from '@utils/format';
 
 interface HiscoresListProps {
   page: number;
@@ -31,7 +33,7 @@ const HiscoresList = (props: HiscoresListProps) => {
               {user.rank}.
             </p>
             <div className='flex justify-center items-center w-1/3'>
-              {user.account_type && user.account_type != 'NORMAL' &&
+              {user.account_type && user.account_type != AccountType.NORMAL &&
                 <img
                   className='h-[20px] mr-[5px] icon-shadow'
                   src={`https://oldschool.runescape.wiki/images/${capitalize(user.account_type)}_chat_badge.png`}

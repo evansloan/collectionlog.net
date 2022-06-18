@@ -2,6 +2,8 @@ import React from 'react';
 
 import { FlexSection, LogButton, LogInput } from '@components/ui';
 
+import { AccountType } from '@models/CollectionLog';
+
 import { fetchCollectionLog } from '@store/collectionlog/actions';
 import { useAppDispatch, useAppSelector } from '@store/hooks';
 import { RootState } from '@store/store';
@@ -57,7 +59,7 @@ const LogHeader = () => {
       </form>
       <div className='m-[3px] grow page-title'>
         <h1>
-          {state.data?.account_type && state.data?.account_type != 'NORMAL' &&
+          {state.data?.account_type && state.data?.account_type != AccountType.NORMAL &&
             <img
               className='inline-block w-[20px] mr-[5px] mt-[-10px] icon-shadow'
               src={`https://oldschool.runescape.wiki/images/${capitalize(state.data.account_type)}_chat_badge.png`}
@@ -72,13 +74,13 @@ const LogHeader = () => {
           Unique: <span className='text-white'>
             {getItemCounts('unique')}{' '}
             <span className='text-[16px]'>
-              (#{state.ranks?.unique})
+              (#{state.ranks?.unique ?? ''})
             </span>
           </span>{' '}
           Total: <span className='text-white'>
             {getItemCounts('total')}{' '}
             <span className='text-[16px]'>
-              (#{state.ranks?.total})
+              (#{state.ranks?.total ?? ''})
             </span>
           </span>
         </p>

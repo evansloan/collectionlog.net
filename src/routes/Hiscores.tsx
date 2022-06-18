@@ -4,10 +4,12 @@ import { useParams } from 'react-router';
 
 import { HiscoresList, HiscoresNav } from '@components/hiscores';
 import { Container } from '@components/layout';
-import { capitalize } from '@utils/format';
-import { useAppDispatch, useAppSelector } from '@store/hooks';
+
 import { fetchHiscores } from '@store/hiscores/actions';
 import { HiscoresType } from '@store/hiscores/slice';
+import { useAppDispatch, useAppSelector } from '@store/hooks';
+
+import { capitalize } from '@utils/format';
 
 const Hiscores = () => {
   const dispatch = useAppDispatch();
