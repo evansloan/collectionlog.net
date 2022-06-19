@@ -8,8 +8,8 @@ const HISCORES_FILTERS = [
   'ironman',
   'hardcore ironman',
   'ultimate ironman',
-  'hardcore group ironman',
   'group ironman',
+  'hardcore group ironman',
   'normal',
 ];
 
