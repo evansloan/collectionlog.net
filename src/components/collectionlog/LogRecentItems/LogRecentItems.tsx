@@ -9,7 +9,7 @@ interface LogRecentItemsProps {
 }
 
 const LogRecentItems = (props: LogRecentItemsProps) => (
-  <div className='recent-items-container p-[10px] border-4 border-black border-t-0'>
+  <div className='recent-items-container p-[10px] shadow-log border-4 border-black border-t-0'>
     <h2 className='text-center'>Recent Obtained Items</h2>
     <div className='recent-items flex flex-wrap justify-around mt-[20px]'>
       {props.items?.map((item, i) => {

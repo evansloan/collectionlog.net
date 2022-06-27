@@ -7,7 +7,7 @@ interface LogInputProps {
 }
 
 const LogInput = (props: LogInputProps) => {
-  let className = 'pl-[10px] bg-light text-[20px] text-white border-0 shadow-none focus:outline-none';
+  let className = 'pl-[10px] bg-light text-[20px] text-white border-0 shadow-log focus:outline-none';
   if (props.className) {
     className = `${className} ${props.className}`;
   }
