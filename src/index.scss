@@ -2,40 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import './scss/variables';
-@import './scss/utlities.scss';
+@import './assets/scss/variables';
+@import './assets/scss/utlities.scss';
 
-h1, h2, h3, h4, h5 {
-  color: $text-orange;
-  text-align: center;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-}
-
-h1 {
-  font-size: 24px;
-}
-
-h2 {
-  font-size: 22px;
-}
-
-h3 {
-  font-size: 20px;
-}
-
-a {
-  text-decoration: underline;
-  color: $text-orange;
-
-  &:hover {
-    color: white;
-  }
+html, body {
+  height: 100%;
 }
 
 body {
-  margin: 0;
   font-family: 'Runescape', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,22 +17,59 @@ body {
   text-shadow: $text-shadow;
 }
 
-.log-button {
-  padding: 10px;
-  background-color: $bg-primary;
-  border: 2px solid $bg-lighter;
-  font-size: 20px;
+h1, h2, h3 {
   color: $text-orange;
-  text-shadow: $text-shadow;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
 
-  &:hover {
-    background-color: $bg-highlight;
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+h3 {
+  font-size:1.15rem;
+}
+
+a {
+  color: $text-orange;
+  text-decoration: underline;
+
+  :visited {
     color: $text-orange;
   }
 }
 
-.spacer {
-  width: 30%;
+p {
+  color: white;
+}
+
+select {
+  &:focus {
+    outline: none;
+  }
+
+  option {
+    font-family: 'Runescape', monospace;
+    font-size: 16px;
+
+    &:checked, &:hover {
+      background-color: $bg-highlight;
+      padding: 5px;
+    }
+  }
+}
+
+button {
+  &:focus {
+    outline: none;
+    background-color: $bg-highlight;
+  }
 }
 
 input {
@@ -79,4 +90,27 @@ input {
   &::placeholder {
     text-shadow: $text-shadow;
   }
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-dark;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $bg-primary;
+  box-shadow: $log-shadow;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: $bg-highlight;
 }

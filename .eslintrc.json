@@ -29,7 +29,8 @@
     "indent": ["error", 2],
     "jsx-quotes": ["error", "prefer-single"],
     "max-len": ["off"],
-    "multiline-comment-style": ["warn", "starred-block"],
+    "multiline-comment-style": ["off"],
+    "no-case-declarations": ["off"],
     "no-explicit-any": ["off"],
     "no-multiple-empty-lines": ["error", { "max": 1 }],
     "no-multi-spaces": ["error", { "ignoreEOLComments": true }],
@@ -58,7 +59,7 @@
       "error",
       "always",
       {
-        "arraysInObjects": false,
+        "arraysInObjects": true,
         "objectsInObjects": true
       }
     ],
