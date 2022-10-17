@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import DocumentMeta from 'react-document-meta';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { loadRecentItemsGlobal, loadUserCount } from '../app/reducers/home/slice';
@@ -25,8 +26,22 @@ const Home = () => {
     dispatch(loadUserCount());
   }, []);
 
+  const pageTitle = 'Collection Log';
+
+  const meta = {
+    title: pageTitle,
+    property: {
+      'og:title': pageTitle,
+      'twitter:title': pageTitle,
+    },
+    auto: {
+      ograph: true,
+    },
+  };
+
   return (
     <PageContainer>
+      <DocumentMeta {...meta} />
       <PageHeader>
         <PageTitle
           title='collectionlog.net'
