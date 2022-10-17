@@ -32,7 +32,7 @@ const Table = (props: TableProps) => {
 
   return (
     <div className='flex flex-col grow overflow-y-scroll'>
-      <div className='flex bg-dark text-center sticky top-0'>
+      <div className='flex bg-dark text-center sticky top-0 z-50'>
         {headings.map((heading, i) => {
           return (
             <div key={`${i}-${heading}`} className='flex-1'>
