@@ -31,7 +31,7 @@ const Table = (props: TableProps) => {
   const headings = columns.map((column) => column.heading);
 
   return (
-    <div className='flex flex-col grow overflow-y-scroll'>
+    <div className='flex flex-col grow overflow-y-auto'>
       <div className='flex bg-dark text-center sticky top-0 z-50'>
         {headings.map((heading, i) => {
           return (
