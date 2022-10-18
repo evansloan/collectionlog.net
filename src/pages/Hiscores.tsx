@@ -136,6 +136,7 @@ const Hiscores = () => {
             onChange={(e) => onAccountTypeChange(e.target.value)}
           >
             <option value='ALL'>All</option>
+            <option value='NORMAL'>Normal</option>
             <option value='IRONMAN'>Ironman</option>
             <option value='HARDCORE_IRONMAN'>Hardcore Ironman</option>
             <option value='ULTIMATE_IRONMAN'>Ultimate Ironman</option>
