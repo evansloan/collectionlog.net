@@ -50,7 +50,7 @@ const DropDown = (props: DropDownProps) => {
           <span className='underline'>{title}</span> <span>&#9207;</span>
         </button>
         {isOpen &&
-          <div className='flex flex-col absolute left-0 right-0 md:left-auto md:right-auto md:min-w-[150px] p-2 text-left bg-dark border border-black z-10' onClick={onClick}>
+          <div className='flex flex-col absolute left-0 right-0 md:left-auto md:right-auto md:min-w-[150px] p-2 text-left bg-dark border border-black z-50' onClick={onClick}>
             {children}
           </div>
         }
