@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import DocumentMeta from 'react-document-meta';
 import { useNavigate, useParams } from 'react-router-dom';
+import { AccountType } from '../app/constants';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
@@ -18,9 +19,10 @@ import {
   Spinner,
   Table,
 } from '../components/elements';
+import Select, { SelectOption } from '../components/elements/Select';
 import { ColumnType } from '../components/elements/Table';
 import { PageContainer, PageHeader } from '../components/layout';
-import { updateUrl } from '../utils';
+import { toTitleCase, updateUrl } from '../utils';
 
 const TABLE_COLUMNS = [
   {
@@ -55,6 +57,16 @@ const Hiscores = () => {
   const dispatch = useAppDispatch();
   const params = useParams();
   const navigate = useNavigate();
+
+  const accountTypeOptions: SelectOption[] = [{ title: 'All', value: 'ALL', selected: true }];
+
+  for (const accountType in AccountType) {
+    const optionTitle = toTitleCase(accountType.replace(/_/g, ' '));
+    accountTypeOptions.push({
+      title: optionTitle,
+      value: accountType,
+    });
+  }
 
   /**
    * Load hiscores data from API.
@@ -147,22 +159,9 @@ const Hiscores = () => {
       <div className='flex flex-col h-full md:flex-row m-2 border-2 border-light md:overflow-hidden shadow-log'>
         <Button title='Show options' className='block md:hidden mb-2' onClick={showMenu} />
         {mobileButtonGroup}
-        <div className='hidden md:flex flex-col p-5 bg-light text-lg' id='hiscores-menu'>
+        <div className='hidden md:flex flex-col md:w-1/5 p-5 bg-light text-lg' id='hiscores-menu'>
           <label className='text-white' htmlFor='account-type'>Account type:</label>
-          <select
-            className='p-2 bg-primary border-2 border-light text-orange text-shadow'
-            name='account-type'
-            id='account-type'
-            onChange={(e) => onAccountTypeChange(e.target.value)}
-          >
-            <option value='ALL'>All</option>
-            <option value='NORMAL'>Normal</option>
-            <option value='IRONMAN'>Ironman</option>
-            <option value='HARDCORE_IRONMAN'>Hardcore Ironman</option>
-            <option value='ULTIMATE_IRONMAN'>Ultimate Ironman</option>
-            <option value='GROUP_IRONMAN'>Group Ironman</option>
-            <option value='HARDCORE_GROUP_IRONMAN'>Hardcore Group Ironman</option>
-          </select>
+          <Select options={accountTypeOptions} onChange={onAccountTypeChange} />
           <form className='flex flex-col' onSubmit={(e) => onSearch(e) }>
             <label className='text-white'>Search:</label>
             <Input placeholder='Enter username...' onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value ?? '') }/>
