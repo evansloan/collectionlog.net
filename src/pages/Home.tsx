@@ -6,13 +6,14 @@ import { loadRecentItemsGlobal, loadUserCount } from '../app/reducers/home/slice
 import logIcon from '../assets/images/collectionlog.png';
 import discordIcon from '../assets/images/discord.png';
 import githubIcon from '../assets/images/github.png';
-import Button from '../components/elements/Button';
-import LogItem from '../components/elements/Item';
-import PageTitle from '../components/elements/PageTitle';
-import Spinner from '../components/elements/Spinner';
-import Tabs from '../components/elements/Tabs';
-import PageContainer from '../components/layout/PageContainer';
-import PageHeader from '../components/layout/PageHeader';
+import {
+  Button,
+  Item,
+  PageTitle,
+  Spinner,
+  Tabs,
+} from '../components/elements';
+import { PageContainer, PageHeader } from '../components/layout';
 import { formatDate } from '../utils';
 
 const Home = () => {
@@ -64,7 +65,7 @@ const Home = () => {
                   {recentItems?.map((item, i) => {
                     return (
                       <div key={`${i}-${item.id}`} className='flex items-center w-1/2 sm:1/3 md:1/4 lg:w-1/5 mb-2 md:mb-5'>
-                        <LogItem item={item} showQuantity={false}/>
+                        <Item item={item} showQuantity={false}/>
                         <div className='flex flex-col flex-1 items-center md:items-start'>
                           <a className='text-lg' href={`/log/${item.username}`}>{item.username}</a>
                           <p>{item.name}</p>
