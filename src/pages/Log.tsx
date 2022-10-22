@@ -2,8 +2,14 @@ import { useEffect, useState } from 'react';
 import DocumentMeta from 'react-document-meta';
 import { useParams } from 'react-router-dom';
 
+import { AccountType } from '../app/constants';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { loadCollectionLog, loadHiscoresRank, loadRecentItems, setError } from '../app/reducers/log/slice';
+import {
+  loadCollectionLog,
+  loadHiscoresRank,
+  loadRecentItems,
+  setError,
+} from '../app/reducers/log/slice';
 import {
   AccountIcon,
   Button,
