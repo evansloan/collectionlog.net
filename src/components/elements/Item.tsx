@@ -1,14 +1,14 @@
 import icons from '../../assets/data/item-icons.json';
 import { formatDate } from '../../utils';
 
-interface LogItemProps {
+interface ItemProps {
   item: CollectionLogItem;
   showQuantity?: boolean;
   showTooltip?: boolean;
   isLink?: boolean;
 }
 
-const LogItem = (props: LogItemProps) => {
+const Item = (props: ItemProps) => {
   const { item, showQuantity, showTooltip } = props;
   const {
     id,
@@ -51,4 +51,4 @@ const LogItem = (props: LogItemProps) => {
   );
 };
 
-export default LogItem;
+export default Item;

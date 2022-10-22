@@ -4,14 +4,15 @@ import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { loadCollectionLog, loadHiscoresRank, loadRecentItems, setError } from '../app/reducers/log/slice';
-import AccountIcon from '../components/elements/AccountIcon';
-import Button from '../components/elements/Button';
-import LogItem from '../components/elements/Item';
-import PageTitle from '../components/elements/PageTitle';
-import Spinner from '../components/elements/Spinner';
-import Tabs from '../components/elements/Tabs';
-import PageContainer from '../components/layout/PageContainer';
-import PageHeader from '../components/layout/PageHeader';
+import {
+  AccountIcon,
+  Button,
+  Item,
+  PageTitle,
+  Spinner,
+  Tabs,
+} from '../components/elements';
+import { PageContainer, PageHeader } from '../components/layout';
 import { formatDate, sortAlphabetical, updateUrl } from '../utils';
 
 const TABS = [
@@ -219,7 +220,7 @@ const Log = () => {
                           <div className='flex flex-wrap grow content-start px-2 pt-3 mb-3 overflow-y-auto shadow-log'>
                             {entryData?.items.map((item, i) => {
                               return (
-                                <LogItem key={`${i}-${item.id}`} item={item} showQuantity={true} showTooltip={true} />
+                                <Item key={`${i}-${item.id}`} item={item} showQuantity={true} showTooltip={true} />
                               );
                             })}
                           </div>
@@ -238,7 +239,7 @@ const Log = () => {
                 {recentItems?.map((item, i) => {
                   return (
                     <div key={`${i}-${item.id}`} className='flex flex-wrap justify-center grow'>
-                      <LogItem item={item} showQuantity={false}/>
+                      <Item item={item} showQuantity={false}/>
                       <div className='flex flex-col'>
                         <p>{item.name}</p>
                         <p>{formatDate(item.obtainedAt as string)}</p>

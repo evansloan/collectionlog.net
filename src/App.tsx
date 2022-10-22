@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Hiscores, Home, Log } from './pages';
-import Header from './components/layout/Header';
-import Footer from './components/layout/Footer';
+import { Footer, Header } from './components/layout';
 
 const App = () => (
   <BrowserRouter>

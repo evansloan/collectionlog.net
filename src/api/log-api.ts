@@ -11,7 +11,7 @@ import {
 } from './responses';
 
 class CollectionLogAPI {
-  private static readonly BASE_URL = 'https://api.collectionlog.net';
+  private static readonly BASE_URL = 'http://localhost:3001';
   private static readonly COLLECTION_LOG_ENDPOINT = 'collectionlog';
   private static readonly HISCORES_ENDPOINT = 'hiscores';
   private static readonly ITEMS_ENDPOINT = 'items';

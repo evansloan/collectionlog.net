@@ -11,13 +11,15 @@ import {
   setPage,
   setUsername,
 } from '../app/reducers/hiscores/slice';
-import Button from '../components/elements/Button';
-import Input from '../components/elements/Input';
-import PageTitle from '../components/elements/PageTitle';
-import Spinner from '../components/elements/Spinner';
-import Table, { ColumnType } from '../components/elements/Table';
-import PageContainer from '../components/layout/PageContainer';
-import PageHeader from '../components/layout/PageHeader';
+import {
+  Button,
+  Input,
+  PageTitle,
+  Spinner,
+  Table,
+} from '../components/elements';
+import { ColumnType } from '../components/elements/Table';
+import { PageContainer, PageHeader } from '../components/layout';
 import { updateUrl } from '../utils';
 
 const TABLE_COLUMNS = [

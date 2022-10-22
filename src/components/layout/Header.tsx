@@ -3,10 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { CollectionLogAPI } from '../../api/log-api';
 import discordIcon from '../../assets/images/discord.png';
-import AccountIcon from '../elements/AccountIcon';
-import Button from '../elements/Button';
-import DropDown from '../elements/DropDown';
-import Input from '../elements/Input';
+import { AccountIcon, Button, DropDown, Input } from '../elements';
 
 const Header = () => {
   const [search, setSearch] = useState('');
