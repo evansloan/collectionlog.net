@@ -118,6 +118,23 @@ const Hiscores = () => {
     title: `Hiscores | Page ${hiscoresState?.page ?? 1}`,
   };
 
+  const mobileButtonGroup = (
+    <div className='flex md:hidden'>
+      {hiscoresState.page > 1 &&
+        <Button
+          title={`< Page ${hiscoresState.page - 1}`}
+          onClick={() => onPageClick(hiscoresState.page - 1)}
+          className='flex-1 text-orange'
+        />
+      }
+      <Button
+        title={`Page ${hiscoresState.page + 1} >`}
+        onClick={() => onPageClick(hiscoresState.page + 1)}
+        className='flex-1 text-orange'
+      />
+    </div>
+  );
+
   return (
     <PageContainer>
       <DocumentMeta {...meta} />
@@ -129,6 +146,7 @@ const Hiscores = () => {
       </PageHeader>
       <div className='flex flex-col h-full md:flex-row m-2 border-2 border-light md:overflow-hidden shadow-log'>
         <Button title='Show options' className='block md:hidden mb-2' onClick={showMenu} />
+        {mobileButtonGroup}
         <div className='hidden md:flex flex-col p-5 bg-light text-lg' id='hiscores-menu'>
           <label className='text-white' htmlFor='account-type'>Account type:</label>
           <select
@@ -150,24 +168,27 @@ const Hiscores = () => {
             <Input placeholder='Enter username...' onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value ?? '') }/>
             <Button type='submit' title='Search' />
           </form>
-          <label className='text-white'>Change page:</label>
+          <label className='hidden md:block text-white'>Change page:</label>
           {hiscoresState.page > 1 &&
             <Button
               title={`< Page ${hiscoresState.page - 1}`}
               onClick={() => onPageClick(hiscoresState.page - 1)}
-              className='text-orange'
+              className='hidden md:block text-orange'
             />
           }
           <Button
             title={`Page ${hiscoresState.page + 1} >`}
             onClick={() => onPageClick(hiscoresState.page + 1)}
-            className='text-orange'
+            className='hidden md:block text-orange'
           />
         </div>
         {hiscoresState.isLoading ?
           <Spinner />
           :
-          <Table data={hiscoresState.data} columns={TABLE_COLUMNS} highlightVal={hiscoresState.username}/>
+          <>
+            <Table data={hiscoresState.data} columns={TABLE_COLUMNS} highlightVal={hiscoresState.username}/>
+            {mobileButtonGroup}
+          </>
         }
       </div>
     </PageContainer>
