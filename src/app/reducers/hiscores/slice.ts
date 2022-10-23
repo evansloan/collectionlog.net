@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { CollectionLogAPI } from '../../../api/log-api';
+import { AccountType } from '../../constants';
 
 export interface HiscoresState {
   page: number;
