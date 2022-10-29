@@ -212,7 +212,7 @@ const Log = () => {
                         </div>
                         <div id='entry-items' className='flex md:flex flex-col w-full md:w-3/4'>
                           <div className='mx-2 border-b border-b-lighter shadow-log'>
-                            <Button title='Show Entries' className='w-full block md:hidden' onClick={showEntries} />
+                            <Button title='Show Pages' className='w-full block md:hidden' onClick={showEntries} />
                             <h3 className='text-xl font-bold text-orange'>{activeEntry}</h3>
                             <p className='text-orange'>Obtained: <span className={obtainedClass}>{obtainedCount}/{itemCount}</span></p>
                             {entryData?.killCount?.map((kc, i) => {
