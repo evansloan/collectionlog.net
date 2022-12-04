@@ -1,7 +1,7 @@
 export const sortAlphabetical = (vals: string[]) => {
   return vals.sort((a, b) => {
-    a.replace(/^The /, '');
-    b.replace(/^The /, '');
+    a = a.replace(/^The /, '');
+    b = b.replace(/^The /, '');
     return a.localeCompare(b);
   });
 };
