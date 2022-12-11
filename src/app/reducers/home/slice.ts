@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { CollectionLogAPI } from '../../../api/log-api';
+import TwitchAPI from '../../../api/twitch/twitch-api';
 
 export interface HomeState {
   recentItems?: CollectionLogItem[];
   userCount: number;
   isLoading: boolean;
+  streams?: any[];
 }
 
 const initialState: HomeState = {
@@ -32,6 +34,15 @@ export const loadUserCount = createAsyncThunk(
   }
 );
 
+export const loadStreams = createAsyncThunk(
+  'home/loadStreams',
+  async () => {
+    const api = TwitchAPI.getInstance();
+    const streams = await api.getStreams();
+    return streams;
+  }
+);
+
 export const homeSlice = createSlice({
   name: 'home',
   initialState,
@@ -50,6 +61,9 @@ export const homeSlice = createSlice({
       })
       .addCase(loadUserCount.fulfilled, (state, action) => {
         state.userCount = action.payload;
+      })
+      .addCase(loadStreams.fulfilled, (state, action) => {
+        state.streams = action.payload;
       });
   },
 });

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import DocumentMeta from 'react-document-meta';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { loadRecentItemsGlobal, loadUserCount } from '../app/reducers/home/slice';
+import { loadRecentItemsGlobal, loadStreams, loadUserCount } from '../app/reducers/home/slice';
 import logIcon from '../assets/images/collectionlog.png';
 import discordIcon from '../assets/images/discord.png';
 import githubIcon from '../assets/images/github.png';
@@ -20,11 +20,12 @@ const Home = () => {
   const homeState = useAppSelector((state) => state.home);
   const dispatch = useAppDispatch();
 
-  const { isLoading, recentItems, userCount } = homeState;
+  const { isLoading, recentItems, streams, userCount } = homeState;
 
   useEffect(() => {
     dispatch(loadRecentItemsGlobal());
     dispatch(loadUserCount());
+    dispatch(loadStreams());
   }, []);
 
   const pageTitle = 'Collection Log';
@@ -77,6 +78,31 @@ const Home = () => {
                 </div>
               </div>
             }
+          </div>
+          <div data-tab='Live streams'>
+            <div className='h-full overflow-hidden'>
+              {streams == undefined ?
+                <div className='flex justify-center items-center h-[90%]'>
+                  <Spinner />
+                </div>
+                :
+                <div className='flex justify-evenly flex-wrap mt-2'>
+                  {streams.length == 0 ?
+                    <h3>No live streams</h3>
+                    :
+                    streams.map((stream, i) => {
+                      return (
+                        <a key={`${stream.title}-${i}`} className='w-1/4 text-center no-underline' href={`https://twitch.tv/${stream.user_login}`}>
+                          <img className='m-auto' src={stream.thumbnail_url.replace(/{width}/g, '150').replace(/{height}/g, '100')} />
+                          <h4 className='text-orange font-bold'>{stream.title}</h4>
+                          <p>{stream.user_name}</p>
+                        </a>
+                      );
+                    })
+                  }
+                </div>
+              }
+            </div>
           </div>
           <div data-tab='FAQ'>
             <div className='flex justify-around text-lg'>
