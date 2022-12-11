@@ -6,8 +6,8 @@ export default class TwitchAPI {
 
   private static readonly GAME_ID = '459931';
 
-  private static readonly CLIENT_ID = process.env.TWITCH_CLIENT_ID as string;
-  private static readonly CLIENT_SECRET = process.env.TWITCH_CLIENT_SECRET as string;
+  private static readonly CLIENT_ID = process.env.REACT_APP_TWITCH_CLIENT_ID as string;
+  private static readonly CLIENT_SECRET = process.env.REACT_APP_TWITCH_CLIENT_SECRET as string;
   private static readonly GRANT_TYPE = 'client_credentials';
 
   private static readonly SEARCH_KEYS = [

@@ -6,9 +6,8 @@ frontend:
         - yarn install
     build:
       commands:
-        - API_URL=${API_URL}
-        - TWITCH_CLIENT_SECRET=${TWITCH_CLIENT_SECRET}
-        - TWITCH_CLIENT_ID=${TWITCH_CLIENT_ID}
+        - REACT_APP_TWITCH_CLIENT_SECRET=${REACT_APP_TWITCH_CLIENT_SECRET}
+        - REACT_APP_TWITCH_CLIENT_ID=${REACT_APP_TWITCH_CLIENT_ID}
         - yarn run build
   artifacts:
     baseDirectory: build
