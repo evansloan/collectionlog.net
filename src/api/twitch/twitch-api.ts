@@ -87,6 +87,11 @@ export default class TwitchAPI {
     const logStreams: any[] = [];
     streams.forEach((stream) => {
       TwitchAPI.SEARCH_KEYS.forEach((key) => {
+        const existing = logStreams.filter((es) => es.title == stream.title);
+        if (existing.length) {
+          return;
+        }
+
         if (stream.title.toLowerCase().includes(key)) {
           logStreams.push(stream);
         }
