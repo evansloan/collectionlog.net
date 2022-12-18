@@ -32,9 +32,10 @@ export const loadHiscores = createAsyncThunk(
 
 export const searchHiscores = createAsyncThunk(
   'hiscores/searchHiscores',
-  async (username: string) => {
+  async (params: { username: string; filter: FilterType }) => {
+    const { username, filter } = params;
     const api = CollectionLogAPI.getInstance();
-    const response = await api.getRankByUsername(username);
+    const response = await api.getRankByUsername(username, filter);
     const { rank } = response.data;
 
     return {

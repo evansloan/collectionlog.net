@@ -109,7 +109,10 @@ const Hiscores = () => {
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(searchHiscores(hiscoresState.username ?? ''));
+    dispatch(searchHiscores({
+      username: hiscoresState.username ?? '',
+      filter: hiscoresState.accountType,
+    }));
   };
 
   const showMenu = () => {

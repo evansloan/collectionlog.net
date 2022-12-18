@@ -73,9 +73,13 @@ class CollectionLogAPI {
     return await this.getRequest<HiscoresResponse>(url, queryParams);
   };
 
-  getRankByUsername = async (username: string) => {
+  getRankByUsername = async (username: string, filter?: string) => {
     const url = `${CollectionLogAPI.HISCORES_ENDPOINT}/rank/${username}`;
-    return await this.getRequest<RankResponse>(url);
+    let queryParams = undefined;
+    if (filter != 'ALL') {
+      queryParams = { accountType: filter };
+    }
+    return await this.getRequest<RankResponse>(url, queryParams);
   };
 
   getUserTypeahead = async (username: string) => {
