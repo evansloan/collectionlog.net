@@ -171,13 +171,12 @@ const Hiscores = () => {
             <Button type='submit' title='Search' />
           </form>
           <label className='hidden md:block text-white'>Change page:</label>
-          {hiscoresState.page > 1 &&
-            <Button
-              title={`< Page ${hiscoresState.page - 1}`}
-              onClick={() => onPageClick(hiscoresState.page - 1)}
-              className='hidden md:block text-orange'
-            />
-          }
+          <Button
+            title={hiscoresState.page > 1 ? `< Page ${hiscoresState.page - 1}` : '< Page 1'}
+            onClick={() => onPageClick(hiscoresState.page - 1)}
+            className='hidden md:block text-orange'
+            disabled={hiscoresState.page == 1}
+          />
           <Button
             title={`Page ${hiscoresState.page + 1} >`}
             onClick={() => onPageClick(hiscoresState.page + 1)}

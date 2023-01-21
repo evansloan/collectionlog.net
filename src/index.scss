@@ -70,6 +70,15 @@ button {
     outline: none;
     background-color: $bg-highlight;
   }
+
+  &:disabled {
+    background-color: transparent;
+    color: darkgray;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
 }
 
 input {
