@@ -66,7 +66,7 @@ const Home = () => {
                   {recentItems?.map((item, i) => {
                     return (
                       <div key={`${i}-${item.id}`} className='flex items-center w-1/2 sm:1/3 md:1/4 lg:w-1/5 mb-2 md:mb-5'>
-                        <Item item={item} showQuantity={false}/>
+                        <Item item={item} showQuantity={false} isDetail={true} />
                         <div className='flex flex-col flex-1 items-center md:items-start'>
                           <a className='text-lg' href={`/log/${item.username}`}>{item.username}</a>
                           <p>{item.name}</p>
