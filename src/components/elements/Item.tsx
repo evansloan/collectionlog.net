@@ -19,9 +19,9 @@ const Item = (props: ItemProps) => {
     obtainedAt,
   } = item;
 
-  let wrapperClassName = 'w-1/4 sm:w-1/5 h-[50px] mb-[10px]';
-  if (!isDetail) {
-    wrapperClassName += ' md:w-[16.6%]';
+  let wrapperClassName = 'w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]';
+  if (isDetail) {
+    wrapperClassName = 'w-[50px] h-[50px] mb-[10px]';
   }
 
   return (
