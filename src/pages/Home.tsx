@@ -111,7 +111,7 @@ const Home = () => {
                 <h3>How do I upload my collection log?</h3>
                 <ol className='list-decimal text-white ml-3'>
                   <li>
-                    <p>Install the <a href={pluginUrl}>Collection Log Runelite plugin</a> from the Runelite plugin hub.</p>
+                    <p>Install the <a href={pluginUrl}>Collection Log RuneLite plugin</a> from the RuneLite plugin hub.</p>
                   </li>
                   <li>
                     <p>Open your collection log in-game and click through all pages in order to save a copy of your collection log.</p>

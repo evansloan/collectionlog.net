@@ -11,7 +11,7 @@ const Footer = () => {
         Install the {' '}
         <a href={pluginUrl}>Collection Log plugin</a> {' '}
         on {' '}
-        <a href='https://runelite.net'>Runelite</a>
+        <a href='https://runelite.net'>RuneLite</a>
       </p>
       <p>
         Have a problem or found a bug? Submit an issue on {' '}
