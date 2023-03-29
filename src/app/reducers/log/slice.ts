@@ -20,7 +20,27 @@ export const loadCollectionLog = createAsyncThunk(
     const api = CollectionLogAPI.getInstance();
     username = username.toLowerCase();
     const response = await api.getCollectionLog(username);
-    return response.data.collectionLog;
+
+    const collectionLog = response.data.collectionLog;
+
+    // Calculate uniques by item counts. This number may differ from the overall definitive uniques obtained if data is out of sync.
+    const uniquesObtainedByItemCount = new Set<number>();
+    for(const tabKey in collectionLog.tabs) {
+      const tab = collectionLog.tabs[tabKey];
+
+      for(const collectionLogEntryKey in tab) {
+        const collectionLogEntry = tab[collectionLogEntryKey];
+
+        for(const item of collectionLogEntry.items) {
+          if (item.obtained && !uniquesObtainedByItemCount.has(item.id)) {
+            uniquesObtainedByItemCount.add(item.id);
+          }
+        }
+      }
+    }
+    collectionLog.uniqueObtainedByItemCount = uniquesObtainedByItemCount.size;
+
+    return collectionLog;
   }
 );
 

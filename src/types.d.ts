@@ -35,8 +35,9 @@ interface CollectionLog {
   accountType: AccountType;
   totalObtained: number;
   totalitems: number;
-  uniqueObtained: number;
+  uniqueObtained: number; // The total uniques obtained as defined by the overview number
   uniqueItems: number;
+  uniqueObtainedByItemCount: number; // The total uniques obtained as defined by the sum of known obtained. If value doesn't match uniqueObtained, this is indicative of item data being out of sync.
 }
 
 interface RecentItems {
