@@ -6,6 +6,7 @@ import { loadRecentItemsGlobal, loadStreams, loadUserCount } from '../app/reduce
 import logIcon from '../assets/images/collectionlog.png';
 import discordIcon from '../assets/images/discord.png';
 import githubIcon from '../assets/images/github.png';
+import { discordUrl, gitHubUrl, pluginUrl } from '../constants/Urls';
 import {
   Button,
   Item,
@@ -110,7 +111,7 @@ const Home = () => {
                 <h3>How do I upload my collection log?</h3>
                 <ol className='list-decimal text-white ml-3'>
                   <li>
-                    <p>Install the <a href=''>Collection Log Runelite plugin</a> from the Runelite plugin hub.</p>
+                    <p>Install the <a href={pluginUrl}>Collection Log RuneLite plugin</a> from the RuneLite plugin hub.</p>
                   </li>
                   <li>
                     <p>Open your collection log in-game and click through all pages in order to save a copy of your collection log.</p>
@@ -151,6 +152,7 @@ const Home = () => {
                   icon={discordIcon}
                   className='block w-1/4 m-auto bg-[#6A5ACD] hover:bg-[#6d67b6] text-lg'
                   title='Open in Discord'
+                  externalLink={discordUrl}
                 />
               </div>
               <div className='flex-1'>
@@ -160,6 +162,7 @@ const Home = () => {
                   icon={githubIcon}
                   className='block w-1/4 m-auto bg-black hover:bg-gray-500 text-lg'
                   title='View on GitHub'
+                  externalLink={gitHubUrl}
                 />
               </div>
             </div>

@@ -6,12 +6,13 @@ type HTMLButtonProps = DetailedHTMLElementProps<
 interface OverrideProps {
   title: string;
   icon?: string;
+  externalLink?: string;
 }
 
 type ButtonProps = HTMLButtonProps & OverrideProps;
 
 const Button = (props: ButtonProps) => {
-  return (
+  let buttonDom = (
     <button
       {...props}
       className={`p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow ${props.className ?? ''}`}
@@ -24,6 +25,17 @@ const Button = (props: ButtonProps) => {
       </div>
     </button>
   );
+
+  // Wrap the button in an anchor if we should be redirecting outwards
+  if (props.externalLink) {
+    buttonDom = (
+      <a href={props.externalLink}>
+        {buttonDom}
+      </a>
+    );
+  }
+
+  return buttonDom;
 };
 
 export default Button;

@@ -1,3 +1,5 @@
+import { gitHubUrl, pluginUrl } from '../../constants/Urls';
+
 const Footer = () => {
   return (
     <footer className='flex flex-wrap justify-around w-full mt-2 p-2 bg-primary border-t-4 border-t-black text-sm text-center shadow-log'>
@@ -7,13 +9,13 @@ const Footer = () => {
       </p>
       <p>
         Install the {' '}
-        <a href='https://runelite.net/plugin-hub/show/collection-log'>Collection Log plugin</a> {' '}
+        <a href={pluginUrl}>Collection Log plugin</a> {' '}
         on {' '}
-        <a href='https://runelite.net'>Runelite</a>
+        <a href='https://runelite.net'>RuneLite</a>
       </p>
       <p>
         Have a problem or found a bug? Submit an issue on {' '}
-        <a href='https://github.com/evansloan/collectionlog.net/issues/new/choose'>Github</a>
+        <a href={gitHubUrl + '/issues/new/choose'}>GitHub</a>
       </p>
     </footer>
   );
