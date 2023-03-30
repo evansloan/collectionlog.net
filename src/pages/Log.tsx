@@ -104,6 +104,35 @@ const Log = () => {
     obtainedClass = 'text-red';
   }
 
+  /**
+   * Explicitly iterate through and count the unique items that have been obtained.
+   *
+   * This value can be compared to the total uniques collected. If the values do not match, it is an indicator that a sync is needed for some entries.
+   */
+  const countObtainedUniques = (collectionLog: CollectionLog | undefined): number => {
+    if (collectionLog === undefined) {
+      return 0;
+    }
+
+    const uniqueItemIds = new Set<number>();
+    for(const tabKey in collectionLog.tabs) {
+      const tab = collectionLog.tabs[tabKey];
+
+      for(const collectionLogEntryKey in tab) {
+        const collectionLogEntry = tab[collectionLogEntryKey];
+
+        for(const item of collectionLogEntry.items) {
+          if (item.obtained && !uniqueItemIds.has(item.id)) {
+            uniqueItemIds.add(item.id);
+          }
+        }
+      }
+    }
+    return uniqueItemIds.size;
+  };
+
+  const explicitlyCountedUniques = countObtainedUniques(collectionLog);
+
   const onTabClick = (tabName: string) => {
     const entries = sortAlphabetical(Object.keys(collectionLog?.tabs[tabName] ?? []));
     setActiveTab(tabName);
@@ -175,6 +204,11 @@ const Log = () => {
                 Obtained: <span className='text-white'>{collectionLog?.uniqueObtained}/{collectionLog?.uniqueItems}</span> {' '}
                 Rank: <span className='text-white'>#{logState.rank}</span>
               </p>
+              {collectionLog && collectionLog?.uniqueObtained !== explicitlyCountedUniques &&
+                <p className='text-lg font-bold text-center text-yellow'>
+                  Total obtained does not match specific items collected. Please re-upload collection log data.
+                </p>
+              }
             </PageHeader>
             <div className='md:mx-3 mb-3 md:mt-1 h-full border-2 border-t-0 border-light md:rounded-tr-[10px] md:rounded-tl-[10px] md:overflow-hidden'>
               <Tabs activeTab={activeTab} onClick={onTabClick}>
