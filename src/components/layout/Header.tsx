@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { CollectionLogAPI } from '../../api/log-api';
 import discordIcon from '../../assets/images/discord.png';
+import { discordUrl } from '../../constants/Urls';
 import { AccountIcon, Button, DropDown, Input } from '../elements';
 
 const Header = () => {
@@ -112,7 +113,7 @@ const Header = () => {
         <Link to='/hiscores/1'>Hiscores</Link>
         <div className='flex'>
           <img className='w-[25px] mr-2' src={discordIcon} />
-          <a href='https://discord.gg/loghunters'>Join the Log Hunters Discord server</a>
+          <a href={discordUrl}>Join the Log Hunters Discord server</a>
         </div>
       </div>
       <div className='flex md:hidden justify-around w-full mb-2 p-2 bg-primary border-b-4 border-b-black text-lg shadow-log sticky top-0 z-50'>
@@ -120,7 +121,7 @@ const Header = () => {
           <Link to='/'>Home</Link>
           <Link to='/hiscores/1'>Hiscores</Link>
           <div className='flex'>
-            <a href='https://discord.gg/loghunters'>Join the Log Hunters Discord server</a>
+            <a href={discordUrl}>Join the Log Hunters Discord server</a>
             <img className='w-[25px] ml-2' src={discordIcon} />
           </div>
         </DropDown>
