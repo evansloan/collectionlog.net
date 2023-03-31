@@ -53,6 +53,23 @@ interface User {
   collectionLog?: CollectionLog;
 }
 
+type RankType = 'ALL'
+  | 'NORMAL'
+  | 'IRONMAN'
+  | 'HARDCORE_IRONMAN'
+  | 'ULTIMATE_IRONMAN'
+  | 'GROUP_IRONMAN'
+  | 'HARDCORE_GROUP_IRONMAN';
+
+type Ranks = {
+  [key in RankType]: number;
+};
+
+interface UserSettings {
+  displayRank: RankType;
+  showQuantity: boolean;
+}
+
 interface Hiscores {
   rank: number;
   username: string;

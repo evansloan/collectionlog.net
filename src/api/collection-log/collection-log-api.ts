@@ -5,13 +5,15 @@ import {
   HiscoresResponse,
   ItemsResponse,
   RankResponse,
+  RanksResponse,
   UserCountResponse,
   UserListResponse,
   UserResponse,
+  UserSettingsResponse,
 } from './responses';
 
 class CollectionLogAPI {
-  private static readonly BASE_URL = 'https://api.collectionlog.net';
+  private static readonly BASE_URL = 'http://localhost:3001';
   private static readonly COLLECTION_LOG_ENDPOINT = 'collectionlog';
   private static readonly HISCORES_ENDPOINT = 'hiscores';
   private static readonly ITEMS_ENDPOINT = 'items';
@@ -82,6 +84,11 @@ class CollectionLogAPI {
     return await this.getRequest<RankResponse>(url, queryParams);
   };
 
+  getRanksByUsername = async (username: string) => {
+    const url = `${CollectionLogAPI.HISCORES_ENDPOINT}/ranks/${username}`;
+    return await this.getRequest<RanksResponse>(url);
+  };
+
   getUserTypeahead = async (username: string) => {
     const url = `${CollectionLogAPI.USER_ENDPOINT}/typeahead/${username.toLowerCase()}`;
     return await this.getRequest<UserListResponse>(url);
@@ -95,6 +102,11 @@ class CollectionLogAPI {
   getUserCount = async () => {
     const url = `${CollectionLogAPI.USER_ENDPOINT}/count`;
     return await this.getRequest<UserCountResponse>(url);
+  };
+
+  getUserSettings = async (username: string) => {
+    const url = `${CollectionLogAPI.USER_ENDPOINT}/settings/${username.toLowerCase()}`;
+    return await this.getRequest<UserSettingsResponse>(url);
   };
 }
 

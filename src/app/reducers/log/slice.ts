@@ -8,7 +8,8 @@ export interface LogState {
   recentItems?: CollectionLogItem[];
   isLoading: boolean;
   error?: string;
-  rank?: number;
+  ranks?: Ranks;
+  userSettings?: UserSettings;
 }
 
 const initialState: LogState = {
@@ -55,22 +56,25 @@ export const loadRecentItems = createAsyncThunk(
   }
 );
 
-export const loadHiscoresRank = createAsyncThunk(
-  'log/fetchHiscoresRank',
+export const loadHiscoresRanks = createAsyncThunk(
+  'log/fetchHiscoresRanks',
   async (username: string) => {
-    const cacheKey = `hiscores-rank-${username}`;
-    const cacheItem = cacheService.get<number>(cacheKey);
-    if (cacheItem) {
-      return cacheItem;
-    }
-
     const api = CollectionLogAPI.getInstance();
     username = username.toLowerCase();
-    const response = await api.getRankByUsername(username);
-    const rank = response.data.rank;
+    const response = await api.getRanksByUsername(username);
+    return response.data.accountTypeRanks;
+  }
+);
 
-    cacheService.add(cacheKey, rank);
-    return rank;
+export const loadUserSettings = createAsyncThunk(
+  'log/fetchUserSettings',
+  async (username: string) => {
+    const api = CollectionLogAPI.getInstance();
+    username = username.toLowerCase();
+    const response = await api.getUserSettings(username);
+    const userSettings = response.data.userSettings;
+
+    return userSettings;
   }
 );
 
@@ -99,8 +103,11 @@ export const logSlice = createSlice({
       .addCase(loadRecentItems.fulfilled, (state, action) => {
         state.recentItems = action.payload;
       })
-      .addCase(loadHiscoresRank.fulfilled, (state, action) => {
-        state.rank = action.payload;
+      .addCase(loadHiscoresRanks.fulfilled, (state, action) => {
+        state.ranks = action.payload as unknown as Ranks;
+      })
+      .addCase(loadUserSettings.fulfilled, (state, action) => {
+        state.userSettings = action.payload;
       });
   },
 });
