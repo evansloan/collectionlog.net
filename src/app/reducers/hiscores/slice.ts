@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CollectionLogAPI } from '../../../api/log-api';
+import { CollectionLogAPI } from '../../../api/collection-log/collection-log-api';
 import { AccountType } from '../../constants';
+import CacheService from '../../../services/cache';
 
 export interface HiscoresState {
   page: number;
@@ -18,15 +19,26 @@ const initialState: HiscoresState = {
   isLoading: false,
 };
 
+const cacheService = CacheService.getInstance();
+
 export type FilterType = AccountType | 'ALL';
 
 export const loadHiscores = createAsyncThunk(
   'hiscores/fetchHiscores',
   async (params: { page: number; filter: FilterType }) => {
+    const cacheKey = 'hiscores';
+    const cacheItem = cacheService.get<Hiscores[]>(cacheKey);
+    if (cacheItem) {
+      return cacheItem;
+    }
+
     const { page, filter } = params;
     const api = CollectionLogAPI.getInstance();
     const response = await api.getHiscores(page, filter);
-    return response.data.hiscores;
+    const hiscores = response.data.hiscores;
+
+    cacheService.add(cacheKey, hiscores);
+    return hiscores;
   }
 );
 

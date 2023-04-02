@@ -95,7 +95,7 @@ const Home = () => {
                       return (
                         <a key={`${stream.title}-${i}`} className='w-1/4 text-center no-underline' href={`https://twitch.tv/${stream.user_login}`}>
                           <img className='m-auto' src={stream.thumbnail_url.replace(/{width}/g, '150').replace(/{height}/g, '100')} />
-                          <h4 className='text-orange font-bold'>{stream.title}</h4>
+                          <h4 className='px-2 text-orange font-bold overflow-hidden text-ellipsis whitespace-nowrap'>{stream.title}</h4>
                           <p>{stream.user_name}</p>
                         </a>
                       );

@@ -61,3 +61,8 @@ interface Hiscores {
   total: number;
   recentObtained: number;
 }
+
+interface CacheItem<T> {
+  data: T;
+  expires: string;
+}

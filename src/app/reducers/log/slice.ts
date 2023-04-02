@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { CollectionLogAPI } from '../../../api/log-api';
+import { CollectionLogAPI } from '../../../api/collection-log/collection-log-api';
+import CacheService from '../../../services/cache';
 
 export interface LogState {
   collectionLog?: CollectionLog;
@@ -14,33 +15,62 @@ const initialState: LogState = {
   isLoading: false,
 };
 
+const cacheService = CacheService.getInstance();
+
 export const loadCollectionLog = createAsyncThunk(
   'log/fetchLog',
   async (username: string) => {
+    const cacheKey = `collection-log-${username}`;
+    const cacheItem = cacheService.get<CollectionLog>(cacheKey);
+    if (cacheItem) {
+      return cacheItem;
+    }
+
     const api = CollectionLogAPI.getInstance();
     username = username.toLowerCase();
     const response = await api.getCollectionLog(username);
-    return response.data.collectionLog;
+    const collectionLog = response.data.collectionLog;
+
+    cacheService.add(cacheKey, collectionLog);
+    return collectionLog;
   }
 );
 
 export const loadRecentItems = createAsyncThunk(
   'log/fetchRecentItems',
   async (username: string) => {
+    const cacheKey = `recent-items-${username}`;
+    const cacheItem = cacheService.get<CollectionLogItem[]>(cacheKey);
+    if (cacheItem) {
+      return cacheItem;
+    }
+
     const api = CollectionLogAPI.getInstance();
     username = username.toLowerCase();
     const response = await api.getRecentItems(username);
-    return response.data.items;
+    const items = response.data.items;
+
+    cacheService.add(cacheKey, items);
+    return items;
   }
 );
 
 export const loadHiscoresRank = createAsyncThunk(
   'log/fetchHiscoresRank',
   async (username: string) => {
+    const cacheKey = `hiscores-rank-${username}`;
+    const cacheItem = cacheService.get<number>(cacheKey);
+    if (cacheItem) {
+      return cacheItem;
+    }
+
     const api = CollectionLogAPI.getInstance();
     username = username.toLowerCase();
     const response = await api.getRankByUsername(username);
-    return response.data.rank;
+    const rank = response.data.rank;
+
+    cacheService.add(cacheKey, rank);
+    return rank;
   }
 );
 
