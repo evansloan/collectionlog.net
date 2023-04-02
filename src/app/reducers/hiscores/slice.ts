@@ -26,7 +26,7 @@ export type FilterType = AccountType | 'ALL';
 export const loadHiscores = createAsyncThunk(
   'hiscores/fetchHiscores',
   async (params: { page: number; filter: FilterType }) => {
-    const cacheKey = 'hiscores';
+    const cacheKey = `hiscores-${params.page}-${params.filter}`;
     const cacheItem = cacheService.get<Hiscores[]>(cacheKey);
     if (cacheItem) {
       return cacheItem;
