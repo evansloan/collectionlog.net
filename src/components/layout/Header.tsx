@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { CollectionLogAPI } from '../../api/log-api';
+import { CollectionLogAPI } from '../../api/collection-log/collection-log-api';
 import discordIcon from '../../assets/images/discord.png';
 import { discordUrl } from '../../constants/Urls';
 import { AccountIcon, Button, DropDown, Input } from '../elements';
