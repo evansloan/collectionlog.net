@@ -1,6 +1,7 @@
 import { Item } from '../elements';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import EntryItem from './EntryItem';
 
 interface EntryItemsProps {
 	items: CollectionLogItem[];
@@ -36,11 +37,8 @@ const EntryItems = (props: EntryItemsProps) => {
         })}
       </div>
       <div className='flex flex-wrap grow content-start px-2 pt-3 mb-3 overflow-y-auto shadow-log'>
-        {items.length > 0 && items.map((item, i) => {
-          return (
-            <Item key={`${i}-${item.id}`} item={item} showQuantity={true} showTooltip={true} />
-          );
-        })}
+        {/* eslint-disable-next-line react/jsx-key */}
+        {items.length > 0 && items.map((item, i) => <EntryItem item={item} number={i}/>)}
       </div>
     </div>
   );
