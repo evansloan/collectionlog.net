@@ -2,14 +2,13 @@ import { Item } from '../elements';
 
 interface EntryItemProps {
 	item: CollectionLogItem;
-	number: number;
 }
 
 const EntryItem = (props: EntryItemProps) => {
-  const { item, number } = props;
+  const { item } = props;
 
   return (
-    <Item key={`${number}-${item.id}`} item={item} showQuantity={true} showTooltip={true} />
+    <Item item={item} showQuantity={true} showTooltip={true} />
   );
 };
 

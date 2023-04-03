@@ -36,8 +36,7 @@ const EntryItems = (props: EntryItemsProps) => {
         })}
       </div>
       <div className='flex flex-wrap grow content-start px-2 pt-3 mb-3 overflow-y-auto shadow-log'>
-        {/* eslint-disable-next-line react/jsx-key */}
-        {items.length > 0 && items.map((item, i) => <EntryItem item={item} number={i}/>)}
+        {items.length > 0 && items.map((item, i) => <EntryItem key={`${i}-${item.id}`} item={item}/>)}
       </div>
     </div>
   );
