@@ -1,4 +1,3 @@
-import { Item } from '../elements';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import EntryItem from './EntryItem';
