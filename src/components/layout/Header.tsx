@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { CollectionLogAPI } from '../../api/collection-log/collection-log-api';
 import discordIcon from '../../assets/images/discord.png';
-import { discordUrl } from '../../constants/Urls';
+import { discordUrl } from '../../app/constants';
 import { AccountIcon, Button, DropDown, Input } from '../elements';
 
 const Header = () => {

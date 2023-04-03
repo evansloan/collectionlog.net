@@ -1,4 +1,4 @@
-import { gitHubUrl, pluginUrl } from '../../constants/Urls';
+import { gitHubUrl, pluginUrl } from '../../app/constants';
 
 const Footer = () => {
   return (
