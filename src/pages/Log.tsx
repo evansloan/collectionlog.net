@@ -12,7 +12,6 @@ import {
 } from '../app/reducers/log/slice';
 import {
   AccountIcon,
-  Button,
   Item,
   PageTitle,
   Spinner,
@@ -20,6 +19,7 @@ import {
 } from '../components/elements';
 import { PageContainer, PageHeader } from '../components/layout';
 import { formatDate, sortAlphabetical, updateUrl } from '../utils';
+import EntryList from '../components/log/EntryList';
 
 const TABS = [
   'Bosses',
@@ -88,6 +88,7 @@ const Log = () => {
       dispatch(setError(`Unable to find collection log for user ${params.username}`));
       return;
     }
+    console.log(logState.collectionLog);
 
     if (paramsEntry) {
       paramsTab = tabs.find((tabName) => {
@@ -141,36 +142,10 @@ const Log = () => {
 
   const onTabClick = (tabName: string) => {
     const entries = sortAlphabetical(Object.keys(collectionLog?.tabs[tabName] ?? []));
+    console.log(entries[0]);
     setActiveTab(tabName);
     setActiveEntry(entries[0]);
     updateUrl(`/log/${params.username}/${entries[0]}`);
-  };
-
-  const onEntryClick = (entryName: string) => {
-    setActiveEntry(entryName);
-    showEntries();
-    updateUrl(`/log/${params.username}/${entryName}`);
-  };
-
-  const showEntries = () => {
-    const entryList = document.getElementById('entry-list');
-    const entryItems = document.getElementById('entry-items');
-
-    const isHidden = entryList?.classList.contains('hidden');
-
-    if (isHidden) {
-      entryList?.classList.remove('hidden');
-      entryList?.classList.add('block');
-
-      entryItems?.classList.add('hidden');
-      entryItems?.classList.remove('flex');
-    } else {
-      entryList?.classList.add('hidden');
-      entryList?.classList.remove('block');
-
-      entryItems?.classList.add('flex');
-      entryItems?.classList.remove('hidden');
-    }
   };
 
   const pageTitle = 'Collection Log';
@@ -226,38 +201,16 @@ const Log = () => {
                 {collectionLog && tabs.map((tabName) => {
                   let entries = sortAlphabetical(Object.keys(collectionLog.tabs[tabName] ?? []));
                   // Override alphabetical sort for clues
-                  if (tabName == 'Clues') {
+                  if (tabName == 'Clues' && collectionLog?.tabs[tabName]) {
                     entries = CLUE_TAB_ENTRIES;
                   }
 
                   return (
                     <div key={tabName} data-tab={tabName}>
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
-                        <div id='entry-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
-                          {entries.map((entryName, i) => {
-                            const entryItems = collectionLog.tabs[tabName][entryName]?.items;
-                            const entryObtained = entryItems?.filter((item) => {
-                              return item.obtained;
-                            }).length;
-                            const isComplete = entryObtained == entryItems?.length && entryItems;
-                            const textColor = isComplete ? 'text-green' : 'text-orange';
-
-                            let bg = i % 2 == 0 ? 'bg-primary' : 'bg-light';
-                            bg = entryName == activeEntry ? 'bg-highlight' : bg;
-
-                            return (
-                              <p
-                                className={`${bg} hover:bg-highlight ${textColor} text-lg cursor-pointer`}
-                                onClick={() => onEntryClick(entryName)}
-                                key={entryName}>
-                                {entryName}
-                              </p>
-                            );
-                          })}
-                        </div>
+                        <EntryList collectionLog={collectionLog} entries={entries} tabName={tabName}/>
                         <div id='entry-items' className='flex md:flex flex-col w-full md:w-3/4'>
                           <div className='mx-2 border-b border-b-lighter shadow-log'>
-                            <Button title='Show Pages' className='w-full block md:hidden' onClick={showEntries} />
                             <h3 className='text-xl font-bold text-orange'>{activeEntry}</h3>
                             <p className='text-orange'>Obtained: <span className={obtainedClass}>{obtainedCount}/{itemCount}</span></p>
                             {entryData?.killCount?.map((kc, i) => {
