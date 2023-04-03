@@ -41,7 +41,7 @@ const Header = () => {
 
   const onTypeaheadClick = (username: string) => {
     setSearch(username);
-    setTypeahead([]);
+    onSearch();
   };
 
   const onSearch = () => {
