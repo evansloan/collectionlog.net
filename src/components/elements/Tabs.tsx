@@ -4,14 +4,14 @@ import Tab from './Tab';
 
 interface OverrideProps {
   activeTab?: string;
-  children: React.ReactElement[];
+  children: React.ReactElement[] | undefined;
   onClick?: (tabName: string) => void;
 }
 
 type TabsProps = HTMLElementProps<OverrideProps>;
 
 const Tabs = (props: TabsProps) => {
-  const [activeTab, setActiveTab] = useState(props.activeTab ?? props.children[0].props['data-tab']);
+  const [activeTab, setActiveTab] = useState(props.activeTab ?? props.children?.[0].props['data-tab']);
   const className = props.className ?? '';
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Tabs = (props: TabsProps) => {
   return (
     <>
       <div className={`flex flex-wrap justify-between p-0 border-b-2 border-b-light ${className}`}>
-        {props.children.map((child) => {
+        {props.children && props.children.map((child) => {
           const label = child.props['data-tab'];
 
           return (
@@ -43,7 +43,7 @@ const Tabs = (props: TabsProps) => {
           );
         })}
       </div>
-      {props.children.map((child) => {
+      {props.children && props.children.map((child) => {
         if (child.props['data-tab'] != activeTab) {
           return undefined;
         }

@@ -53,6 +53,14 @@ const Log = () => {
   const [activeTab, setActiveTab] = useState('Bosses');
   const [activeEntry, setActiveEntry] = useState(paramsEntry ?? 'Abyssal Sire');
 
+  const { collectionLog, isLoading } = logState;
+  const tabKeys = Object.keys(collectionLog?.tabs || []);
+
+  /**
+   * Alphabetical sorted tabs that are matched between the TAB constant and the retrieved tab from the collectionLog
+   */
+  const tabs = sortAlphabetical(TABS.filter((staticTab) => tabKeys.some((tabKey) => staticTab == tabKey)));
+
   /**
    * Load collection log data from API.
    *
@@ -82,15 +90,13 @@ const Log = () => {
     }
 
     if (paramsEntry) {
-      paramsTab = TABS.find((tabName) => {
+      paramsTab = tabs.find((tabName) => {
         const entry = logState.collectionLog?.tabs[tabName][paramsEntry];
         return entry != undefined;
       });
       setActiveTab(paramsTab ?? 'Bosses');
     }
   }, [logState.collectionLog]);
-
-  const { collectionLog, isLoading } = logState;
 
   const entryData = collectionLog?.tabs[activeTab][activeEntry];
   const obtainedCount = entryData?.items.filter((item) => item.obtained).length;
@@ -212,8 +218,8 @@ const Log = () => {
             </PageHeader>
             <div className='md:mx-3 mb-3 md:mt-1 h-full border-2 border-t-0 border-light md:rounded-tr-[10px] md:rounded-tl-[10px] md:overflow-hidden'>
               <Tabs activeTab={activeTab} onClick={onTabClick}>
-                {TABS.map((tabName) => {
-                  let entries = sortAlphabetical(Object.keys(collectionLog?.tabs[tabName] ?? []));
+                {collectionLog && tabs.map((tabName) => {
+                  let entries = sortAlphabetical(Object.keys(collectionLog.tabs[tabName] ?? []));
                   // Override alphabetical sort for clues
                   if (tabName == 'Clues') {
                     entries = CLUE_TAB_ENTRIES;
@@ -224,7 +230,7 @@ const Log = () => {
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
                         <div id='entry-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
                           {entries.map((entryName, i) => {
-                            const entryItems = collectionLog?.tabs[tabName][entryName]?.items;
+                            const entryItems = collectionLog.tabs[tabName][entryName]?.items;
                             const entryObtained = entryItems?.filter((item) => {
                               return item.obtained;
                             }).length;
