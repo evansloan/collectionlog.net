@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import DocumentMeta from 'react-document-meta';
 import { useParams } from 'react-router-dom';
 
-import { AccountType } from '../app/constants';
+import { AccountType, expectedMaxUniqueItems } from '../app/constants';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   loadCollectionLog,
@@ -204,6 +204,11 @@ const Log = () => {
                 Obtained: <span className='text-white'>{collectionLog?.uniqueObtained}/{collectionLog?.uniqueItems}</span> {' '}
                 Rank: <span className='text-white'>#{logState.rank}</span>
               </p>
+              {collectionLog && collectionLog?.uniqueItems < expectedMaxUniqueItems &&
+                <p className='text-lg font-bold text-center text-yellow'>
+                  New unique items have been added to Old School RuneScape! Please re-upload collection log data.
+                </p>
+              }
               {collectionLog && collectionLog?.uniqueObtained !== explicitlyCountedUniques &&
                 <p className='text-lg font-bold text-center text-yellow'>
                   Total obtained does not match specific items collected. Please re-upload collection log data.
