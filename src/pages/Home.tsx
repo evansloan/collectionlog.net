@@ -6,7 +6,7 @@ import { loadRecentItemsGlobal, loadStreams, loadUserCount } from '../app/reduce
 import logIcon from '../assets/images/collectionlog.png';
 import discordIcon from '../assets/images/discord.png';
 import githubIcon from '../assets/images/github.png';
-import { discordUrl, gitHubUrl, pluginUrl } from '../constants/Urls';
+import { discordUrl, gitHubUrl, pluginUrl } from '../app/constants';
 import {
   Button,
   Item,
