@@ -40,16 +40,19 @@ const Header = () => {
   };
 
   const onTypeaheadClick = (username: string) => {
-    setSearch(username);
-    setTypeahead([]);
+    navigateToUser(username);
   };
 
   const onSearch = () => {
     if (search == '') {
       return;
     }
+    navigateToUser(search);
+  };
+
+  const navigateToUser = (username: string) => {
     setIsSearchOpen(false);
-    navigate(`log/${search}`);
+    navigate(`log/${username}`);
   };
 
   const onSubmit = (e: React.FormEvent) => {
