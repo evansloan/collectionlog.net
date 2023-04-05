@@ -47,6 +47,11 @@ const Header = () => {
     if (search == '') {
       return;
     }
+
+    if (!typeahead.some((user) => user.username === search)) {
+      return;
+    }
+
     navigateToUser(search);
   };
 
