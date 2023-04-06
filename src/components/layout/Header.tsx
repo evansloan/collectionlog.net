@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { CollectionLogAPI } from '../../api/collection-log/collection-log-api';
@@ -6,33 +6,81 @@ import discordIcon from '../../assets/images/discord.png';
 import { discordUrl } from '../../app/constants';
 import { AccountIcon, Button, DropDown, Input } from '../elements';
 
+interface TypeaheadCache {
+  users: User[];
+  /**
+   * Search length when the request was made
+   */
+  requestMadeAtLength: number;
+}
+
 const Header = () => {
+  /**
+   * Search debounce time in milliseconds
+   */
+  const searchDebounce = 250;
+
+  /**
+   * Default state of the typeahead cache
+   */
+  const initStateTypeaheadCache = () => {
+    return {
+      users: [],
+      requestMadeAtLength: 0,
+    };
+  };
+
   const [search, setSearch] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [typeaheadCache, setTypeaheadCache] = useState<User[]>([]);
+  const [typeaheadCache, setTypeaheadCache] = useState<TypeaheadCache>(initStateTypeaheadCache);
   const [typeahead, setTypeahead] = useState<User[]>([]);
+  const [searchLength, setSearchLength] = useState<number>(0);
 
   const navigate = useNavigate();
   const api = CollectionLogAPI.getInstance();
 
-  const onSearchChange = (username: string) => {
-    setSearch(username);
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      setSearchLength(search.length);
+    }, searchDebounce);
 
-    // Trigger initial typeahead lookup
-    if (username.length == 2) {
-      api.getUserTypeahead(username).then((res) => setTypeaheadCache(res.data.users));
-    }
+    return () => clearTimeout(debounce);
 
-    if (username.length >= 3) {
-      filterTypeahead(username);
+  }, [search]);
+
+  useEffect(() => {
+    filterTypeahead(search);
+  }, [typeaheadCache]);
+
+  useEffect(() => {
+    if (search.length === 0) {
+      // If there previously was a request made, reset the typeahead cache back to its init state
+      if (typeaheadCache.requestMadeAtLength > 0) {
+        setTypeaheadCache(initStateTypeaheadCache);
+      }
+
       return;
     }
 
-    setTypeahead([]);
-  };
+    // To reduce the amount of fetched users, the search will be started at 2 characters
+    if (search.length === 1) {
+      return;
+    }
+
+    // Only inputting spaces will not result in an API call
+    if (search.trim() === '') {
+      return;
+    }
+
+    if (searchLength < typeaheadCache.requestMadeAtLength || typeaheadCache.requestMadeAtLength === 0) {
+      api.getUserTypeahead(search).then((res) => setTypeaheadCache({ users:res.data.users, requestMadeAtLength: searchLength }));
+    } else {
+      filterTypeahead(search);
+    }
+  }, [searchLength]);
 
   const filterTypeahead = (search: string) => {
-    const typeaheadVals = typeaheadCache.filter((user) => {
+    const typeaheadVals = typeaheadCache.users.filter((user) => {
       const username = user.username.toLowerCase();
       return username.slice(0, search.length) == search.toLowerCase();
     });
@@ -93,7 +141,7 @@ const Header = () => {
                 placeholder='Enter username...'
                 className='md:w-[400px] mb-1'
                 value={search}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value ?? '')}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value ?? '')}
               />
               {typeahead?.length > 0 &&
                 <div className='flex flex-col my-2'>
@@ -141,7 +189,7 @@ const Header = () => {
             placeholder='Enter username...'
             className='md:w-[400px] mb-1'
             value={search}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value ?? '')}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value ?? '')}
           />
           {typeahead?.length > 0 &&
             <div className='flex flex-col mb-2'>
