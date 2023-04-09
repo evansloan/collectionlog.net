@@ -59,7 +59,7 @@ const Log = () => {
   /**
    * Alphabetical sorted tabs that are matched between the TAB constant and the retrieved tab from the collectionLog
    */
-  const tabs = sortAlphabetical(TABS.filter((staticTab) => tabKeys.some((tabKey) => staticTab == tabKey)));
+  const tabs = TABS.filter((staticTab) => tabKeys.some((tabKey) => staticTab == tabKey));
 
   /**
    * Load collection log data from API.
