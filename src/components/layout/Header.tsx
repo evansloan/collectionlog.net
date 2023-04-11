@@ -8,6 +8,12 @@ import { AccountIcon, Button, DropDown, Input } from '../elements';
 
 interface TypeaheadCache {
   users: User[];
+
+  /**
+   * Search query when the request was made
+   */
+  searchQuery: string;
+
   /**
    * Search length when the request was made
    */
@@ -26,6 +32,7 @@ const Header = () => {
   const initStateTypeaheadCache = () => {
     return {
       users: [],
+      searchQuery: '',
       requestMadeAtLength: 0,
     };
   };
@@ -34,14 +41,13 @@ const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [typeaheadCache, setTypeaheadCache] = useState<TypeaheadCache>(initStateTypeaheadCache);
   const [typeahead, setTypeahead] = useState<User[]>([]);
-  const [searchLength, setSearchLength] = useState<number>(0);
 
   const navigate = useNavigate();
   const api = CollectionLogAPI.getInstance();
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      setSearchLength(search.length);
+      onSearchChange(search);
     }, searchDebounce);
 
     return () => clearTimeout(debounce);
@@ -52,27 +58,22 @@ const Header = () => {
     filterTypeahead(search);
   }, [typeaheadCache]);
 
-  useEffect(() => {
-    if (search.length === 0) {
-      // If there previously was a request made, reset the typeahead cache back to its init state
-      if (typeaheadCache.requestMadeAtLength > 0) {
-        setTypeaheadCache(initStateTypeaheadCache);
-      }
-
-      return;
-    }
-
+  const onSearchChange = (search: string) => {
     // Only inputting spaces will not result in an API call
     if (search.trim() === '') {
+      setTypeahead([]);
       return;
     }
 
-    if (searchLength < typeaheadCache.requestMadeAtLength || typeaheadCache.requestMadeAtLength === 0) {
-      api.getUserTypeahead(search).then((res) => setTypeaheadCache({ users:res.data.users, requestMadeAtLength: searchLength }));
+    if (search[0] !== typeaheadCache.searchQuery[0] || search.length < typeaheadCache.requestMadeAtLength) {
+      api.getUserTypeahead(search).then((res) => setTypeaheadCache({
+        users: res.data.users,
+        searchQuery: search,
+        requestMadeAtLength: search.length }));
     } else {
       filterTypeahead(search);
     }
-  }, [searchLength]);
+  };
 
   const filterTypeahead = (search: string) => {
     const maxShownResults = 5;
