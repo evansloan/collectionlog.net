@@ -80,11 +80,31 @@ const Header = () => {
   }, [searchLength]);
 
   const filterTypeahead = (search: string) => {
-    const typeaheadVals = typeaheadCache.users.filter((user) => {
-      const username = user.username.toLowerCase();
-      return username.slice(0, search.length) == search.toLowerCase();
-    });
-    setTypeahead(typeaheadVals.slice(0, 5));
+    const maxShownResults = 5;
+    let matchedUsers = 0;
+    const filter: User[] = Array(maxShownResults);
+
+    if (search === '') {
+      setTypeahead(filter);
+      return;
+    }
+
+    const searchValue = search.toLowerCase();
+    for (const user of typeaheadCache.users) {
+      if (matchedUsers >= maxShownResults) {
+        break;
+      }
+
+      const partialUsername = user.username.toLowerCase().slice(0, search.length);
+      if (partialUsername !== searchValue) {
+        continue;
+      }
+
+      filter[matchedUsers] = user;
+      matchedUsers++;
+    }
+
+    setTypeahead(filter);
   };
 
   const onTypeaheadClick = (username: string) => {
