@@ -62,11 +62,6 @@ const Header = () => {
       return;
     }
 
-    // To reduce the amount of fetched users, the search will be started at 2 characters
-    if (search.length === 1) {
-      return;
-    }
-
     // Only inputting spaces will not result in an API call
     if (search.trim() === '') {
       return;
