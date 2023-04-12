@@ -6,6 +6,7 @@ type HTMLButtonProps = DetailedHTMLElementProps<
 interface OverrideProps {
   title: string;
   icon?: string;
+  iconAlt?: string;
   externalLink?: string;
 }
 
@@ -19,7 +20,7 @@ const Button = (props: ButtonProps) => {
     >
       <div className='flex justify-around items-center'>
         {props.icon &&
-          <img src={props.icon} className='w-[50px]'/>
+          <img src={props.icon} alt={props.iconAlt} className='w-[50px]'/>
         }
         {props.title}
       </div>
