@@ -8,7 +8,14 @@
 
 ## Code style/standards
 * ESLint is configured to try to keep things in a uniform style. Before committing or submitting a PR, make sure to run `yarn run lint` and `yarn run lint:fix` to catch and correct any style issues.
-* If using VSCode, the [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) is highly recommended. It will show any style inconsistencies as errors to make them easier to find/fix.
+
+### VSCode
+* The [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) is highly recommended. It will show any style inconsistencies as errors to make them easier to find/fix.
+
+### WebStorm
+* WebStorm has built-in ESLint and can be configured to automatically apply the styling and fix the code on save. 
+  * To enable ESLint go to: Settings (File -> Settings) and navigate to Languages & Frameworks -> JavaScript -> Code Quality Tools -> ESLint and enable the option "Automatic ESLint configuration".
+  * To enable automatic fixing on save got to: Settings (File -> Settings) and navigate to Tools -> Actions on Save and enable the option "Run eslint --fix". 
 
 ## Branching
 * When creating a new branch, you'll most likely want to branch from the `master` branch. `master` holds the source code for the site in it's current live state.
