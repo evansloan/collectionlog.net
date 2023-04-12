@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { CollectionLogAPI } from '../../api/collection-log/collection-log-api';
@@ -6,37 +6,101 @@ import discordIcon from '../../assets/images/discord.png';
 import { discordUrl } from '../../app/constants';
 import { AccountIcon, Button, DropDown, Input } from '../elements';
 
+interface TypeaheadCache {
+  users: User[];
+
+  /**
+   * Search query when the request was made
+   */
+  searchQuery: string;
+
+  /**
+   * Search length when the request was made
+   */
+  requestMadeAtLength: number;
+}
+
 const Header = () => {
+  /**
+   * Search debounce time in milliseconds
+   */
+  const searchDebounce = 250;
+
+  /**
+   * Default state of the typeahead cache
+   */
+  const initStateTypeaheadCache = () => {
+    return {
+      users: [],
+      searchQuery: '',
+      requestMadeAtLength: 0,
+    };
+  };
+
   const [search, setSearch] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [typeaheadCache, setTypeaheadCache] = useState<User[]>([]);
+  const [typeaheadCache, setTypeaheadCache] = useState<TypeaheadCache>(initStateTypeaheadCache);
   const [typeahead, setTypeahead] = useState<User[]>([]);
 
   const navigate = useNavigate();
   const api = CollectionLogAPI.getInstance();
 
-  const onSearchChange = (username: string) => {
-    setSearch(username);
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      onSearchChange(search);
+    }, searchDebounce);
 
-    // Trigger initial typeahead lookup
-    if (username.length == 2) {
-      api.getUserTypeahead(username).then((res) => setTypeaheadCache(res.data.users));
-    }
+    return () => clearTimeout(debounce);
 
-    if (username.length >= 3) {
-      filterTypeahead(username);
+  }, [search]);
+
+  useEffect(() => {
+    filterTypeahead(search);
+  }, [typeaheadCache]);
+
+  const onSearchChange = (search: string) => {
+    // Only inputting spaces will not result in an API call
+    if (search.trim() === '') {
+      setTypeahead([]);
       return;
     }
 
-    setTypeahead([]);
+    if (search[0] !== typeaheadCache.searchQuery[0] || search.length < typeaheadCache.requestMadeAtLength) {
+      api.getUserTypeahead(search).then((res) => setTypeaheadCache({
+        users: res.data.users,
+        searchQuery: search,
+        requestMadeAtLength: search.length }));
+    } else {
+      filterTypeahead(search);
+    }
   };
 
   const filterTypeahead = (search: string) => {
-    const typeaheadVals = typeaheadCache.filter((user) => {
-      const username = user.username.toLowerCase();
-      return username.slice(0, search.length) == search.toLowerCase();
-    });
-    setTypeahead(typeaheadVals.slice(0, 5));
+    const maxShownResults = 5;
+    let matchedUsers = 0;
+    const filter: User[] = Array(maxShownResults);
+
+    if (search === '') {
+      setTypeahead(filter);
+      return;
+    }
+
+    const searchValue = search.toLowerCase();
+    for (const user of typeaheadCache.users) {
+      if (matchedUsers >= maxShownResults) {
+        break;
+      }
+
+      const partialUsername = user.username.toLowerCase().slice(0, search.length);
+      if (partialUsername !== searchValue) {
+        continue;
+      }
+
+      filter[matchedUsers] = user;
+      matchedUsers++;
+    }
+
+    setTypeahead(filter);
   };
 
   const onTypeaheadClick = (username: string) => {
@@ -47,6 +111,11 @@ const Header = () => {
     if (search == '') {
       return;
     }
+
+    if (!typeahead.some((user) => user.username === search)) {
+      return;
+    }
+
     navigateToUser(search);
   };
 
@@ -88,7 +157,7 @@ const Header = () => {
                 placeholder='Enter username...'
                 className='md:w-[400px] mb-1'
                 value={search}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value ?? '')}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value ?? '')}
               />
               {typeahead?.length > 0 &&
                 <div className='flex flex-col my-2'>
@@ -136,7 +205,7 @@ const Header = () => {
             placeholder='Enter username...'
             className='md:w-[400px] mb-1'
             value={search}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value ?? '')}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.currentTarget.value ?? '')}
           />
           {typeahead?.length > 0 &&
             <div className='flex flex-col mb-2'>
