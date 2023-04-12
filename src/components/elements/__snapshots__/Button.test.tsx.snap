@@ -36,42 +36,6 @@ exports[`Button component should render with external link "https://runelite.net
 </a>
 `;
 
-exports[`Button component should render with external link 1`] = `
-<a
-  href="https://runelite.net/"
->
-  <button
-    className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
-    externalLink="https://runelite.net/"
-    title="test"
-  >
-    <div
-      className="flex justify-around items-center"
-    >
-      test
-    </div>
-  </button>
-</a>
-`;
-
-exports[`Button component should render with external link 2`] = `
-<a
-  href="https://example.com"
->
-  <button
-    className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
-    externalLink="https://example.com"
-    title="test"
-  >
-    <div
-      className="flex justify-around items-center"
-    >
-      test
-    </div>
-  </button>
-</a>
-`;
-
 exports[`Button component should render with icon "discord" 1`] = `
 <button
   className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
@@ -93,46 +57,6 @@ exports[`Button component should render with icon "discord" 1`] = `
 `;
 
 exports[`Button component should render with icon "github" 1`] = `
-<button
-  className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
-  icon="github.png"
-  iconAlt="github"
-  title="test"
->
-  <div
-    className="flex justify-around items-center"
-  >
-    <img
-      alt="github"
-      className="w-[50px]"
-      src="github.png"
-    />
-    test
-  </div>
-</button>
-`;
-
-exports[`Button component should render with icon 1`] = `
-<button
-  className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
-  icon="discord.png"
-  iconAlt="discord"
-  title="test"
->
-  <div
-    className="flex justify-around items-center"
-  >
-    <img
-      alt="discord"
-      className="w-[50px]"
-      src="discord.png"
-    />
-    test
-  </div>
-</button>
-`;
-
-exports[`Button component should render with icon 2`] = `
 <button
   className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
   icon="github.png"
