@@ -53,6 +53,15 @@ interface User {
   collectionLog?: CollectionLog;
 }
 
+interface Hiscores {
+  rank: number;
+  username: string;
+  accountType: AccountType;
+  obtained: number;
+  total: number;
+  recentObtained: number;
+}
+
 type RankType = 'ALL'
   | 'NORMAL'
   | 'IRONMAN'
@@ -68,15 +77,6 @@ type Ranks = {
 interface UserSettings {
   displayRank: RankType;
   showQuantity: boolean;
-}
-
-interface Hiscores {
-  rank: number;
-  username: string;
-  accountType: AccountType;
-  obtained: number;
-  total: number;
-  recentObtained: number;
 }
 
 interface CacheItem<T> {
