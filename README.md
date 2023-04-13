@@ -6,6 +6,8 @@ Install the [Collection Log RuneLite plugin](https://github.com/evansloan/collec
 
 Want to contribute? Check out the [contributing guidelines](https://github.com/evansloan/collectionlog.net/blob/master/CONTRIBUTING.md)
 
+Placeholder text
+
 ## Links
 * [Site](https://collectionlog.net)
 * [API](https://github.com/evansloan/collection-log-api)
