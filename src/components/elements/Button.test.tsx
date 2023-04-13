@@ -1,7 +1,7 @@
 import renderer from 'react-test-renderer';
 import Button from './Button';
 
-// import discordIcon from '../../assets/images/discord.png';
+import discordIcon from '../../assets/images/discord.png';
 import githubIcon from '../../assets/images/github.png';
 
 describe(`${Button.name} component`, () => {
@@ -13,7 +13,7 @@ describe(`${Button.name} component`, () => {
     });
 
   test.each([
-    ['discord', githubIcon],
+    ['discord', discordIcon],
     ['github', githubIcon],
   ])(
     'should render with icon %p',
