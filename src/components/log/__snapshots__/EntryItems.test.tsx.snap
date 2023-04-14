@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntryItems component should display collection 1`] = `
+<div
+  className="flex md:flex flex-col w-full md:w-3/4"
+  id="entry-items"
+>
+  <div
+    className="mx-2 border-b border-b-lighter shadow-log"
+  >
+    <h3
+      className="text-xl font-bold text-orange"
+    >
+      Master Treasure Trails (Rare)
+    </h3>
+    <p
+      className="text-orange"
+    >
+      Obtained: 
+      <span
+        className="text-green"
+      >
+        3
+        /
+        3
+      </span>
+    </p>
+    <p
+      className="text-orange"
+    >
+      Master clues completed
+      : 
+      <span
+        className="text-white"
+      >
+        1
+      </span>
+    </p>
+  </div>
+  <div
+    className="flex flex-wrap grow content-start px-2 pt-3 mb-3 overflow-y-auto shadow-log"
+  >
+    <div
+      className="w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]"
+    >
+      <span
+        className="relative top-[25%] left-[2%] md:top-[20%] md:left-[15%] text-yellow"
+      >
+        1
+      </span>
+      <div
+        className="flex justify-center h-[45px] group"
+      >
+        <a
+          className="hidden flex-col items-center justify-center mb-6 h-full group-hover:flex no-underline"
+          href="https://oldschool.runescape.wiki/w/3rd_age_longsword"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <p
+            className="whitespace-nowrap"
+          >
+            3rd age longsword
+          </p>
+          <p>
+            1/1/2023
+          </p>
+        </a>
+        <img
+          className="group-hover:hidden"
+          src="data:image/jpeg;charset=utf-8;base64,undefined"
+        />
+      </div>
+    </div>
+    <div
+      className="w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]"
+    >
+      <span
+        className="relative top-[25%] left-[2%] md:top-[20%] md:left-[15%] text-yellow"
+      >
+        1
+      </span>
+      <div
+        className="flex justify-center h-[45px] group"
+      >
+        <a
+          className="hidden flex-col items-center justify-center mb-6 h-full group-hover:flex no-underline"
+          href="https://oldschool.runescape.wiki/w/3rd_age_wand"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <p
+            className="whitespace-nowrap"
+          >
+            3rd age wand
+          </p>
+          <p>
+            1/1/2023
+          </p>
+        </a>
+        <img
+          className="group-hover:hidden"
+          src="data:image/jpeg;charset=utf-8;base64,undefined"
+        />
+      </div>
+    </div>
+    <div
+      className="w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]"
+    >
+      <span
+        className="relative top-[25%] left-[2%] md:top-[20%] md:left-[15%] text-yellow"
+      >
+        1
+      </span>
+      <div
+        className="flex justify-center h-[45px] group"
+      >
+        <a
+          className="hidden flex-col items-center justify-center mb-6 h-full group-hover:flex no-underline"
+          href="https://oldschool.runescape.wiki/w/3rd_age_bow"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <p
+            className="whitespace-nowrap"
+          >
+            3rd age bow
+          </p>
+          <p>
+            1/1/2023
+          </p>
+        </a>
+        <img
+          className="group-hover:hidden"
+          src="data:image/jpeg;charset=utf-8;base64,undefined"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`EntryItems component should have 'Master clues completed' to be '1' 1`] = `
+<div
+  className="flex md:flex flex-col w-full md:w-3/4"
+  id="entry-items"
+>
+  <div
+    className="mx-2 border-b border-b-lighter shadow-log"
+  >
+    <h3
+      className="text-xl font-bold text-orange"
+    >
+      Master Treasure Trails (Rare)
+    </h3>
+    <p
+      className="text-orange"
+    >
+      Obtained: 
+      <span
+        className="text-green"
+      >
+        0
+        /
+        0
+      </span>
+    </p>
+    <p
+      className="text-orange"
+    >
+      Master clues completed
+      : 
+      <span
+        className="text-white"
+      >
+        1
+      </span>
+    </p>
+  </div>
+  <div
+    className="flex flex-wrap grow content-start px-2 pt-3 mb-3 overflow-y-auto shadow-log"
+  />
+</div>
+`;
