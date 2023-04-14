@@ -134,7 +134,6 @@ const Log = () => {
 
   const onTabClick = (tabName: string) => {
     const entries = sortAlphabetical(Object.keys(collectionLog?.tabs[tabName] ?? []));
-    console.log(entries[0]);
     setActiveTab(tabName);
     setActiveEntry(entries[0]);
     updateUrl(`/log/${params.username}/${entries[0]}`);
@@ -193,15 +192,15 @@ const Log = () => {
                 {collectionLog && tabs.map((tabName) => {
                   let entries = sortAlphabetical(Object.keys(collectionLog.tabs[tabName] ?? []));
                   // Override alphabetical sort for clues
-                  if (tabName == 'Clues' && collectionLog?.tabs[tabName]) {
+                  if (tabName == 'Clues' && collectionLog.tabs[tabName]) {
                     entries = CLUE_TAB_ENTRIES;
                   }
 
                   return (
                     <div key={tabName} data-tab={tabName}>
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
-                        <EntryList collectionLog={collectionLog} entries={entries} tabName={tabName}/>
-                        <EntryItems items={entryData?.items || []} killCount={entryData?.killCount || []}/>
+                        <EntryList collectionLog={collectionLog} entries={entries} tabName={tabName} activeEntryState={[activeEntry, setActiveEntry]}/>
+                        {entryData && <EntryItems name={activeEntry} items={entryData.items || []} killCount={entryData.killCount || []}/>}
                       </div>
                     </div>
                   );

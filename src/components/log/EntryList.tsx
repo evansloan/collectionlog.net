@@ -1,18 +1,23 @@
 import { updateUrl } from '../../utils';
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 interface EntryListProps {
   entries: string[];
   collectionLog: CollectionLog | undefined;
   tabName: string;
+  activeEntryState: [string, Dispatch<SetStateAction<string>>];
 }
 
 const EntryList = (props: EntryListProps) => {
   const params = useParams();
-  const { entries, collectionLog, tabName } = props;
+  const {
+    entries,
+    collectionLog,
+    tabName,
+  } = props;
 
-  const [activeEntry, setActiveEntry] = useState(params.entry ?? 'Abyssal Sire');
+  const [activeEntry, setActiveEntry] = props.activeEntryState;
 
   const onEntryClick = (entryName: string) => {
     setActiveEntry(entryName);

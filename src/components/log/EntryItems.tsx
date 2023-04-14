@@ -1,16 +1,13 @@
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
 import EntryItem from './EntryItem';
 
 interface EntryItemsProps {
+  name: string;
 	items: CollectionLogItem[];
 	killCount: CollectionLogKillCount[];
 }
 
 const EntryItems = (props: EntryItemsProps) => {
-  const params = useParams();
-  const { items, killCount } = props;
-  const [activeEntry] = useState(params.entry ?? 'Abyssal Sire');
+  const { name, items, killCount } = props;
 
   const obtainedCount = items.filter((item) => item.obtained).length;
   const itemCount = items.length;
@@ -25,7 +22,7 @@ const EntryItems = (props: EntryItemsProps) => {
   return (
     <div id='entry-items' className='flex md:flex flex-col w-full md:w-3/4'>
       <div className='mx-2 border-b border-b-lighter shadow-log'>
-        <h3 className='text-xl font-bold text-orange'>{activeEntry}</h3>
+        <h3 className='text-xl font-bold text-orange'>{name}</h3>
         <p className='text-orange'>Obtained: <span className={obtainedClass}>{obtainedCount}/{itemCount}</span></p>
         {killCount.length > 0 && killCount.map((kc, i) => {
           return (
