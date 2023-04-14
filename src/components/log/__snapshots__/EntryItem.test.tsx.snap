@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntryItem component should render 1`] = `
+<div
+  className="w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]"
+>
+  <span
+    className="relative top-[25%] left-[2%] md:top-[20%] md:left-[15%] text-yellow"
+  >
+    1
+  </span>
+  <div
+    className="flex justify-center h-[45px] group"
+  >
+    <a
+      className="hidden flex-col items-center justify-center mb-6 h-full group-hover:flex no-underline"
+      href="https://oldschool.runescape.wiki/w/Collection_log"
+      rel="noreferrer"
+      target="_blank"
+    >
+      <p
+        className="whitespace-nowrap"
+      >
+        Collection log
+      </p>
+      <p>
+        1/1/2023
+      </p>
+    </a>
+    <img
+      className="group-hover:hidden"
+      src="data:image/jpeg;charset=utf-8;base64,undefined"
+    />
+  </div>
+</div>
+`;
