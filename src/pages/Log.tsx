@@ -12,15 +12,15 @@ import {
 } from '../app/reducers/log/slice';
 import {
   AccountIcon,
-  Item,
   PageTitle,
   Spinner,
   Tabs,
 } from '../components/elements';
 import { PageContainer, PageHeader } from '../components/layout';
-import { formatDate, sortAlphabetical, updateUrl } from '../utils';
+import { sortAlphabetical, updateUrl } from '../utils';
 import EntryList from '../components/log/EntryList';
 import EntryItems from '../components/log/EntryItems';
+import RecentItems from '../components/log/RecentItems';
 
 const TABS = [
   'Bosses',
@@ -101,7 +101,6 @@ const Log = () => {
   }, [logState.collectionLog]);
 
   const entryData = collectionLog?.tabs[activeTab][activeEntry];
-  const recentItems = logState.recentItems;
 
   /**
    * Explicitly iterate through and count the unique items that have been obtained.
@@ -207,24 +206,7 @@ const Log = () => {
                 })}
               </Tabs>
             </div>
-            <div>
-              <PageHeader className='border-black border-t-4'>
-                <PageTitle title='Recent items' />
-              </PageHeader>
-              <div className='flex sm:flex-wrap flex-col sm:flex-row justify-center sm:justify-around grow p-2 mt-[10px]'>
-                {recentItems?.map((item, i) => {
-                  return (
-                    <div key={`${i}-${item.id}`} className='flex flex-wrap justify-center grow'>
-                      <Item item={item} showQuantity={false} isDetail={true}/>
-                      <div className='flex flex-col'>
-                        <p>{item.name}</p>
-                        <p>{formatDate(item.obtainedAt as string)}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <RecentItems/>
           </>
       }
     </PageContainer>
