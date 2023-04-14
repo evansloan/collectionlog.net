@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import DocumentMeta from 'react-document-meta';
 import { useParams } from 'react-router-dom';
 
-import { AccountType, expectedMaxUniqueItems } from '../app/constants';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   loadCollectionLog,
@@ -11,16 +10,15 @@ import {
   setError,
 } from '../app/reducers/log/slice';
 import {
-  AccountIcon,
-  PageTitle,
   Spinner,
   Tabs,
 } from '../components/elements';
-import { PageContainer, PageHeader } from '../components/layout';
+import { PageContainer } from '../components/layout';
 import { sortAlphabetical, updateUrl } from '../utils';
 import EntryList from '../components/log/EntryList';
 import EntryItems from '../components/log/EntryItems';
 import RecentItems from '../components/log/RecentItems';
+import LogHeader from '../components/log/LogHeader';
 
 const TABS = [
   'Bosses',
@@ -89,7 +87,6 @@ const Log = () => {
       dispatch(setError(`Unable to find collection log for user ${params.username}`));
       return;
     }
-    console.log(logState.collectionLog);
 
     if (paramsEntry) {
       paramsTab = tabs.find((tabName) => {
@@ -101,35 +98,6 @@ const Log = () => {
   }, [logState.collectionLog]);
 
   const entryData = collectionLog?.tabs[activeTab][activeEntry];
-
-  /**
-   * Explicitly iterate through and count the unique items that have been obtained.
-   *
-   * This value can be compared to the total uniques collected. If the values do not match, it is an indicator that a sync is needed for some entries.
-   */
-  const countObtainedUniques = (collectionLog: CollectionLog | undefined): number => {
-    if (collectionLog === undefined) {
-      return 0;
-    }
-
-    const uniqueItemIds = new Set<number>();
-    for(const tabKey in collectionLog.tabs) {
-      const tab = collectionLog.tabs[tabKey];
-
-      for(const collectionLogEntryKey in tab) {
-        const collectionLogEntry = tab[collectionLogEntryKey];
-
-        for(const item of collectionLogEntry.items) {
-          if (item.obtained && !uniqueItemIds.has(item.id)) {
-            uniqueItemIds.add(item.id);
-          }
-        }
-      }
-    }
-    return uniqueItemIds.size;
-  };
-
-  const explicitlyCountedUniques = countObtainedUniques(collectionLog);
 
   const onTabClick = (tabName: string) => {
     const entries = sortAlphabetical(Object.keys(collectionLog?.tabs[tabName] ?? []));
@@ -166,26 +134,7 @@ const Log = () => {
           </div>
           :
           <>
-            <PageHeader className='flex-col'>
-              <div className='flex justify-center items-center'>
-                <AccountIcon accountType={collectionLog?.accountType as AccountType} height='20px' />
-                <PageTitle title={`${collectionLog?.username}'s Collection log`} />
-              </div>
-              <p className='text-lg font-bold text-center text-orange'>
-                Obtained: <span className='text-white'>{collectionLog?.uniqueObtained}/{collectionLog?.uniqueItems}</span> {' '}
-                Rank: <span className='text-white'>#{logState.rank}</span>
-              </p>
-              {collectionLog && collectionLog?.uniqueItems < expectedMaxUniqueItems &&
-                <p className='text-lg font-bold text-center text-yellow'>
-                  New unique items have been added to Old School RuneScape! Please re-upload collection log data.
-                </p>
-              }
-              {collectionLog && collectionLog?.uniqueObtained !== explicitlyCountedUniques &&
-                <p className='text-lg font-bold text-center text-yellow'>
-                  Total obtained does not match specific items collected. Please re-upload collection log data.
-                </p>
-              }
-            </PageHeader>
+            <LogHeader />
             <div className='md:mx-3 mb-3 md:mt-1 h-full border-2 border-t-0 border-light md:rounded-tr-[10px] md:rounded-tl-[10px] md:overflow-hidden'>
               <Tabs activeTab={activeTab} onClick={onTabClick}>
                 {collectionLog && tabs.map((tabName) => {
