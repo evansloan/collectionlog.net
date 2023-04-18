@@ -19,10 +19,7 @@ const Item = (props: ItemProps) => {
     obtainedAt,
   } = item;
 
-  let wrapperClassName = 'w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]';
-  if (isDetail) {
-    wrapperClassName = 'w-[50px] h-[50px] mb-[10px]';
-  }
+  const wrapperClassName = (isDetail) ? 'w-[50px] h-[50px] mb-[10px]' : 'w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]';
 
   return (
     <div key={item.id} className={wrapperClassName}>
@@ -47,10 +44,12 @@ const Item = (props: ItemProps) => {
             />
           </>
           :
-          <img
-            className={obtained ? '' : 'opacity-[0.35]'}
-            src={`data:image/jpeg;charset=utf-8;base64,${(icons as { [key: string]: string })[id]}`}
-          />
+          <a href={`https://oldschool.runescape.wiki/w/${name.replace(/ /g, '_')}`} target='_blank' rel='noreferrer'>
+            <img
+              className={obtained ? '' : 'opacity-[0.35]'}
+              src={`data:image/jpeg;charset=utf-8;base64,${(icons as { [key: string]: string })[id]}`}
+            />
+          </a>
         }
       </div>
     </div>
