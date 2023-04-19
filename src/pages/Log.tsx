@@ -98,6 +98,9 @@ const Log = () => {
     }
   }, [logState.collectionLog]);
 
+  // Eventually this setting will be a toggle-able user setting, until then it'll be feature flagged by this
+  const shouldShowSectionProgress = true;
+
   const entryData = collectionLog?.tabs[activeTab][activeEntry];
   const obtainedCount = entryData?.items.filter((item) => item.obtained).length;
   const itemCount = entryData?.items.length;
@@ -230,17 +233,40 @@ const Log = () => {
                     entries = CLUE_TAB_ENTRIES;
                   }
 
+                  // Count the number of uniques and totals for the tab
+                  const uniqueTabItemIds = new Set<number>();
+                  const uniqueTabItemIdsObtained = new Set<number>();
+
+                  for(const collectionLogEntryKey in collectionLog.tabs[tabName] ?? []) {
+                    const collectionLogEntry = collectionLog.tabs[tabName][collectionLogEntryKey];
+
+                    for(const item of collectionLogEntry.items) {
+                      if (!uniqueTabItemIds.has(item.id)) {
+                        uniqueTabItemIds.add(item.id);
+                      }
+                      if (item.obtained && !uniqueTabItemIdsObtained.has(item.id)) {
+                        uniqueTabItemIdsObtained.add(item.id);
+                      }
+                    }
+                  }
+
                   return (
-                    <div key={tabName} data-tab={tabName}>
+                    <div key={tabName} data-tab={tabName} data-obtainedUniques={uniqueTabItemIdsObtained.size} data-totalUniques={uniqueTabItemIds.size}>
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
                         <div id='entry-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
                           {entries.map((entryName, i) => {
                             const entryItems = collectionLog.tabs[tabName][entryName]?.items;
                             const entryObtained = entryItems?.filter((item) => {
                               return item.obtained;
-                            }).length;
+                            }).length ?? 0;
+                            const totalEntryItems = entryItems?.length ?? 0;
                             const isComplete = entryObtained == entryItems?.length && entryItems;
                             const textColor = isComplete ? 'text-green' : 'text-orange';
+
+                            let sectionProgressColor = isComplete ? 'text-green' : 'text-yellow';
+                            if (entryObtained == 0) {
+                              sectionProgressColor = 'text-red';
+                            }
 
                             let bg = i % 2 == 0 ? 'bg-primary' : 'bg-light';
                             bg = entryName == activeEntry ? 'bg-highlight' : bg;
@@ -250,7 +276,7 @@ const Log = () => {
                                 className={`${bg} hover:bg-highlight ${textColor} text-lg cursor-pointer`}
                                 onClick={() => onEntryClick(entryName)}
                                 key={entryName}>
-                                {entryName}
+                                {entryName} {shouldShowSectionProgress && (<span className={sectionProgressColor}>{` (${entryObtained}/${totalEntryItems})`}</span>)}
                               </p>
                             );
                           })}

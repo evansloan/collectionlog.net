@@ -32,12 +32,16 @@ const Tabs = (props: TabsProps) => {
       <div className={`flex flex-wrap justify-between p-0 border-b-2 border-b-light ${className}`}>
         {props.children && props.children.map((child) => {
           const label = child.props['data-tab'];
+          const obtainedUniques: number = child.props['data-obtainedUniques'];
+          const totalUniques: number = child.props['data-totalUniques'];
 
           return (
             <Tab
               activeTab={activeTab}
               key={label}
               label={label}
+              obtainedUniques={obtainedUniques}
+              totalUniques={totalUniques}
               onTabClick={onClickTabItem}
             />
           );
