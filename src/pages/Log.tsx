@@ -33,18 +33,18 @@ const TABS = [
   'Other',
 ];
 
-// const CLUE_TAB_ENTRIES = [
-//   'Beginner Treasure Trails',
-//   'Easy Treasure Trails',
-//   'Medium Treasure Trails',
-//   'Hard Treasure Trails',
-//   'Elite Treasure Trails',
-//   'Master Treasure Trails',
-//   'Hard Treasure Trails (Rare)',
-//   'Elite Treasure Trails (Rare)',
-//   'Master Treasure Trails (Rare)',
-//   'Shared Treasure Trail Rewards',
-// ];
+const CLUE_TAB_ENTRIES = [
+  'Beginner Treasure Trails',
+  'Easy Treasure Trails',
+  'Medium Treasure Trails',
+  'Hard Treasure Trails',
+  'Elite Treasure Trails',
+  'Master Treasure Trails',
+  'Hard Treasure Trails (Rare)',
+  'Elite Treasure Trails (Rare)',
+  'Master Treasure Trails (Rare)',
+  'Shared Treasure Trail Rewards',
+];
 
 const Log = () => {
   const logState = useAppSelector((state) => state.log);
@@ -252,9 +252,11 @@ const Log = () => {
             <div className='md:mx-3 mb-3 md:mt-1 h-full border-2 border-t-0 border-light md:rounded-tr-[10px] md:rounded-tl-[10px] md:overflow-hidden'>
               <Tabs activeTab={activeTab} onClick={onTabClick}>
                 {collectionLog && tabs.map((tabName) => {
-                  const entries = sortAlphabetical(Object.keys(collectionLog.tabs[tabName] ?? []));
+                  let entries = Object.keys(collectionLog.tabs[tabName] ?? []);
                   // Override alphabetical sort for clues
-
+                  if (tabName == 'Clues') {
+                    entries = CLUE_TAB_ENTRIES;
+                  }
                   return (
                     <div key={tabName} data-tab={tabName}>
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
