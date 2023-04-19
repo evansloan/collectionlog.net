@@ -233,8 +233,25 @@ const Log = () => {
                     entries = CLUE_TAB_ENTRIES;
                   }
 
+                  // Count the number of uniques and totals for the tab
+                  const uniqueTabItemIds = new Set<number>();
+                  const uniqueTabItemIdsObtained = new Set<number>();
+
+                  for(const collectionLogEntryKey in collectionLog.tabs[tabName] ?? []) {
+                    const collectionLogEntry = collectionLog.tabs[tabName][collectionLogEntryKey];
+
+                    for(const item of collectionLogEntry.items) {
+                      if (!uniqueTabItemIds.has(item.id)) {
+                        uniqueTabItemIds.add(item.id);
+                      }
+                      if (item.obtained && !uniqueTabItemIdsObtained.has(item.id)) {
+                        uniqueTabItemIdsObtained.add(item.id);
+                      }
+                    }
+                  }
+
                   return (
-                    <div key={tabName} data-tab={tabName}>
+                    <div key={tabName} data-tab={tabName} data-obtainedUniques={uniqueTabItemIdsObtained.size} data-totalUniques={uniqueTabItemIds.size}>
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
                         <div id='entry-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
                           {entries.map((entryName, i) => {
