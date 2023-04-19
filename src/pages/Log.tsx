@@ -98,6 +98,9 @@ const Log = () => {
     }
   }, [logState.collectionLog]);
 
+  // Eventually this setting will be a toggle-able user setting, until then it'll be feature flagged by this
+  const shouldShowSectionProgress = true;
+
   const entryData = collectionLog?.tabs[activeTab][activeEntry];
   const obtainedCount = entryData?.items.filter((item) => item.obtained).length;
   const itemCount = entryData?.items.length;
@@ -238,9 +241,15 @@ const Log = () => {
                             const entryItems = collectionLog.tabs[tabName][entryName]?.items;
                             const entryObtained = entryItems?.filter((item) => {
                               return item.obtained;
-                            }).length;
+                            }).length ?? 0;
+                            const totalEntryItems = entryItems?.length ?? 0;
                             const isComplete = entryObtained == entryItems?.length && entryItems;
                             const textColor = isComplete ? 'text-green' : 'text-orange';
+
+                            let sectionProgressColor = isComplete ? 'text-green' : 'text-yellow';
+                            if (entryObtained == 0) {
+                              sectionProgressColor = 'text-red';
+                            }
 
                             let bg = i % 2 == 0 ? 'bg-primary' : 'bg-light';
                             bg = entryName == activeEntry ? 'bg-highlight' : bg;
@@ -250,7 +259,7 @@ const Log = () => {
                                 className={`${bg} hover:bg-highlight ${textColor} text-lg cursor-pointer`}
                                 onClick={() => onEntryClick(entryName)}
                                 key={entryName}>
-                                {entryName}
+                                {entryName} {shouldShowSectionProgress && (<span className={sectionProgressColor}>{` (${entryObtained}/${totalEntryItems})`}</span>)}
                               </p>
                             );
                           })}
