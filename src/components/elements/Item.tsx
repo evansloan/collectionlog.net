@@ -44,7 +44,10 @@ const Item = (props: ItemProps) => {
             />
           </>
           :
-          <a href={`https://oldschool.runescape.wiki/w/${name.replace(/ /g, '_')}`} target='_blank' rel='noreferrer'>
+          <a
+            className='flex'
+            href={`https://oldschool.runescape.wiki/w/${name.replace(/ /g, '_')}`} target='_blank' rel='noreferrer'
+          >
             <img
               className={obtained ? '' : 'opacity-[0.35]'}
               src={`data:image/jpeg;charset=utf-8;base64,${(icons as { [key: string]: string })[id]}`}
