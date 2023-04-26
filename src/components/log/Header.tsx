@@ -3,7 +3,7 @@ import { AccountType, expectedMaxUniqueItems } from '../../app/constants';
 import { PageHeader } from '../layout';
 import { useAppSelector } from '../../app/hooks';
 
-const LogHeader = () => {
+const Header = () => {
   const logState = useAppSelector((state) => state.log);
   const { collectionLog } = logState;
 
@@ -60,4 +60,4 @@ const LogHeader = () => {
   );
 };
 
-export default LogHeader;
+export default Header;

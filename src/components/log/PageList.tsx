@@ -2,14 +2,14 @@ import { updateUrl } from '../../utils';
 import { useParams } from 'react-router-dom';
 import { Dispatch, SetStateAction } from 'react';
 
-interface EntryListProps {
+interface PageListProps {
   entries: string[];
   collectionLog: CollectionLog | undefined;
   tabName: string;
   activeEntryState: [string, Dispatch<SetStateAction<string>>];
 }
 
-const EntryList = (props: EntryListProps) => {
+const PageList = (props: PageListProps) => {
   const params = useParams();
   const {
     entries,
@@ -26,28 +26,28 @@ const EntryList = (props: EntryListProps) => {
   };
 
   const showEntries = () => {
-    const entryList = document.getElementById('entry-list');
-    const entryItems = document.getElementById('entry-items');
+    const pageList = document.getElementById('page-list');
+    const items = document.getElementById('items');
 
-    const isHidden = entryList?.classList.contains('hidden');
+    const isHidden = pageList?.classList.contains('hidden');
 
     if (isHidden) {
-      entryList?.classList.remove('hidden');
-      entryList?.classList.add('block');
+      pageList?.classList.remove('hidden');
+      pageList?.classList.add('block');
 
-      entryItems?.classList.add('hidden');
-      entryItems?.classList.remove('flex');
+      items?.classList.add('hidden');
+      items?.classList.remove('flex');
     } else {
-      entryList?.classList.add('hidden');
-      entryList?.classList.remove('block');
+      pageList?.classList.add('hidden');
+      pageList?.classList.remove('block');
 
-      entryItems?.classList.add('flex');
-      entryItems?.classList.remove('hidden');
+      items?.classList.add('flex');
+      items?.classList.remove('hidden');
     }
   };
 
   return (
-    <div id='entry-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
+    <div id='page-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
       {entries.map((entryName, i) => {
         const entryItems = collectionLog?.tabs[tabName][entryName]?.items;
         const entryObtained = entryItems?.filter((item) => {
@@ -72,4 +72,4 @@ const EntryList = (props: EntryListProps) => {
   );
 };
 
-export default EntryList;
+export default PageList;

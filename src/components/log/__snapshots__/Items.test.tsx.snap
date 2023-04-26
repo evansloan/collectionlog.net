@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EntryItems component should display collection 1`] = `
+exports[`Items component should display collection 1`] = `
 <div
   className="flex md:flex flex-col w-full md:w-3/4"
-  id="entry-items"
+  id="items"
 >
   <div
     className="mx-2 border-b border-b-lighter shadow-log"
@@ -140,10 +140,10 @@ exports[`EntryItems component should display collection 1`] = `
 </div>
 `;
 
-exports[`EntryItems component should have 'Master clues completed' to be '1' 1`] = `
+exports[`Items component should have 'Master clues completed' to be '1' 1`] = `
 <div
   className="flex md:flex flex-col w-full md:w-3/4"
-  id="entry-items"
+  id="items"
 >
   <div
     className="mx-2 border-b border-b-lighter shadow-log"

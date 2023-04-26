@@ -1,5 +1,5 @@
 import Hiscores from './Hiscores';
 import Home from './Home';
-import Log from './Log';
+import CollectionLog from './CollectionLog';
 
-export { Hiscores, Home, Log };
+export { Hiscores, Home, CollectionLog };

@@ -13,10 +13,10 @@ import {
 } from '../components/elements';
 import { PageContainer } from '../components/layout';
 import RecentItems from '../components/log/RecentItems';
-import LogHeader from '../components/log/LogHeader';
-import LogTab from '../components/log/LogTab';
+import Header from '../components/log/Header';
+import Tab from '../components/log/Tab';
 
-const Log = () => {
+const CollectionLog = () => {
   const logState = useAppSelector((state) => state.log);
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -67,8 +67,8 @@ const Log = () => {
           </div>
           :
           <>
-            <LogHeader />
-            <LogTab />
+            <Header />
+            <Tab />
             <RecentItems />
           </>
       }
@@ -76,4 +76,4 @@ const Log = () => {
   );
 };
 
-export default Log;
+export default CollectionLog;

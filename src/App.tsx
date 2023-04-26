@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { Hiscores, Home, Log } from './pages';
+import { Hiscores, Home, CollectionLog } from './pages';
 import { Footer, Header } from './components/layout';
 
 const App = () => (
@@ -9,8 +9,8 @@ const App = () => (
     <Header />
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/log/:username' element={<Log />} />
-      <Route path='/log/:username/:entry' element={<Log />} />
+      <Route path='/log/:username' element={<CollectionLog />} />
+      <Route path='/log/:username/:entry' element={<CollectionLog />} />
       <Route path='/hiscores' element={<Hiscores />} />
       <Route path='/hiscores/:page' element={<Hiscores />} />
     </Routes>

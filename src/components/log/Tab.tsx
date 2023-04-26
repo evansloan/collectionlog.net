@@ -1,7 +1,7 @@
 import { Tabs } from '../elements';
 import { sortAlphabetical, updateUrl } from '../../utils';
-import EntryList from './EntryList';
-import EntryItems from './EntryItems';
+import PageList from './PageList';
+import Items from './Items';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -28,7 +28,7 @@ const CLUE_TAB_ENTRIES = [
   'Shared Treasure Trail Rewards',
 ];
 
-const LogTab = () => {
+const Tab = () => {
   const logState = useAppSelector((state) => state.log);
   const dispatch = useAppDispatch();
   const params = useParams();
@@ -88,8 +88,8 @@ const LogTab = () => {
           return (
             <div key={tabName} data-tab={tabName}>
               <div className='flex w-full h-[94%] md:overflow-hidden'>
-                <EntryList collectionLog={collectionLog} entries={entries} tabName={tabName} activeEntryState={[activeEntry, setActiveEntry]}/>
-                {entryData && <EntryItems name={activeEntry} items={entryData.items || []} killCount={entryData.killCount || []}/>}
+                <PageList collectionLog={collectionLog} entries={entries} tabName={tabName} activeEntryState={[activeEntry, setActiveEntry]}/>
+                {entryData && <Items name={activeEntry} items={entryData.items || []} killCount={entryData.killCount || []}/>}
               </div>
             </div>
           );
@@ -99,4 +99,4 @@ const LogTab = () => {
   );
 };
 
-export default LogTab;
+export default Tab;

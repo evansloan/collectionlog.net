@@ -1,12 +1,12 @@
-import EntryItem from './EntryItem';
+import Item from './Item';
 
-interface EntryItemsProps {
+interface ItemsProps {
   name: string;
 	items: CollectionLogItem[];
 	killCount: CollectionLogKillCount[];
 }
 
-const EntryItems = (props: EntryItemsProps) => {
+const Items = (props: ItemsProps) => {
   const { name, items, killCount } = props;
 
   const obtainedCount = items.filter((item) => item.obtained).length;
@@ -20,7 +20,7 @@ const EntryItems = (props: EntryItemsProps) => {
   }
 
   return (
-    <div id='entry-items' className='flex md:flex flex-col w-full md:w-3/4'>
+    <div id='items' className='flex md:flex flex-col w-full md:w-3/4'>
       <div className='mx-2 border-b border-b-lighter shadow-log'>
         <h3 className='text-xl font-bold text-orange'>{name}</h3>
         <p className='text-orange'>Obtained: <span className={obtainedClass}>{obtainedCount}/{itemCount}</span></p>
@@ -33,10 +33,10 @@ const EntryItems = (props: EntryItemsProps) => {
         })}
       </div>
       <div className='flex flex-wrap grow content-start px-2 pt-3 mb-3 overflow-y-auto shadow-log'>
-        {items.length > 0 && items.map((item, i) => <EntryItem key={`${i}-${item.id}`} item={item}/>)}
+        {items.length > 0 && items.map((item, i) => <Item key={`${i}-${item.id}`} item={item}/>)}
       </div>
     </div>
   );
 };
 
-export default EntryItems;
+export default Items;

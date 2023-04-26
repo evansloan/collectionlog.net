@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EntryItem component should render 1`] = `
+exports[`Item component should render 1`] = `
 <div
   className="w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]"
 >
