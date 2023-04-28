@@ -5,9 +5,11 @@ import {
   HiscoresResponse,
   ItemsResponse,
   RankResponse,
+  RanksResponse,
   UserCountResponse,
   UserListResponse,
   UserResponse,
+  UserSettingsResponse,
 } from './responses';
 
 class CollectionLogAPI {
@@ -82,6 +84,11 @@ class CollectionLogAPI {
     return await this.getRequest<RankResponse>(url, queryParams);
   };
 
+  getRanksByUsername = async (username: string) => {
+    const url = `${CollectionLogAPI.HISCORES_ENDPOINT}/ranks/${username}`;
+    return await this.getRequest<RanksResponse>(url);
+  };
+
   getUserTypeahead = async (username: string) => {
     const url = `${CollectionLogAPI.USER_ENDPOINT}/typeahead/${username.toLowerCase()}`;
     return await this.getRequest<UserListResponse>(url);
@@ -95,6 +102,11 @@ class CollectionLogAPI {
   getUserCount = async () => {
     const url = `${CollectionLogAPI.USER_ENDPOINT}/count`;
     return await this.getRequest<UserCountResponse>(url);
+  };
+
+  getUserSettings = async (username: string) => {
+    const url = `${CollectionLogAPI.USER_ENDPOINT}/settings/${username.toLowerCase()}`;
+    return await this.getRequest<UserSettingsResponse>(url);
   };
 }
 

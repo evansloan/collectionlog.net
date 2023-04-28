@@ -1,3 +1,5 @@
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import DocumentMeta from 'react-document-meta';
 import { useParams } from 'react-router-dom';
@@ -6,8 +8,9 @@ import { AccountType, expectedMaxUniqueItems } from '../app/constants';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   loadCollectionLog,
-  loadHiscoresRank,
+  loadHiscoresRanks,
   loadRecentItems,
+  loadUserSettings,
   setError,
 } from '../app/reducers/log/slice';
 import {
@@ -18,6 +21,7 @@ import {
   Spinner,
   Tabs,
 } from '../components/elements';
+import RankIcon from '../components/elements/RankIcon';
 import { PageContainer, PageHeader } from '../components/layout';
 import { formatDate, sortAlphabetical, updateUrl } from '../utils';
 
@@ -53,7 +57,7 @@ const Log = () => {
   const [activeTab, setActiveTab] = useState('Bosses');
   const [activeEntry, setActiveEntry] = useState(paramsEntry ?? 'Abyssal Sire');
 
-  const { collectionLog, isLoading } = logState;
+  const { collectionLog, isLoading, ranks, userSettings } = logState;
   const tabKeys = Object.keys(collectionLog?.tabs || []);
 
   /**
@@ -72,9 +76,10 @@ const Log = () => {
       return;
     }
 
+    dispatch(loadUserSettings(username));
     dispatch(loadCollectionLog(username));
     dispatch(loadRecentItems(username));
-    dispatch(loadHiscoresRank(username));
+    dispatch(loadHiscoresRanks(username));
   }, [params.username]);
 
   /**
@@ -190,6 +195,11 @@ const Log = () => {
     meta.title = `${collectionLog.username} | ${pageTitle}`;
   }
 
+  let displayRank = undefined;
+  if (ranks) {
+    displayRank = ranks[userSettings?.displayRank ?? 'ALL'];
+  }
+
   return (
     <PageContainer>
       <DocumentMeta {...meta} />
@@ -206,10 +216,28 @@ const Log = () => {
                 <AccountIcon accountType={collectionLog?.accountType as AccountType} height='20px' />
                 <PageTitle title={`${collectionLog?.username}'s Collection log`} />
               </div>
-              <p className='text-lg font-bold text-center text-orange'>
-                Obtained: <span className='text-white'>{collectionLog?.uniqueObtained}/{collectionLog?.uniqueItems}</span> {' '}
-                Rank: <span className='text-white'>#{logState.rank}</span>
-              </p>
+              <div className='flex justify-center items-center'>
+                <p className='mx-2 text-lg font-bold text-center text-orange'>Obtained: <span className='text-white'>{collectionLog?.uniqueObtained}/{collectionLog?.uniqueItems}</span></p>
+                <RankIcon rankType={userSettings?.displayRank ??'ALL'} height='15px' />
+                <div className='group'>
+                  <p className='mx-1 text-lg font-bold text-center text-orange'>
+                    Rank <span className='text-white'>#{displayRank}</span>
+                  </p>
+                  <div className='hidden group-hover:flex group-hover:flex-col w-[5%] absolute p-2 bg-primary z-50 border-2 border-black'>
+                    {ranks && Object.keys(ranks).map((rankType, i) => {
+                      const rankValue = ranks[rankType as RankType];
+                      if (!rankValue) {
+                        return;
+                      }
+                      return <div key={`${i}-${rankType}`} className='flex justify-between items-center'>
+                        <RankIcon rankType={rankType as RankType} height='15px' />
+                        <p className='text-white font-bold'>#{rankValue}</p>
+                      </div>;
+                    })}
+                  </div>
+                </div>
+                <FontAwesomeIcon icon={faChevronDown} className='h-[10px] mb-1 text-orange icon-shadow'/>
+              </div>
               {collectionLog && collectionLog?.uniqueItems < expectedMaxUniqueItems &&
                 <p className='text-lg font-bold text-center text-yellow'>
                   New unique items have been added to Old School RuneScape! Please re-upload collection log data.
@@ -224,12 +252,11 @@ const Log = () => {
             <div className='md:mx-3 mb-3 md:mt-1 h-full border-2 border-t-0 border-light md:rounded-tr-[10px] md:rounded-tl-[10px] md:overflow-hidden'>
               <Tabs activeTab={activeTab} onClick={onTabClick}>
                 {collectionLog && tabs.map((tabName) => {
-                  let entries = sortAlphabetical(Object.keys(collectionLog.tabs[tabName] ?? []));
+                  let entries = Object.keys(collectionLog.tabs[tabName] ?? []);
                   // Override alphabetical sort for clues
                   if (tabName == 'Clues') {
                     entries = CLUE_TAB_ENTRIES;
                   }
-
                   return (
                     <div key={tabName} data-tab={tabName}>
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
@@ -271,7 +298,7 @@ const Log = () => {
                           <div className='flex flex-wrap grow content-start px-2 pt-3 mb-3 overflow-y-auto shadow-log'>
                             {entryData?.items.map((item, i) => {
                               return (
-                                <Item key={`${i}-${item.id}`} item={item} showQuantity={true} showTooltip={true} />
+                                <Item key={`${i}-${item.id}`} item={item} showQuantity={userSettings?.showQuantity} showTooltip={true} />
                               );
                             })}
                           </div>
