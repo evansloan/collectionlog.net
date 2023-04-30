@@ -21,10 +21,12 @@ const Item = (props: ItemProps) => {
 
   const wrapperClassName = (isDetail) ? 'w-[50px] h-[50px] mb-[10px]' : 'w-1/4 sm:w-1/5 md:w-[16.6%] h-[50px] mb-[10px]';
 
+  const displayQuantity = showQuantity && quantity ? quantity : '\u00a0';
+
   return (
     <div key={item.id} className={wrapperClassName}>
-      {showQuantity &&
-        <span className='relative top-[25%] left-[2%] md:top-[20%] md:left-[15%] text-yellow'>{quantity ? quantity : '\u00a0'}</span>
+      {!isDetail &&
+        <span className='relative top-[25%] left-[2%] md:top-[20%] md:left-[15%] text-yellow'>{displayQuantity}</span>
       }
       <div className='flex justify-center h-[45px] group'>
         {showTooltip ?
