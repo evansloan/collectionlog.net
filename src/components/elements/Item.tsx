@@ -47,7 +47,7 @@ const Item = (props: ItemProps) => {
           </>
           :
           <a
-            className='flex'
+            className='flex w-full'
             href={`https://oldschool.runescape.wiki/w/${name.replace(/ /g, '_')}`} target='_blank' rel='noreferrer'
           >
             <img
