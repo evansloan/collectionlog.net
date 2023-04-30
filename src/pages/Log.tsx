@@ -252,7 +252,7 @@ const Log = () => {
             <div className='md:mx-3 mb-3 md:mt-1 h-full border-2 border-t-0 border-light md:rounded-tr-[10px] md:rounded-tl-[10px] md:overflow-hidden'>
               <Tabs activeTab={activeTab} onClick={onTabClick}>
                 {collectionLog && tabs.map((tabName) => {
-                  let entries = Object.keys(collectionLog.tabs[tabName] ?? []);
+                  let entries = sortAlphabetical(Object.keys(collectionLog.tabs[tabName] ?? []));
                   // Override alphabetical sort for clues
                   if (tabName == 'Clues') {
                     entries = CLUE_TAB_ENTRIES;
