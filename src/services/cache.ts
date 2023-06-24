@@ -11,6 +11,10 @@ class CacheService {
   }
 
   public add<T>(key: string, data: T, ttlOverride?: number) {
+    if (!key || !data) {
+      return;
+    }
+
     const ttl = ttlOverride ?? CacheService.DEFAULT_TTL;
     const expires = new Date();
     expires.setSeconds(expires.getSeconds() + ttl);
