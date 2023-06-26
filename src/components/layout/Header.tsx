@@ -5,6 +5,7 @@ import { CollectionLogAPI } from '../../api/collection-log/collection-log-api';
 import discordIcon from '../../assets/images/discord.png';
 import { discordUrl } from '../../app/constants';
 import { AccountIcon, Button, DropDown, Input } from '../elements';
+import AnalyticsService from '../../services/analytics';
 
 interface TypeaheadCache {
   users: User[];
@@ -122,6 +123,7 @@ const Header = () => {
   const navigateToUser = (username: string) => {
     setIsSearchOpen(false);
     navigate(`log/${username}`);
+    AnalyticsService.clUserSearchEvent(username);
   };
 
   const onSubmit = (e: React.FormEvent) => {
