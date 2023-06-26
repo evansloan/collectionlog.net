@@ -10,7 +10,6 @@ export interface HiscoresState {
   data?: Hiscores[];
   error?: string;
   isLoading: boolean;
-  username?: string;
 }
 
 const initialState: HiscoresState = {
@@ -51,7 +50,6 @@ export const searchHiscores = createAsyncThunk(
     const { rank } = response.data;
 
     return {
-      username,
       page: Math.ceil(rank / 25),
     };
   }
@@ -66,9 +64,6 @@ export const hiscoresSlice = createSlice({
     },
     setPage: (state, action: PayloadAction<number>) => {
       state.page = action.payload;
-    },
-    setUsername: (state, action: PayloadAction<string>) => {
-      state.username = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -85,7 +80,6 @@ export const hiscoresSlice = createSlice({
         state.error = 'Unable to retrieve hiscores';
       })
       .addCase(searchHiscores.fulfilled, (state, action) => {
-        state.username = action.payload.username;
         state.page = action.payload.page;
       })
       .addCase(searchHiscores.rejected, (state) => {
@@ -94,5 +88,5 @@ export const hiscoresSlice = createSlice({
   },
 });
 
-export const { setAccountType, setPage, setUsername } = hiscoresSlice.actions;
+export const { setAccountType, setPage } = hiscoresSlice.actions;
 export default hiscoresSlice.reducer;

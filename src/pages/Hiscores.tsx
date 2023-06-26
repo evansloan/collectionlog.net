@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import DocumentMeta from 'react-document-meta';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AccountType } from '../app/constants';
 
+import { AccountType } from '../app/constants';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import {
   FilterType,
@@ -10,7 +10,6 @@ import {
   searchHiscores,
   setAccountType,
   setPage,
-  setUsername,
 } from '../app/reducers/hiscores/slice';
 import {
   Button,
@@ -23,6 +22,9 @@ import Select, { SelectOption } from '../components/elements/Select';
 import { ColumnType } from '../components/elements/Table';
 import { PageContainer, PageHeader } from '../components/layout';
 import { toTitleCase, updateUrl } from '../utils';
+import AnalyticsService from '../services/analytics';
+
+const URL_PATH = 'hiscores';
 
 const TABLE_COLUMNS = [
   {
@@ -58,6 +60,8 @@ const Hiscores = () => {
   const params = useParams();
   const navigate = useNavigate();
 
+  const [search, setSearch] = useState('');
+
   const accountTypeOptions: SelectOption[] = [{ title: 'All', value: 'ALL', selected: true }];
 
   for (const accountType in AccountType) {
@@ -75,23 +79,27 @@ const Hiscores = () => {
    */
   useEffect(() => {
     let page = Number(params.page);
-    const filter = hiscoresState.accountType;
     if (!page) {
       page = 1;
-      updateUrl(`/hiscores/${page}`);
+      updateUrl(`/${URL_PATH}/${page}`);
     }
 
-    dispatch(setPage(page));
-    dispatch(loadHiscores({ page, filter }));
+    if (page != hiscoresState.page) {
+      dispatch(setPage(page));
+    }
+
+    AnalyticsService.hsPageChangeEvent(page);
   }, [params.page]);
 
   useEffect(() => {
-    const { page } = hiscoresState;
-    navigate(`/hiscores/${page}`);
+    const { accountType: filter, page } = hiscoresState;
+
+    updateUrl(`/${URL_PATH}/${page}`);
+    dispatch(loadHiscores({ page, filter }));
   }, [hiscoresState.page]);
 
   const onPageClick = (page: number) => {
-    navigate(`/hiscores/${page}`);
+    navigate(`/${URL_PATH}/${page}`);
   };
 
   const onAccountTypeChange = (value: string) => {
@@ -104,15 +112,22 @@ const Hiscores = () => {
   };
 
   const onSearchChange = (value: string) => {
-    dispatch(setUsername(value));
+    setSearch(value);
   };
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (search === '') {
+      return;
+    }
+
     dispatch(searchHiscores({
-      username: hiscoresState.username ?? '',
+      username: search,
       filter: hiscoresState.accountType,
     }));
+
+    AnalyticsService.hsUserSearchEvent(search.toLowerCase());
   };
 
   const showMenu = () => {
@@ -187,7 +202,7 @@ const Hiscores = () => {
           <Spinner />
           :
           <>
-            <Table data={hiscoresState.data} columns={TABLE_COLUMNS} highlightVal={hiscoresState.username}/>
+            <Table data={hiscoresState.data} columns={TABLE_COLUMNS} highlightVal={search.toLowerCase()}/>
             {mobileButtonGroup}
           </>
         }
