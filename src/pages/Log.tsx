@@ -25,6 +25,12 @@ import RankIcon from '../components/elements/RankIcon';
 import { PageContainer, PageHeader } from '../components/layout';
 import { formatDate, sortAlphabetical, updateUrl } from '../utils';
 
+import AnalyticsService from '../services/analytics';
+
+const DEFAULT_TAB = 'Bosses';
+const DEFAULT_PAGE = 'Abyssal Sire';
+const URL_PATH = 'log';
+
 const TABS = [
   'Bosses',
   'Raids',
@@ -52,10 +58,9 @@ const Log = () => {
   const params = useParams();
 
   const paramsEntry = params.entry;
-  let paramsTab = undefined;
 
-  const [activeTab, setActiveTab] = useState('Bosses');
-  const [activeEntry, setActiveEntry] = useState(paramsEntry ?? 'Abyssal Sire');
+  const [activeTab, setActiveTab] = useState(DEFAULT_TAB);
+  const [activeEntry, setActiveEntry] = useState(paramsEntry ?? DEFAULT_PAGE);
 
   const { collectionLog, isLoading, ranks, userSettings } = logState;
   const tabKeys = Object.keys(collectionLog?.tabs || []);
@@ -95,12 +100,23 @@ const Log = () => {
     }
 
     if (paramsEntry) {
-      paramsTab = tabs.find((tabName) => {
+      const paramsTab = tabs.find((tabName) => {
         const entry = logState.collectionLog?.tabs[tabName][paramsEntry];
         return entry != undefined;
       });
-      setActiveTab(paramsTab ?? 'Bosses');
+
+      if (paramsTab) {
+        setActiveTab(paramsTab);
+        AnalyticsService.clTabChangeEvent(paramsTab, paramsEntry);
+        return;
+      }
+
+      setActiveTab(DEFAULT_TAB);
+      setActiveEntry(DEFAULT_PAGE);
+      updateUrl(`/${URL_PATH}/${params.username}/${DEFAULT_PAGE}`);
     }
+
+    AnalyticsService.clTabChangeEvent(DEFAULT_TAB, DEFAULT_PAGE);
   }, [logState.collectionLog]);
 
   const entryData = collectionLog?.tabs[activeTab][activeEntry];
@@ -148,13 +164,17 @@ const Log = () => {
     const entries = sortAlphabetical(Object.keys(collectionLog?.tabs[tabName] ?? []));
     setActiveTab(tabName);
     setActiveEntry(entries[0]);
-    updateUrl(`/log/${params.username}/${entries[0]}`);
+    updateUrl(`/${URL_PATH}/${params.username}/${entries[0]}`);
+
+    AnalyticsService.clTabChangeEvent(tabName, entries[0]);
   };
 
   const onEntryClick = (entryName: string) => {
     setActiveEntry(entryName);
     showEntries();
-    updateUrl(`/log/${params.username}/${entryName}`);
+    updateUrl(`/${URL_PATH}/${params.username}/${entryName}`);
+
+    AnalyticsService.clPageChangeEvent(entryName);
   };
 
   const showEntries = () => {

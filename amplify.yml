@@ -6,6 +6,7 @@ frontend:
         - yarn install
     build:
       commands:
+        - REACT_APP_GOOGLE_ANALYTICS_ID=${REACT_APP_GOOGLE_ANALYTICS_ID}
         - REACT_APP_TWITCH_CLIENT_SECRET=${REACT_APP_TWITCH_CLIENT_SECRET}
         - REACT_APP_TWITCH_CLIENT_ID=${REACT_APP_TWITCH_CLIENT_ID}
         - yarn run build
