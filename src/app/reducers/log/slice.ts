@@ -18,24 +18,14 @@ const initialState: LogState = {
 
 const cacheService = CacheService.getInstance();
 
-export const loadCollectionLog = createAsyncThunk(
-  'log/fetchLog',
-  async (username: string) => {
-    const cacheKey = `collection-log-${username}`;
-    const cacheItem = cacheService.get<CollectionLog>(cacheKey);
-    if (cacheItem) {
-      return cacheItem;
-    }
+export const loadCollectionLog = async (username: string) => {
+  const api = CollectionLogAPI.getInstance();
+  username = username.toLowerCase();
+  const response = await api.getCollectionLog(username);
+  const collectionLog = response.data.collectionLog;
 
-    const api = CollectionLogAPI.getInstance();
-    username = username.toLowerCase();
-    const response = await api.getCollectionLog(username);
-    const collectionLog = response.data.collectionLog;
-
-    cacheService.add(cacheKey, collectionLog);
-    return collectionLog;
-  }
-);
+  return collectionLog;
+};
 
 export const loadRecentItems = createAsyncThunk(
   'log/fetchRecentItems',
@@ -88,18 +78,6 @@ export const logSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadCollectionLog.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(loadCollectionLog.fulfilled, (state, action) => {
-        state.collectionLog = action.payload;
-        state.isLoading = false;
-        state.error = undefined;
-      })
-      .addCase(loadCollectionLog.rejected, (state) => {
-        state.isLoading = false;
-        state.error = 'Error connecting to api.collectionlog.net';
-      })
       .addCase(loadRecentItems.fulfilled, (state, action) => {
         state.recentItems = action.payload;
       })
