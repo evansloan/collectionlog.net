@@ -1,3 +1,4 @@
 import PageList from './PageList';
+import PageListPage from './PageListPage';
 
-export { PageList };
+export { PageList, PageListPage };
