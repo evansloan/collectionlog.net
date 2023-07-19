@@ -36,11 +36,7 @@ class CollectionLogAPI {
   }
 
   private getRequest = async <T>(url: string, queryParams?: any): Promise<AxiosResponse<T>> => {
-    try {
-      return await CollectionLogAPI.axiosInstance.get<T>(url, { params: queryParams });
-    } catch (error: any) {
-      return error.response;
-    }
+    return await CollectionLogAPI.axiosInstance.get<T>(url, { params: queryParams });
   };
 
   private postRequest = async <T, R>(url: string, data: T): Promise<AxiosResponse<R>> => {
