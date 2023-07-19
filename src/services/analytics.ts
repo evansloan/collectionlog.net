@@ -1,4 +1,5 @@
 import ReactGA from 'react-ga4';
+import { OpenPage } from './collection-log';
 
 type EventLabel = number|string;
 
@@ -37,9 +38,9 @@ class AnalyticsService {
    * @param tabName Tab changed to
    * @param pageName Page changed to
    */
-  public static clTabChangeEvent(tabName: string, pageName: string) {
-    this.collectionLogEvent(this.ACTION_TAB_CHANGE, tabName);
-    this.clPageChangeEvent(pageName);
+  public static clTabChangeEvent(activePage: OpenPage) {
+    this.collectionLogEvent(this.ACTION_TAB_CHANGE, activePage.tab);
+    this.clPageChangeEvent(activePage.page);
   }
 
   /**
