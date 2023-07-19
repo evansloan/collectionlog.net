@@ -1,7 +1,7 @@
 # Contributing
 
 ## Project setup
-1. Install the [Yarn package manager](https://classic.yarnpkg.com/lang/en/docs/install/)
+1. Install the [Yarn package manager](https://yarnpkg.com/getting-started/install)
 2. Clone the repository `git clone https://github.com/evansloan/collectionlog.net && cd collectionlog.net`
 3. Install dependencies `yarn install`
 4. Run the project `yarn start`
