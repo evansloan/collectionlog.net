@@ -19,6 +19,7 @@ import {
   Spinner,
   Tabs,
 } from '../components/elements';
+import { PageList } from '../components/collection-log';
 import RankIcon from '../components/elements/RankIcon';
 import { PageContainer, PageHeader } from '../components/layout';
 import { formatDate, updateUrl } from '../utils';
@@ -226,24 +227,12 @@ const Log = () => {
                   return (
                     <div key={tabName} data-tab={tabName}>
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
-                        <div id='entry-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
-                          {pages.map((pageName, i) => {
-                            const isComplete = collectionLog.isPageCompleted(pageName);
-                            const textColor = isComplete ? 'text-green' : 'text-orange';
-
-                            let bg = i % 2 == 0 ? 'bg-primary' : 'bg-light';
-                            bg = pageName == openPage.page ? 'bg-highlight' : bg;
-
-                            return (
-                              <p
-                                className={`${bg} hover:bg-highlight ${textColor} text-lg cursor-pointer`}
-                                onClick={() => onEntryClick(pageName)}
-                                key={pageName}>
-                                {pageName}
-                              </p>
-                            );
-                          })}
-                        </div>
+                        <PageList
+                          collectionLog={collectionLog}
+                          openView={openView}
+                          pageClickHandler={onPageClick}
+                          pageNames={pages}
+                        />
                         <div id='entry-items' className='flex md:flex flex-col w-full md:w-3/4'>
                           <div className='mx-2 border-b border-b-lighter shadow-log'>
                             <Button title='Show Pages' className='w-full block md:hidden' onClick={showEntries} />
