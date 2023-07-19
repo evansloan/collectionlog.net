@@ -1,7 +1,10 @@
 import { CollectionLogAPI } from '../api/collection-log/collection-log-api';
 import { sortAlphabetical } from '../utils';
 
-export interface OpenPage {
+/**
+ * Represents the current open tab/page combination
+ */
+export interface OpenView {
   tab: string;
   page: string;
 }
@@ -93,8 +96,8 @@ class CollectionLogService {
     return this.data.uniqueItems;
   }
 
-  public getPage(activePage: OpenPage) {
-    const { tab, page } = activePage;
+  public getPage(openView: OpenView) {
+    const { tab, page } = openView;
     return this.data.tabs[tab][page];
   }
 
@@ -110,8 +113,9 @@ class CollectionLogService {
     });
   }
 
-  public getPageItems(activePage: OpenPage) {
-    return this.data.tabs[activePage.tab][activePage.page].items;
+  public getPageItems(openView: OpenView) {
+    const { tab, page } = openView;
+    return this.data.tabs[tab][page].items;
   }
 
   public isPageCompleted(page: string): boolean {

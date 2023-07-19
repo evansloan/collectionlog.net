@@ -1,8 +1,8 @@
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import DocumentMeta from 'react-document-meta';
 import { useParams } from 'react-router-dom';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { AccountType, expectedMaxUniqueItems } from '../app/constants';
 import { useAppDispatch, useAppSelector, useCollectionLog } from '../app/hooks';
@@ -24,7 +24,7 @@ import { PageContainer, PageHeader } from '../components/layout';
 import { formatDate, updateUrl } from '../utils';
 
 import AnalyticsService from '../services/analytics';
-import { OpenPage } from '../services/collection-log';
+import { OpenView } from '../services/collection-log';
 import ErrorService from '../services/errors';
 
 const DEFAULT_TAB = 'Bosses';
@@ -38,7 +38,7 @@ const Log = () => {
 
   const paramsPage = params.pageName;
 
-  const [openPage, setOpenPage] = useState<OpenPage>({
+  const [openView, setOpenView] = useState<OpenView>({
     tab: DEFAULT_TAB,
     page: DEFAULT_PAGE,
   });
@@ -59,13 +59,13 @@ const Log = () => {
       return;
     }
 
-    setOpenPage({
+    setOpenView({
       tab,
       page: paramsPage,
     });
-    updateUrl(`/${URL_PATH}/${params.username}/${openPage.page}`);
+    updateUrl(`/${URL_PATH}/${params.username}/${openView.page}`);
 
-    AnalyticsService.clTabChangeEvent(openPage);
+    AnalyticsService.clTabChangeEvent(openView);
   }, [collectionLog]);
 
   useEffect(() => {
@@ -91,9 +91,9 @@ const Log = () => {
     dispatch(loadHiscoresRanks(username));
   }, [params.username]);
 
-  const entryData = collectionLog?.getPage(openPage);
-  const obtainedCount = entryData?.items.filter((item) => item.obtained).length;
-  const itemCount = entryData?.items.length;
+  const pageData = collectionLog?.getPage(openView);
+  const obtainedCount = pageData?.items.filter((item) => item.obtained).length;
+  const itemCount = pageData?.items.length;
   const recentItems = logState.recentItems;
 
   let obtainedClass = 'text-yellow';
@@ -107,24 +107,24 @@ const Log = () => {
 
   const onTabClick = (tabName: string) => {
     const pages = Object.keys(collectionLog?.getPages(tabName) ?? []);
-    setOpenPage({
+    setOpenView({
       tab: tabName,
       page: pages[0],
     });
     updateUrl(`/${URL_PATH}/${params.username}/${pages[0]}`);
 
-    AnalyticsService.clTabChangeEvent(openPage);
+    AnalyticsService.clTabChangeEvent(openView);
   };
 
-  const onEntryClick = (entryName: string) => {
-    setOpenPage({
-      ...openPage,
-      page: entryName,
+  const onPageClick = (pageName: string) => {
+    setOpenView({
+      ...openView,
+      page: pageName,
     });
     showEntries();
-    updateUrl(`/${URL_PATH}/${params.username}/${entryName}`);
+    updateUrl(`/${URL_PATH}/${params.username}/${pageName}`);
 
-    AnalyticsService.clPageChangeEvent(entryName);
+    AnalyticsService.clPageChangeEvent(pageName);
   };
 
   const showEntries = () => {
@@ -220,7 +220,7 @@ const Log = () => {
               }
             </PageHeader>
             <div className='md:mx-3 mb-3 md:mt-1 h-full border-2 border-t-0 border-light md:rounded-tr-[10px] md:rounded-tl-[10px] md:overflow-hidden'>
-              <Tabs activeTab={openPage.tab} onClick={onTabClick}>
+              <Tabs activeTab={openView.tab} onClick={onTabClick}>
                 {collectionLog && collectionLog.getTabs().map((tabName) => {
                   const pages = Object.keys(collectionLog.getPages(tabName) ?? []);
                   return (
@@ -247,9 +247,9 @@ const Log = () => {
                         <div id='entry-items' className='flex md:flex flex-col w-full md:w-3/4'>
                           <div className='mx-2 border-b border-b-lighter shadow-log'>
                             <Button title='Show Pages' className='w-full block md:hidden' onClick={showEntries} />
-                            <h3 className='text-xl font-bold text-orange'>{openPage.page}</h3>
+                            <h3 className='text-xl font-bold text-orange'>{openView.page}</h3>
                             <p className='text-orange'>Obtained: <span className={obtainedClass}>{obtainedCount}/{itemCount}</span></p>
-                            {entryData?.killCount?.map((kc, i) => {
+                            {pageData?.killCount?.map((kc, i) => {
                               return (
                                 <p key={`${i}-${kc.name}`} className='text-orange'>
                                   {kc.name}: <span className='text-white'>{kc.amount}</span>
@@ -258,7 +258,7 @@ const Log = () => {
                             })}
                           </div>
                           <div className='flex flex-wrap grow content-start px-2 pt-3 mb-3 overflow-y-auto shadow-log'>
-                            {entryData?.items.map((item, i) => {
+                            {pageData?.items.map((item, i) => {
                               return (
                                 <Item key={`${i}-${item.id}`} item={item} showQuantity={userSettings?.showQuantity} showTooltip={true} />
                               );
