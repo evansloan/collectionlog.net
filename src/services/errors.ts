@@ -1,9 +1,10 @@
-type ErrorStatus = 404 | 500;
+type ErrorStatus = 404 | 500 | 503;
 
 class ErrorService {
   private static readonly STATUS_ERROR_MAP: { [key in ErrorStatus ]: string }= {
     404: 'Unable to find collection log for user {username}',
     500: 'Error connecting to api.collectionlog.net',
+    503: 'Error connecting to api.collectionlog.net',
   };
 
   public static mapError(error: any, username: string) {
