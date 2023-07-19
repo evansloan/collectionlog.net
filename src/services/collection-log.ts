@@ -1,37 +1,41 @@
 import { CollectionLogAPI } from '../api/collection-log/collection-log-api';
+import { sortAlphabetical } from '../utils';
 
-export interface ActivePage {
+export interface OpenPage {
   tab: string;
   page: string;
 }
 
-export interface OpenPage {
-  tab: string;
-  name: string;
-  page: CollectionLogEntry;
-}
-
 class CollectionLogService {
+
+  private static readonly TAB_BOSSES = 'Bosses';
+  private static readonly TAB_RAIDS = 'Raids';
+  private static readonly TAB_CLUES = 'Clues';
+  private static readonly TAB_MINIGAMES = 'Minigames';
+  private static readonly TAB_OTHER = 'Other';
+
   private static readonly TABS = [
-    'Bosses',
-    'Raids',
-    'Clues',
-    'Minigames',
-    'Other',
+    this.TAB_BOSSES,
+    this.TAB_RAIDS,
+    this.TAB_CLUES,
+    this.TAB_MINIGAMES,
+    this.TAB_OTHER,
   ];
 
-  private static readonly CLUE_TAB_ENTRIES = [
-    'Beginner Treasure Trails',
-    'Easy Treasure Trails',
-    'Medium Treasure Trails',
-    'Hard Treasure Trails',
-    'Elite Treasure Trails',
-    'Master Treasure Trails',
-    'Hard Treasure Trails (Rare)',
-    'Elite Treasure Trails (Rare)',
-    'Master Treasure Trails (Rare)',
-    'Shared Treasure Trail Rewards',
-  ];
+  private static CUSTOM_PAGE_SORT: { [key: string]: string[] } = {
+    [this.TAB_CLUES]: [
+      'Beginner Treasure Trails',
+      'Easy Treasure Trails',
+      'Medium Treasure Trails',
+      'Hard Treasure Trails',
+      'Elite Treasure Trails',
+      'Master Treasure Trails',
+      'Hard Treasure Trails (Rare)',
+      'Elite Treasure Trails (Rare)',
+      'Master Treasure Trails (Rare)',
+      'Shared Treasure Trail Rewards',
+    ],
+  };
 
   private static DEFAULT_TAB_NAME = 'Bosses';
   private static DEFAULT_PAGE_NAME = 'Abyssal Sire';
@@ -39,14 +43,22 @@ class CollectionLogService {
   private static api = CollectionLogAPI.getInstance();
 
   public constructor(public data: CollectionLog) {
-    this.sortTabs();
+    this.sortData();
   }
 
-  private sortTabs() {
+  private sortData() {
     const temp: CollectionLogTab = {};
     for (const tabName of CollectionLogService.TABS) {
-      temp[tabName] = this.data.tabs[tabName];
+      temp[tabName] = {};
+
+      const pageNameSort = CollectionLogService.CUSTOM_PAGE_SORT[tabName] ??
+        sortAlphabetical(Object.keys(this.data.tabs[tabName]));
+
+      for (const pageName of pageNameSort) {
+        temp[tabName][pageName] = this.data.tabs[tabName][pageName];
+      }
     }
+
     this.data.tabs = temp;
   }
 
@@ -55,7 +67,7 @@ class CollectionLogService {
     const response = await this.api.getCollectionLog(username);
     const collectionLog = response.data.collectionLog;
     if (!collectionLog) {
-      return null;
+      return undefined;
     }
 
     return new this(collectionLog);
@@ -81,43 +93,43 @@ class CollectionLogService {
     return this.data.uniqueItems;
   }
 
-  public getPage(activePage: ActivePage) {
+  public getPage(activePage: OpenPage) {
     const { tab, page } = activePage;
     return this.data.tabs[tab][page];
   }
 
-  public getPageList(tabName: string) {
+  public getPages(tabName: string) {
     return this.data.tabs[tabName];
   }
 
-  public getActivePage(pageName: string): ActivePage {
+  public getTabFromPage(pageName: string): string | undefined {
     const tabs = this.getTabs();
-    let tab = tabs?.find((tabName) => {
-      const entry = this.data.tabs[tabName][pageName];
-      return entry != undefined;
+    return tabs?.find((tabName) => {
+      const page = this.data.tabs[tabName][pageName];
+      return page != undefined;
     });
-
-    if (!tab) {
-      tab = CollectionLogService.DEFAULT_TAB_NAME;
-      pageName = CollectionLogService.DEFAULT_PAGE_NAME;
-    }
-
-    return {
-      tab,
-      page: pageName,
-    };
   }
 
-  public getPageItems(activePage: ActivePage) {
+  public getPageItems(activePage: OpenPage) {
     return this.data.tabs[activePage.tab][activePage.page].items;
   }
 
-  public isPageCompleted(pageName: string) {
-    const items = this.getPageItems(this.getActivePage(pageName));
+  public isPageCompleted(page: string): boolean {
+    const tab = this.getTabFromPage(page);
+    if (!tab) {
+      return false;
+    }
+
+    const items = this.getPageItems({
+      tab,
+      page,
+    });
+
     const obtainedItems = items.filter((item) => {
       return item.obtained;
     }).length;
-    return obtainedItems === items.length && items;
+
+    return obtainedItems === items.length;
   }
 
   /**
