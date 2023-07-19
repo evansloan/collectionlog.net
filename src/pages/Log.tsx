@@ -5,13 +5,11 @@ import DocumentMeta from 'react-document-meta';
 import { useParams } from 'react-router-dom';
 
 import { AccountType, expectedMaxUniqueItems } from '../app/constants';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector, useCollectionLog } from '../app/hooks';
 import {
-  loadCollectionLog,
   loadHiscoresRanks,
   loadRecentItems,
   loadUserSettings,
-  setError,
 } from '../app/reducers/log/slice';
 import {
   AccountIcon,
@@ -23,52 +21,59 @@ import {
 } from '../components/elements';
 import RankIcon from '../components/elements/RankIcon';
 import { PageContainer, PageHeader } from '../components/layout';
-import { formatDate, sortAlphabetical, updateUrl } from '../utils';
+import { formatDate, updateUrl } from '../utils';
 
 import AnalyticsService from '../services/analytics';
+import { OpenPage } from '../services/collection-log';
+import ErrorService from '../services/errors';
 
 const DEFAULT_TAB = 'Bosses';
 const DEFAULT_PAGE = 'Abyssal Sire';
 const URL_PATH = 'log';
-
-const TABS = [
-  'Bosses',
-  'Raids',
-  'Clues',
-  'Minigames',
-  'Other',
-];
-
-const CLUE_TAB_ENTRIES = [
-  'Beginner Treasure Trails',
-  'Easy Treasure Trails',
-  'Medium Treasure Trails',
-  'Hard Treasure Trails',
-  'Elite Treasure Trails',
-  'Master Treasure Trails',
-  'Hard Treasure Trails (Rare)',
-  'Elite Treasure Trails (Rare)',
-  'Master Treasure Trails (Rare)',
-  'Shared Treasure Trail Rewards',
-];
 
 const Log = () => {
   const logState = useAppSelector((state) => state.log);
   const dispatch = useAppDispatch();
   const params = useParams();
 
-  const paramsEntry = params.entry;
+  const paramsPage = params.pageName;
 
-  const [activeTab, setActiveTab] = useState(DEFAULT_TAB);
-  const [activeEntry, setActiveEntry] = useState(paramsEntry ?? DEFAULT_PAGE);
+  const [openPage, setOpenPage] = useState<OpenPage>({
+    tab: DEFAULT_TAB,
+    page: DEFAULT_PAGE,
+  });
 
-  const { collectionLog, isLoading, ranks, userSettings } = logState;
-  const tabKeys = Object.keys(collectionLog?.tabs || []);
+  const [errorMessage, setErrorMessage] = useState<string>();
 
-  /**
-   * Alphabetical sorted tabs that are matched between the TAB constant and the retrieved tab from the collectionLog
-   */
-  const tabs = TABS.filter((staticTab) => tabKeys.some((tabKey) => staticTab == tabKey));
+  const { ranks, userSettings } = logState;
+
+  const { data: collectionLog, isLoading, error } = useCollectionLog(params.username?.trim() as string);
+
+  useEffect(() => {
+    if (!collectionLog || !paramsPage) {
+      return;
+    }
+
+    const tab = collectionLog.getTabFromPage(paramsPage);
+    if (!tab) {
+      return;
+    }
+
+    setOpenPage({
+      tab,
+      page: paramsPage,
+    });
+    updateUrl(`/${URL_PATH}/${params.username}/${openPage.page}`);
+
+    AnalyticsService.clTabChangeEvent(openPage);
+  }, [collectionLog]);
+
+  useEffect(() => {
+    if (!error) {
+      return setErrorMessage(undefined);
+    }
+    setErrorMessage(ErrorService.mapError(error, params.username as string));
+  }, [error]);
 
   /**
    * Load collection log data from API.
@@ -82,44 +87,11 @@ const Log = () => {
     }
 
     dispatch(loadUserSettings(username));
-    dispatch(loadCollectionLog(username));
     dispatch(loadRecentItems(username));
     dispatch(loadHiscoresRanks(username));
   }, [params.username]);
 
-  /**
-   * Find the tab the entry provided in URL
-   * belongs to.
-   *
-   * Called on collection log data load
-   */
-  useEffect(() => {
-    if (!logState.collectionLog) {
-      dispatch(setError(`Unable to find collection log for user ${params.username}`));
-      return;
-    }
-
-    if (paramsEntry) {
-      const paramsTab = tabs.find((tabName) => {
-        const entry = logState.collectionLog?.tabs[tabName][paramsEntry];
-        return entry != undefined;
-      });
-
-      if (paramsTab) {
-        setActiveTab(paramsTab);
-        AnalyticsService.clTabChangeEvent(paramsTab, paramsEntry);
-        return;
-      }
-
-      setActiveTab(DEFAULT_TAB);
-      setActiveEntry(DEFAULT_PAGE);
-      updateUrl(`/${URL_PATH}/${params.username}/${DEFAULT_PAGE}`);
-    }
-
-    AnalyticsService.clTabChangeEvent(DEFAULT_TAB, DEFAULT_PAGE);
-  }, [logState.collectionLog]);
-
-  const entryData = collectionLog?.tabs[activeTab][activeEntry];
+  const entryData = collectionLog?.getPage(openPage);
   const obtainedCount = entryData?.items.filter((item) => item.obtained).length;
   const itemCount = entryData?.items.length;
   const recentItems = logState.recentItems;
@@ -131,46 +103,24 @@ const Log = () => {
     obtainedClass = 'text-red';
   }
 
-  /**
-   * Explicitly iterate through and count the unique items that have been obtained.
-   *
-   * This value can be compared to the total uniques collected. If the values do not match, it is an indicator that a sync is needed for some entries.
-   */
-  const countObtainedUniques = (collectionLog: CollectionLog | undefined): number => {
-    if (collectionLog === undefined) {
-      return 0;
-    }
-
-    const uniqueItemIds = new Set<number>();
-    for(const tabKey in collectionLog.tabs) {
-      const tab = collectionLog.tabs[tabKey];
-
-      for(const collectionLogEntryKey in tab) {
-        const collectionLogEntry = tab[collectionLogEntryKey];
-
-        for(const item of collectionLogEntry.items) {
-          if (item.obtained && !uniqueItemIds.has(item.id)) {
-            uniqueItemIds.add(item.id);
-          }
-        }
-      }
-    }
-    return uniqueItemIds.size;
-  };
-
-  const explicitlyCountedUniques = countObtainedUniques(collectionLog);
+  const explicitlyCountedUniques = collectionLog?.countObtainedUniques();
 
   const onTabClick = (tabName: string) => {
-    const entries = sortAlphabetical(Object.keys(collectionLog?.tabs[tabName] ?? []));
-    setActiveTab(tabName);
-    setActiveEntry(entries[0]);
-    updateUrl(`/${URL_PATH}/${params.username}/${entries[0]}`);
+    const pages = Object.keys(collectionLog?.getPages(tabName) ?? []);
+    setOpenPage({
+      tab: tabName,
+      page: pages[0],
+    });
+    updateUrl(`/${URL_PATH}/${params.username}/${pages[0]}`);
 
-    AnalyticsService.clTabChangeEvent(tabName, entries[0]);
+    AnalyticsService.clTabChangeEvent(openPage);
   };
 
   const onEntryClick = (entryName: string) => {
-    setActiveEntry(entryName);
+    setOpenPage({
+      ...openPage,
+      page: entryName,
+    });
     showEntries();
     updateUrl(`/${URL_PATH}/${params.username}/${entryName}`);
 
@@ -211,8 +161,8 @@ const Log = () => {
     },
   };
 
-  if (collectionLog?.username) {
-    meta.title = `${collectionLog.username} | ${pageTitle}`;
+  if (collectionLog?.getUsername()) {
+    meta.title = `${collectionLog.getUsername()} | ${pageTitle}`;
   }
 
   let displayRank = undefined;
@@ -225,19 +175,19 @@ const Log = () => {
       <DocumentMeta {...meta} />
       {isLoading ?
         <Spinner />
-        : logState.error && !logState.collectionLog ?
+        : errorMessage ?
           <div className='flex justify-center items-center'>
-            <h1 className='text-error'>{logState.error}</h1>
+            <h1 className='text-error'>{errorMessage}</h1>
           </div>
           :
           <>
             <PageHeader className='flex-col'>
               <div className='flex justify-center items-center'>
-                <AccountIcon accountType={collectionLog?.accountType as AccountType} height='20px' />
-                <PageTitle title={`${collectionLog?.username}'s Collection log`} />
+                <AccountIcon accountType={collectionLog?.getAccountType() as AccountType} height='20px' />
+                <PageTitle title={`${collectionLog?.getUsername()}'s Collection log`} />
               </div>
               <div className='flex justify-center items-center'>
-                <p className='mx-2 text-lg font-bold text-center text-orange'>Obtained: <span className='text-white'>{collectionLog?.uniqueObtained}/{collectionLog?.uniqueItems}</span></p>
+                <p className='mx-2 text-lg font-bold text-center text-orange'>Obtained: <span className='text-white'>{collectionLog?.getUniqueObtained()}/{collectionLog?.getUniqueItems()}</span></p>
                 <RankIcon rankType={userSettings?.displayRank ??'ALL'} height='15px' />
                 <div className='group'>
                   <p className='mx-1 text-lg font-bold text-center text-orange'>
@@ -258,46 +208,38 @@ const Log = () => {
                 </div>
                 <FontAwesomeIcon icon={faChevronDown} className='h-[10px] mb-1 text-orange icon-shadow'/>
               </div>
-              {collectionLog && collectionLog?.uniqueItems < expectedMaxUniqueItems &&
+              {collectionLog && collectionLog?.getUniqueItems() < expectedMaxUniqueItems &&
                 <p className='text-lg font-bold text-center text-yellow'>
                   New unique items have been added to Old School RuneScape! Please re-upload collection log data.
                 </p>
               }
-              {collectionLog && collectionLog?.uniqueObtained !== explicitlyCountedUniques &&
+              {collectionLog && collectionLog?.getUniqueObtained() !== explicitlyCountedUniques &&
                 <p className='text-lg font-bold text-center text-yellow'>
                   Total obtained does not match specific items collected. Please re-upload collection log data.
                 </p>
               }
             </PageHeader>
             <div className='md:mx-3 mb-3 md:mt-1 h-full border-2 border-t-0 border-light md:rounded-tr-[10px] md:rounded-tl-[10px] md:overflow-hidden'>
-              <Tabs activeTab={activeTab} onClick={onTabClick}>
-                {collectionLog && tabs.map((tabName) => {
-                  let entries = sortAlphabetical(Object.keys(collectionLog.tabs[tabName] ?? []));
-                  // Override alphabetical sort for clues
-                  if (tabName == 'Clues') {
-                    entries = CLUE_TAB_ENTRIES;
-                  }
+              <Tabs activeTab={openPage.tab} onClick={onTabClick}>
+                {collectionLog && collectionLog.getTabs().map((tabName) => {
+                  const pages = Object.keys(collectionLog.getPages(tabName) ?? []);
                   return (
                     <div key={tabName} data-tab={tabName}>
                       <div className='flex w-full h-[94%] md:overflow-hidden'>
                         <div id='entry-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
-                          {entries.map((entryName, i) => {
-                            const entryItems = collectionLog.tabs[tabName][entryName]?.items;
-                            const entryObtained = entryItems?.filter((item) => {
-                              return item.obtained;
-                            }).length;
-                            const isComplete = entryObtained == entryItems?.length && entryItems;
+                          {pages.map((pageName, i) => {
+                            const isComplete = collectionLog.isPageCompleted(pageName);
                             const textColor = isComplete ? 'text-green' : 'text-orange';
 
                             let bg = i % 2 == 0 ? 'bg-primary' : 'bg-light';
-                            bg = entryName == activeEntry ? 'bg-highlight' : bg;
+                            bg = pageName == openPage.page ? 'bg-highlight' : bg;
 
                             return (
                               <p
                                 className={`${bg} hover:bg-highlight ${textColor} text-lg cursor-pointer`}
-                                onClick={() => onEntryClick(entryName)}
-                                key={entryName}>
-                                {entryName}
+                                onClick={() => onEntryClick(pageName)}
+                                key={pageName}>
+                                {pageName}
                               </p>
                             );
                           })}
@@ -305,7 +247,7 @@ const Log = () => {
                         <div id='entry-items' className='flex md:flex flex-col w-full md:w-3/4'>
                           <div className='mx-2 border-b border-b-lighter shadow-log'>
                             <Button title='Show Pages' className='w-full block md:hidden' onClick={showEntries} />
-                            <h3 className='text-xl font-bold text-orange'>{activeEntry}</h3>
+                            <h3 className='text-xl font-bold text-orange'>{openPage.page}</h3>
                             <p className='text-orange'>Obtained: <span className={obtainedClass}>{obtainedCount}/{itemCount}</span></p>
                             {entryData?.killCount?.map((kc, i) => {
                               return (
