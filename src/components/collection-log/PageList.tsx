@@ -1,4 +1,5 @@
 import CollectionLogService, { OpenView } from '../../services/collection-log';
+import { PageListPage } from './index';
 
 interface PageListProps {
   collectionLog: CollectionLogService;
@@ -18,20 +19,17 @@ const PageList = (props: PageListProps) => {
   return (
     <div id='entry-list' className='pb-5 w-full md:w-1/4 h-full border-black border-r shadow-log overflow-y-scroll hidden md:block'>
       {pageNames.map((pageName, i) => {
-        const isComplete = collectionLog.isPageCompleted(pageName);
-        const textColor = isComplete ? 'text-green' : 'text-orange';
+        const isCompleted = collectionLog.isPageCompleted(pageName);
+        const isOpen = pageName == openView.page;
 
-        let bg = i % 2 == 0 ? 'bg-primary' : 'bg-light';
-        bg = pageName == openView.page ? 'bg-highlight' : bg;
-
-        return (
-          <p
-            className={`${bg} hover:bg-highlight ${textColor} text-lg cursor-pointer`}
-            onClick={() => pageClickHandler(pageName)}
-            key={pageName}>
-            {pageName}
-          </p>
-        );
+        return <PageListPage
+          key={pageName}
+          index={i}
+          isCompleted={isCompleted}
+          isOpen={isOpen}
+          pageClickHandler={pageClickHandler}
+          pageName={pageName}
+        />;
       })}
     </div>
   );
