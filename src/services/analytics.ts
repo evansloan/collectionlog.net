@@ -1,5 +1,5 @@
 import ReactGA from 'react-ga4';
-import { OpenPage } from './collection-log';
+import { OpenView } from './collection-log';
 
 type EventLabel = number|string;
 
@@ -35,12 +35,11 @@ class AnalyticsService {
    * Send collection_log:interaction:tab_change and collection_log:interaction:page_view events
    * to GA on tab change in collection log page
    *
-   * @param tabName Tab changed to
-   * @param pageName Page changed to
+   * @param openView Currently open tab/page
    */
-  public static clTabChangeEvent(activePage: OpenPage) {
-    this.collectionLogEvent(this.ACTION_TAB_CHANGE, activePage.tab);
-    this.clPageChangeEvent(activePage.page);
+  public static clTabChangeEvent(openView: OpenView) {
+    this.collectionLogEvent(this.ACTION_TAB_CHANGE, openView.tab);
+    this.clPageChangeEvent(openView.page);
   }
 
   /**
