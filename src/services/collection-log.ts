@@ -73,7 +73,7 @@ class CollectionLogService {
       return undefined;
     }
 
-    return new this(collectionLog);
+    return collectionLog;
   }
 
   public getTabs(): string[] {

@@ -48,7 +48,11 @@ const Log = () => {
 
   const { ranks, userSettings } = logState;
 
-  const { data: collectionLog, isLoading, error } = useCollectionLog(params.username?.trim() as string);
+  const {
+    collectionLog,
+    isLoading,
+    error,
+  } = useCollectionLog(params.username?.trim() as string);
 
   useEffect(() => {
     if (!collectionLog || !paramsPage) {
@@ -189,7 +193,7 @@ const Log = () => {
               </div>
               <div className='flex justify-center items-center'>
                 <p className='mx-2 text-lg font-bold text-center text-orange'>Obtained: <span className='text-white'>{collectionLog?.getUniqueObtained()}/{collectionLog?.getUniqueItems()}</span></p>
-                <RankIcon rankType={userSettings?.displayRank ??'ALL'} height='15px' />
+                <RankIcon rankType={userSettings?.displayRank ?? 'ALL'} height='15px' />
                 <div className='group'>
                   <p className='mx-1 text-lg font-bold text-center text-orange'>
                     Rank <span className='text-white'>#{displayRank}</span>

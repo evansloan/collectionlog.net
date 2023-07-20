@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 
 import type { RootState, AppDispatch } from './store';
-import { useQuery } from 'react-query';
 import CollectionLogService from '../services/collection-log';
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
@@ -26,7 +26,8 @@ export const useOutsideClickHandler = (ref: React.RefObject<Element>, clickHandl
 };
 
 export const useCollectionLog = (username: string) => {
-  return useQuery({
+  const [collectionLogService, setCollectionLogService] = useState<CollectionLogService>();
+  const query = useQuery({
     queryKey: [`collectionLog-${username}`],
     queryFn: async () => {
       if (!username) {
@@ -35,4 +36,13 @@ export const useCollectionLog = (username: string) => {
       return await CollectionLogService.getByUsername(username);
     },
   });
+
+  useEffect(() => {
+    if (!query.data) {
+      return;
+    }
+    setCollectionLogService(new CollectionLogService(query.data));
+  }, [query.data]);
+
+  return { collectionLog: collectionLogService, ...query };
 };
