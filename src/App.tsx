@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+import { QueryClient } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 
 import { Hiscores, Home, Log } from './pages';
 import { Footer, Header } from './components/layout';
@@ -10,12 +13,19 @@ const queryClient = new QueryClient({
     queries: {
       retry: false,
       retryOnMount: false,
+      refetchOnWindowFocus: false,
+      cacheTime: 1000 * 60,
+      staleTime: 1000 * 60,
     },
   },
 });
 
+const persister = createSyncStoragePersister({
+  storage: window.sessionStorage,
+});
+
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+  <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }} >
     <BrowserRouter>
       <Header />
       <Routes>
@@ -27,7 +37,8 @@ const App = () => (
       </Routes>
       <Footer />
     </BrowserRouter>
-  </QueryClientProvider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </PersistQueryClientProvider>
 );
 
 export default App;
