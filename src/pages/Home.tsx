@@ -3,7 +3,8 @@ import DocumentMeta from 'react-document-meta';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useRecentItems } from '../app/hooks/collection-log';
-import { loadStreams, loadUserCount } from '../app/reducers/home/slice';
+import { useUserCount } from '../app/hooks/user';
+import { loadStreams } from '../app/reducers/home/slice';
 import logIcon from '../assets/images/collectionlog.png';
 import discordIcon from '../assets/images/discord.png';
 import githubIcon from '../assets/images/github.png';
@@ -23,10 +24,10 @@ const Home = () => {
   const dispatch = useAppDispatch();
 
   const { recentItems, isLoading } = useRecentItems({ global: true });
-  const { streams, userCount } = homeState;
+  const { userCount } = useUserCount();
+  const { streams } = homeState;
 
   useEffect(() => {
-    dispatch(loadUserCount());
     dispatch(loadStreams());
   }, []);
 

@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { CollectionLogAPI } from '../../../api/collection-log/collection-log-api';
 import TwitchAPI from '../../../api/twitch/twitch-api';
 import CacheService from '../../../services/cache';
 
@@ -18,24 +17,6 @@ const initialState: HomeState = {
 };
 
 const cacheService = CacheService.getInstance();
-
-export const loadUserCount = createAsyncThunk(
-  'home/fetchUserCounts',
-  async () => {
-    const cacheKey = 'user-count';
-    const cacheItem = cacheService.get<number>(cacheKey);
-    if (cacheItem) {
-      return cacheItem;
-    }
-
-    const api = CollectionLogAPI.getInstance();
-    const response = await api.getUserCount();
-    const count = response.data.count;
-
-    cacheService.add(cacheKey, count, CacheService.DEFAULT_TTL * 2);
-    return count;
-  }
-);
 
 export const loadStreams = createAsyncThunk(
   'home/loadStreams',
@@ -60,9 +41,6 @@ export const homeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loadUserCount.fulfilled, (state, action) => {
-        state.userCount = action.payload;
-      })
       .addCase(loadStreams.fulfilled, (state, action) => {
         state.streams = action.payload;
       });

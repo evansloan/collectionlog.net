@@ -103,7 +103,8 @@ class CollectionLogAPI {
 
   getUserCount = async () => {
     const url = `${CollectionLogAPI.USER_ENDPOINT}/count`;
-    return await this.getRequest<UserCountResponse>(url);
+    const res = await this.getRequest<UserCountResponse>(url);
+    return res.data.count;
   };
 
   getUserSettings = async (username: string) => {

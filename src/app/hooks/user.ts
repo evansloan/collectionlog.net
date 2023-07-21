@@ -12,3 +12,12 @@ export const useUserSettings = (username: string) => {
 
   return { ...query, userSettings: query.data };
 };
+
+export const useUserCount = () => {
+  const query = useQuery({
+    queryKey: ['user-count'],
+    queryFn: async () => await api.getUserCount(),
+  });
+
+  return { ...query, userCount: query.data };
+};
