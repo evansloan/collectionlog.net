@@ -108,7 +108,8 @@ class CollectionLogAPI {
 
   getUserSettings = async (username: string) => {
     const url = `${CollectionLogAPI.USER_ENDPOINT}/settings/${username.toLowerCase()}`;
-    return await this.getRequest<UserSettingsResponse>(url);
+    const res = await this.getRequest<UserSettingsResponse>(url);
+    return res.data.userSettings;
   };
 }
 

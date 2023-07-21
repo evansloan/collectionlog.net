@@ -5,12 +5,9 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { AccountType, expectedMaxUniqueItems } from '../app/constants';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { useCollectionLog, useRecentItems } from '../app/hooks/collection-log';
 import { useRanks } from '../app/hooks/hiscores';
-import {
-  loadUserSettings,
-} from '../app/reducers/log/slice';
+import { useUserSettings } from '../app/hooks/user';
 import {
   AccountIcon,
   Button,
@@ -33,8 +30,6 @@ const DEFAULT_PAGE = 'Abyssal Sire';
 const URL_PATH = 'log';
 
 const Log = () => {
-  const logState = useAppSelector((state) => state.log);
-  const dispatch = useAppDispatch();
   const params = useParams();
 
   const paramsUsername = params.username?.trim();
@@ -47,8 +42,6 @@ const Log = () => {
 
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const { userSettings } = logState;
-
   const {
     collectionLog,
     isLoading,
@@ -56,6 +49,7 @@ const Log = () => {
   } = useCollectionLog(paramsUsername as string);
   const { recentItems } = useRecentItems({ username: paramsUsername });
   const { ranks } = useRanks(paramsUsername as string);
+  const { userSettings } = useUserSettings(paramsUsername as string);
 
   useEffect(() => {
     if (!collectionLog || !paramsPage) {
@@ -93,8 +87,6 @@ const Log = () => {
     if (!username) {
       return;
     }
-
-    dispatch(loadUserSettings(username));
   }, [params.username]);
 
   const pageData = collectionLog?.getPage(openView);
