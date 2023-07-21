@@ -65,17 +65,6 @@ class CollectionLogService {
     this.data.tabs = temp;
   }
 
-  public static async getByUsername(username: string) {
-    username = username.toLowerCase();
-    const response = await this.api.getCollectionLog(username);
-    const collectionLog = response.data.collectionLog;
-    if (!collectionLog) {
-      return undefined;
-    }
-
-    return collectionLog;
-  }
-
   public getTabs(): string[] {
     return Object.keys(this.data.tabs);
   }

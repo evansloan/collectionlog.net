@@ -49,12 +49,14 @@ class CollectionLogAPI {
 
   getCollectionLog = async (username: string) => {
     const url = `${CollectionLogAPI.COLLECTION_LOG_ENDPOINT}/user/${username}`;
-    return await this.getRequest<CollectionLogResponse>(url);
+    const res = await this.getRequest<CollectionLogResponse>(url);
+    return res.data.collectionLog;
   };
 
   getRecentItems = async (username: string) => {
     const url = `${CollectionLogAPI.ITEMS_ENDPOINT}/recent/${username}`;
-    return await this.getRequest<ItemsResponse>(url);
+    const res = await this.getRequest<ItemsResponse>(url);
+    return res.data.items;
   };
 
   getRecentItemsGlobal = async () => {
@@ -82,7 +84,8 @@ class CollectionLogAPI {
 
   getRanksByUsername = async (username: string) => {
     const url = `${CollectionLogAPI.HISCORES_ENDPOINT}/ranks/${username}`;
-    return await this.getRequest<RanksResponse>(url);
+    const res = await this.getRequest<RanksResponse>(url);
+    return res.data.accountTypeRanks;
   };
 
   getUserTypeahead = async (username: string) => {

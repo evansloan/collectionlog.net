@@ -5,10 +5,10 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { AccountType, expectedMaxUniqueItems } from '../app/constants';
-import { useAppDispatch, useAppSelector, useCollectionLog } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useCollectionLog, useRecentItems } from '../app/hooks/collection-log';
+import { useRanks } from '../app/hooks/hiscores';
 import {
-  loadHiscoresRanks,
-  loadRecentItems,
   loadUserSettings,
 } from '../app/reducers/log/slice';
 import {
@@ -37,6 +37,7 @@ const Log = () => {
   const dispatch = useAppDispatch();
   const params = useParams();
 
+  const paramsUsername = params.username?.trim();
   const paramsPage = params.pageName;
 
   const [openView, setOpenView] = useState<OpenView>({
@@ -46,13 +47,15 @@ const Log = () => {
 
   const [errorMessage, setErrorMessage] = useState<string>();
 
-  const { ranks, userSettings } = logState;
+  const { userSettings } = logState;
 
   const {
     collectionLog,
     isLoading,
     error,
-  } = useCollectionLog(params.username?.trim() as string);
+  } = useCollectionLog(paramsUsername as string);
+  const { recentItems } = useRecentItems(paramsUsername as string);
+  const { ranks } = useRanks(paramsUsername as string);
 
   useEffect(() => {
     if (!collectionLog || !paramsPage) {
@@ -92,14 +95,11 @@ const Log = () => {
     }
 
     dispatch(loadUserSettings(username));
-    dispatch(loadRecentItems(username));
-    dispatch(loadHiscoresRanks(username));
   }, [params.username]);
 
   const pageData = collectionLog?.getPage(openView);
   const obtainedCount = pageData?.items.filter((item) => item.obtained).length;
   const itemCount = pageData?.items.length;
-  const recentItems = logState.recentItems;
 
   let obtainedClass = 'text-yellow';
   if (obtainedCount == itemCount) {
