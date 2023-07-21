@@ -71,7 +71,8 @@ class CollectionLogAPI {
     if (filter != 'ALL') {
       queryParams = { accountType: filter };
     }
-    return await this.getRequest<HiscoresResponse>(url, queryParams);
+    const res = await this.getRequest<HiscoresResponse>(url, queryParams);
+    return res.data.hiscores;
   };
 
   getRankByUsername = async (username: string, filter?: string) => {
@@ -80,7 +81,8 @@ class CollectionLogAPI {
     if (filter != 'ALL') {
       queryParams = { accountType: filter };
     }
-    return await this.getRequest<RankResponse>(url, queryParams);
+    const res = await this.getRequest<RankResponse>(url, queryParams);
+    return res.data.rank;
   };
 
   getRanksByUsername = async (username: string) => {
