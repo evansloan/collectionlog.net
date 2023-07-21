@@ -54,7 +54,7 @@ const Log = () => {
     isLoading,
     error,
   } = useCollectionLog(paramsUsername as string);
-  const { recentItems } = useRecentItems(paramsUsername as string);
+  const { recentItems } = useRecentItems({ username: paramsUsername });
   const { ranks } = useRanks(paramsUsername as string);
 
   useEffect(() => {

@@ -19,24 +19,6 @@ const initialState: HomeState = {
 
 const cacheService = CacheService.getInstance();
 
-export const loadRecentItemsGlobal = createAsyncThunk(
-  'home/fetchRecentItemsGlobal',
-  async () => {
-    const cacheKey = 'recent-items-global';
-    const cacheItem = cacheService.get<CollectionLogItem[]>(cacheKey);
-    if (cacheItem) {
-      return cacheItem;
-    }
-
-    const api = CollectionLogAPI.getInstance();
-    const response = await api.getRecentItemsGlobal();
-    const items = response.data.items;
-
-    cacheService.add(cacheKey, items, CacheService.DEFAULT_TTL * 2);
-    return items;
-  }
-);
-
 export const loadUserCount = createAsyncThunk(
   'home/fetchUserCounts',
   async () => {
@@ -78,16 +60,6 @@ export const homeSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loadRecentItemsGlobal.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(loadRecentItemsGlobal.fulfilled, (state, action) => {
-        state.recentItems = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(loadRecentItemsGlobal.rejected, (state) => {
-        state.isLoading = false;
-      })
       .addCase(loadUserCount.fulfilled, (state, action) => {
         state.userCount = action.payload;
       })

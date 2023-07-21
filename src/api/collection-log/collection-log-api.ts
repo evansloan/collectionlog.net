@@ -61,7 +61,8 @@ class CollectionLogAPI {
 
   getRecentItemsGlobal = async () => {
     const url = `${CollectionLogAPI.ITEMS_ENDPOINT}/global`;
-    return await this.getRequest<ItemsResponse>(url);
+    const res = await this.getRequest<ItemsResponse>(url);
+    return res.data.items;
   };
 
   getHiscores = async (page: number, filter: string) => {

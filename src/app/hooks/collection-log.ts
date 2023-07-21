@@ -23,12 +23,17 @@ export const useCollectionLog = (username: string) => {
   return { collectionLog: collectionLogService, ...query };
 };
 
-export const useRecentItems = (username: string) => {
-  username = username.toLowerCase();
+export const useRecentItems = (params: { global?: boolean; username?: string }) => {
+  const username = params.username?.toLowerCase().trim();
   const query = useQuery({
-    queryKey: ['recent-items', username],
-    queryFn: async () => await api.getRecentItems(username),
+    queryKey: ['recent-items', username ?? 'global'],
+    queryFn: async () => {
+      return params.global
+        ? await api.getRecentItemsGlobal()
+        : await api.getRecentItems(username as string);
+    },
   });
 
   return { recentItems: query.data, ...query };
 };
+
