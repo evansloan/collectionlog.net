@@ -29,12 +29,10 @@ export const useHiscores = (page: number, filter: RankType, username?: string) =
     },
   });
 
-  // TODO: Page not updated on search of cached user
-
   return {
     ...query,
     hiscores: query.data?.hiscores,
-    page: hsPage,
+    page: query.data?.page ?? hsPage,
     setPage: setHsPage,
   };
 };
