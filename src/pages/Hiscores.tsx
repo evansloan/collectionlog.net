@@ -67,9 +67,7 @@ const Hiscores = () => {
   }
 
   /**
-   * Load hiscores data from API.
-   *
-   * Called on page load
+   * Set open hiscores page based off value provided in URL params
    */
   useEffect(() => {
     let paramsPage = Number(params.page);
@@ -121,7 +119,7 @@ const Hiscores = () => {
   };
 
   const meta = {
-    title: `Hiscores | Page ${page ?? 1}`,
+    title: `Hiscores | Page ${page}`,
   };
 
   const mobileButtonGroup = (
