@@ -39,7 +39,6 @@ const Log = () => {
     tab: DEFAULT_TAB,
     page: DEFAULT_PAGE,
   });
-
   const [errorMessage, setErrorMessage] = useState<string>();
 
   const {
@@ -76,18 +75,6 @@ const Log = () => {
     }
     setErrorMessage(ErrorService.mapError(error, params.username as string));
   }, [error]);
-
-  /**
-   * Load collection log data from API.
-   *
-   * Called on search
-   */
-  useEffect(() => {
-    const username = params.username?.trim();
-    if (!username) {
-      return;
-    }
-  }, [params.username]);
 
   const pageData = collectionLog?.getPage(openView);
   const obtainedCount = pageData?.items.filter((item) => item.obtained).length;
