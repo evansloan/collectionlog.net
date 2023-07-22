@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-import { useOutsideClickHandler } from '../../app/hooks';
-
+import { useOutsideClickHandler } from '../../app/hooks/ui';
 interface DropDownProps {
   title: string;
   closeOnClick?: boolean;

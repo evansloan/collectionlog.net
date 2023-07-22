@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
 import DocumentMeta from 'react-document-meta';
 
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { loadRecentItemsGlobal, loadStreams, loadUserCount } from '../app/reducers/home/slice';
+import { useRecentItems } from '../app/hooks/collection-log';
+import { useTwitchStreams } from '../app/hooks/twitch';
+import { useUserCount } from '../app/hooks/user';
 import logIcon from '../assets/images/collectionlog.png';
 import discordIcon from '../assets/images/discord.png';
 import githubIcon from '../assets/images/github.png';
@@ -18,16 +18,9 @@ import { PageContainer, PageHeader } from '../components/layout';
 import { formatDate } from '../utils';
 
 const Home = () => {
-  const homeState = useAppSelector((state) => state.home);
-  const dispatch = useAppDispatch();
-
-  const { isLoading, recentItems, streams, userCount } = homeState;
-
-  useEffect(() => {
-    dispatch(loadRecentItemsGlobal());
-    dispatch(loadUserCount());
-    dispatch(loadStreams());
-  }, []);
+  const { recentItems, isLoading } = useRecentItems({ global: true });
+  const { userCount } = useUserCount();
+  const { streams } = useTwitchStreams();
 
   const pageTitle = 'Collection Log';
 

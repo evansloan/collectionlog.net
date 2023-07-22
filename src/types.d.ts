@@ -34,7 +34,7 @@ interface CollectionLog {
   username: string;
   accountType: AccountType;
   totalObtained: number;
-  totalitems: number;
+  totalItems: number;
   uniqueObtained: number;
   uniqueItems: number;
 }
