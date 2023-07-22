@@ -87,7 +87,10 @@ const Hiscores = () => {
     updateUrl(`/${URL_PATH}/${page}`);
   }, [page]);
 
-  const onPageClick = (page: number) => navigate(`/${URL_PATH}/${page}`);
+  const onPageClick = (page: number) => {
+    setUsername('');
+    navigate(`/${URL_PATH}/${page}`);
+  };
 
   const onAccountTypeChange = (value: string) => {
     const newAccountType = value as RankType;
