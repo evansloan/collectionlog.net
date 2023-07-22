@@ -1,4 +1,4 @@
-import { CollectionLogAPI } from '../api/collection-log/collection-log-api';
+import { AccountType } from '../app/constants';
 import { sortAlphabetical } from '../utils';
 
 /**
@@ -25,7 +25,7 @@ class CollectionLogService {
     this.TAB_OTHER,
   ];
 
-  private static CUSTOM_PAGE_SORT: { [key: string]: string[] } = {
+  private static readonly CUSTOM_PAGE_SORT: { [key: string]: string[] } = {
     [this.TAB_CLUES]: [
       'Beginner Treasure Trails',
       'Easy Treasure Trails',
@@ -40,16 +40,11 @@ class CollectionLogService {
     ],
   };
 
-  private static DEFAULT_TAB_NAME = 'Bosses';
-  private static DEFAULT_PAGE_NAME = 'Abyssal Sire';
-
-  private static api = CollectionLogAPI.getInstance();
-
   public constructor(public data: CollectionLog) {
     this.sortData();
   }
 
-  private sortData() {
+  private sortData(): void {
     const temp: CollectionLogTab = {};
     for (const tabName of CollectionLogService.TABS) {
       temp[tabName] = {};
@@ -69,19 +64,19 @@ class CollectionLogService {
     return Object.keys(this.data.tabs);
   }
 
-  public getUsername() {
+  public getUsername(): string {
     return this.data.username;
   }
 
-  public getAccountType() {
+  public getAccountType(): AccountType {
     return this.data.accountType;
   }
 
-  public getUniqueObtained() {
+  public getUniqueObtained(): number {
     return this.data.uniqueObtained;
   }
 
-  public getUniqueItems() {
+  public getUniqueItems(): number {
     return this.data.uniqueItems;
   }
 
@@ -90,7 +85,7 @@ class CollectionLogService {
     return this.data.tabs[tab][page];
   }
 
-  public getPages(tabName: string) {
+  public getPages(tabName: string): CollectionLogEntry {
     return this.data.tabs[tabName];
   }
 
@@ -102,7 +97,7 @@ class CollectionLogService {
     });
   }
 
-  public getPageItems(openView: OpenView) {
+  public getPageItems(openView: OpenView): CollectionLogItem[] {
     const { tab, page } = openView;
     return this.data.tabs[tab][page].items;
   }
@@ -130,7 +125,7 @@ class CollectionLogService {
    *
    * This value can be compared to the total uniques collected. If the values do not match, it is an indicator that a sync is needed for some entries.
    */
-  public countObtainedUniques() {
+  public countObtainedUniques(): number {
     const itemIds = this.getTabs().flatMap((tabName) => {
       const pages = this.data.tabs[tabName];
       return Object.keys(pages).flatMap((pageName) => {
