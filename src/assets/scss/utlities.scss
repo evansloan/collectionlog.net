@@ -36,4 +36,43 @@
     border: $log-border;
     border-bottom: none;
   }
+
+  .btn-cutout {
+    -webkit-mask:
+      radial-gradient(circle 5px at top left, #0000 98%,#000) top left,
+      radial-gradient(circle 5px at top right, #0000 98%,#000) top right,
+      radial-gradient(circle 5px at bottom left, #0000 98%,#000) bottom left,
+      radial-gradient(circle 5px at bottom right, #0000 98%,#000) bottom right;
+    -webkit-mask-size: 51% 51%;
+    -webkit-mask-repeat: no-repeat;
+  }
+
+  @mixin btn-standard-bg($bg-color) {
+    background:
+      linear-gradient(-135deg, grey 7px, transparent 0),
+      linear-gradient(-135deg, black 8px, transparent 0),
+      linear-gradient(135deg, grey 7px, transparent 0),
+      linear-gradient(135deg, black 8px, transparent 0),
+      linear-gradient(-45deg, grey 7px, transparent 0),
+      linear-gradient(-45deg, black 8px, transparent 0),
+      linear-gradient(45deg, grey 7px, transparent 0),
+      linear-gradient(45deg, black 8px, $bg-color 0),
+      no-repeat 100% 0;
+  }
+
+  .btn-standard {
+    @include btn-standard-bg($bg-light);
+    border-radius: 5px;
+    box-shadow:
+      inset 4px 4px 5px -3px rgba(255, 255, 255, 0.15),
+      inset -4px -4px 5px -3px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      @include btn-standard-bg($bg-highlight);
+    }
+
+    &:disabled {
+      @include btn-standard-bg($bg-primary);
+    }
+  }
 }
