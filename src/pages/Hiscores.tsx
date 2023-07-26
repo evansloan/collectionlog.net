@@ -4,18 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { AccountType } from '../app/constants';
 import { useHiscores } from '../app/hooks/hiscores';
-import {
-  Button,
-  Input,
-  PageTitle,
-  Spinner,
-  Table,
-} from '../components/elements';
+import { Button, Input, PageTitle, Spinner, Table } from '../components/elements';
 import Select, { SelectOption } from '../components/elements/Select';
 import { ColumnType } from '../components/elements/Table';
 import { PageContainer, PageHeader } from '../components/layout';
-import { toTitleCase, updateUrl } from '../utils';
 import AnalyticsService from '../services/analytics';
+import { toTitleCase, updateUrl } from '../utils';
 
 const URL_PATH = 'hiscores';
 
@@ -126,18 +120,18 @@ const Hiscores = () => {
   };
 
   const mobileButtonGroup = (
-    <div className='flex md:hidden'>
+    <div className='flex md:hidden mb-2'>
       {page > 1 &&
         <Button
           title={`< Page ${page - 1}`}
           onClick={() => onPageClick(page - 1)}
-          className='flex-1 text-orange'
+          className='flex-1 text-orange mr-1'
         />
       }
       <Button
         title={`Page ${page + 1} >`}
         onClick={() => onPageClick(page + 1)}
-        className='flex-1 text-orange'
+        className={`flex-1 text-orange ${page > 1 ? 'ml-1' : ''}`}
       />
     </div>
   );
@@ -160,13 +154,13 @@ const Hiscores = () => {
           <form className='flex flex-col' onSubmit={(e) => onSearch(e) }>
             <label className='text-white'>Search:</label>
             <Input placeholder='Enter username...' onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value ?? '') }/>
-            <Button type='submit' title='Search' />
+            <Button type='submit' title='Search' className='mt-1'/>
           </form>
           <label className='hidden md:block text-white'>Change page:</label>
           <Button
             title={page > 1 ? `< Page ${page - 1}` : '< Page 1'}
             onClick={() => onPageClick(page - 1)}
-            className='hidden md:block text-orange'
+            className='hidden md:block text-orange mb-1'
             disabled={page == 1}
           />
           <Button
