@@ -36,11 +36,7 @@ class CollectionLogAPI {
   }
 
   private getRequest = async <T>(url: string, queryParams?: any): Promise<AxiosResponse<T>> => {
-    try {
-      return await CollectionLogAPI.axiosInstance.get<T>(url, { params: queryParams });
-    } catch (error: any) {
-      return error.response;
-    }
+    return await CollectionLogAPI.axiosInstance.get<T>(url, { params: queryParams });
   };
 
   private postRequest = async <T, R>(url: string, data: T): Promise<AxiosResponse<R>> => {
@@ -53,17 +49,20 @@ class CollectionLogAPI {
 
   getCollectionLog = async (username: string) => {
     const url = `${CollectionLogAPI.COLLECTION_LOG_ENDPOINT}/user/${username}`;
-    return await this.getRequest<CollectionLogResponse>(url);
+    const res = await this.getRequest<CollectionLogResponse>(url);
+    return res.data.collectionLog;
   };
 
   getRecentItems = async (username: string) => {
     const url = `${CollectionLogAPI.ITEMS_ENDPOINT}/recent/${username}`;
-    return await this.getRequest<ItemsResponse>(url);
+    const res = await this.getRequest<ItemsResponse>(url);
+    return res.data.items;
   };
 
   getRecentItemsGlobal = async () => {
     const url = `${CollectionLogAPI.ITEMS_ENDPOINT}/global`;
-    return await this.getRequest<ItemsResponse>(url);
+    const res = await this.getRequest<ItemsResponse>(url);
+    return res.data.items;
   };
 
   getHiscores = async (page: number, filter: string) => {
@@ -72,7 +71,8 @@ class CollectionLogAPI {
     if (filter != 'ALL') {
       queryParams = { accountType: filter };
     }
-    return await this.getRequest<HiscoresResponse>(url, queryParams);
+    const res = await this.getRequest<HiscoresResponse>(url, queryParams);
+    return res.data.hiscores;
   };
 
   getRankByUsername = async (username: string, filter?: string) => {
@@ -81,12 +81,14 @@ class CollectionLogAPI {
     if (filter != 'ALL') {
       queryParams = { accountType: filter };
     }
-    return await this.getRequest<RankResponse>(url, queryParams);
+    const res = await this.getRequest<RankResponse>(url, queryParams);
+    return res.data.rank;
   };
 
   getRanksByUsername = async (username: string) => {
     const url = `${CollectionLogAPI.HISCORES_ENDPOINT}/ranks/${username}`;
-    return await this.getRequest<RanksResponse>(url);
+    const res = await this.getRequest<RanksResponse>(url);
+    return res.data.accountTypeRanks;
   };
 
   getUserTypeahead = async (username: string) => {
@@ -101,12 +103,14 @@ class CollectionLogAPI {
 
   getUserCount = async () => {
     const url = `${CollectionLogAPI.USER_ENDPOINT}/count`;
-    return await this.getRequest<UserCountResponse>(url);
+    const res = await this.getRequest<UserCountResponse>(url);
+    return res.data.count;
   };
 
   getUserSettings = async (username: string) => {
     const url = `${CollectionLogAPI.USER_ENDPOINT}/settings/${username.toLowerCase()}`;
-    return await this.getRequest<UserSettingsResponse>(url);
+    const res = await this.getRequest<UserSettingsResponse>(url);
+    return res.data.userSettings;
   };
 }
 

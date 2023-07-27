@@ -5,7 +5,7 @@ exports[`Button component should render with external link "https://example.com"
   href="https://example.com"
 >
   <button
-    className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
+    className="p-2 btn-standard border-black border-2 text-white text-shadow "
     externalLink="https://example.com"
     title="test"
   >
@@ -23,7 +23,7 @@ exports[`Button component should render with external link "https://runelite.net
   href="https://runelite.net/"
 >
   <button
-    className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
+    className="p-2 btn-standard border-black border-2 text-white text-shadow "
     externalLink="https://runelite.net/"
     title="test"
   >
@@ -38,7 +38,7 @@ exports[`Button component should render with external link "https://runelite.net
 
 exports[`Button component should render with icon "discord" 1`] = `
 <button
-  className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
+  className="p-2 btn-standard border-black border-2 text-white text-shadow "
   icon="discord.png"
   iconAlt="discord"
   title="test"
@@ -58,7 +58,7 @@ exports[`Button component should render with icon "discord" 1`] = `
 
 exports[`Button component should render with icon "github" 1`] = `
 <button
-  className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
+  className="p-2 btn-standard border-black border-2 text-white text-shadow "
   icon="github.png"
   iconAlt="github"
   title="test"
@@ -78,7 +78,7 @@ exports[`Button component should render with icon "github" 1`] = `
 
 exports[`Button component should render with title "Search" 1`] = `
 <button
-  className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
+  className="p-2 btn-standard border-black border-2 text-white text-shadow "
   title="Search"
 >
   <div
@@ -91,7 +91,7 @@ exports[`Button component should render with title "Search" 1`] = `
 
 exports[`Button component should render with title "Show Options" 1`] = `
 <button
-  className="p-2 bg-primary hover:bg-highlight border border-light text-white text-shadow "
+  className="p-2 btn-standard border-black border-2 text-white text-shadow "
   title="Show Options"
 >
   <div

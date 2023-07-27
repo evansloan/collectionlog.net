@@ -3,26 +3,13 @@ import DocumentMeta from 'react-document-meta';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { AccountType } from '../app/constants';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
-import {
-  FilterType,
-  loadHiscores,
-  searchHiscores,
-  setAccountType,
-  setPage,
-} from '../app/reducers/hiscores/slice';
-import {
-  Button,
-  Input,
-  PageTitle,
-  Spinner,
-  Table,
-} from '../components/elements';
+import { useHiscores } from '../app/hooks/hiscores';
+import { Button, Input, PageTitle, Spinner, Table } from '../components/elements';
 import Select, { SelectOption } from '../components/elements/Select';
 import { ColumnType } from '../components/elements/Table';
 import { PageContainer, PageHeader } from '../components/layout';
-import { toTitleCase, updateUrl } from '../utils';
 import AnalyticsService from '../services/analytics';
+import { toTitleCase, updateUrl } from '../utils';
 
 const URL_PATH = 'hiscores';
 
@@ -55,12 +42,13 @@ const TABLE_COLUMNS = [
 ];
 
 const Hiscores = () => {
-  const hiscoresState = useAppSelector((state) => state.hiscores);
-  const dispatch = useAppDispatch();
   const params = useParams();
   const navigate = useNavigate();
 
   const [search, setSearch] = useState('');
+  const [username, setUsername] = useState('');
+  const [filter, setFilter] = useState<RankType>('ALL');
+  const { hiscores, page, setPage, isLoading } = useHiscores(Number(params.page), filter, username);
 
   const accountTypeOptions: SelectOption[] = [{ title: 'All', value: 'ALL', selected: true }];
 
@@ -73,42 +61,34 @@ const Hiscores = () => {
   }
 
   /**
-   * Load hiscores data from API.
-   *
-   * Called on page load
+   * Set open hiscores page based off value provided in URL params
    */
   useEffect(() => {
-    let page = Number(params.page);
-    if (!page) {
-      page = 1;
-      updateUrl(`/${URL_PATH}/${page}`);
+    let paramsPage = Number(params.page);
+    if (!paramsPage) {
+      paramsPage = 1;
+      updateUrl(`/${URL_PATH}/${paramsPage}`);
     }
 
-    if (page != hiscoresState.page) {
-      dispatch(setPage(page));
+    if (paramsPage != page) {
+      setPage(paramsPage);
     }
 
     AnalyticsService.hsPageChangeEvent(page);
   }, [params.page]);
 
   useEffect(() => {
-    const { accountType: filter, page } = hiscoresState;
-
     updateUrl(`/${URL_PATH}/${page}`);
-    dispatch(loadHiscores({ page, filter }));
-  }, [hiscoresState.page]);
+  }, [page]);
 
   const onPageClick = (page: number) => {
+    setUsername('');
     navigate(`/${URL_PATH}/${page}`);
   };
 
   const onAccountTypeChange = (value: string) => {
-    const newAccountType = value as FilterType;
-    dispatch(setAccountType(newAccountType));
-    dispatch(loadHiscores({
-      page: hiscoresState.page,
-      filter: newAccountType,
-    }));
+    const newAccountType = value as RankType;
+    setFilter(newAccountType);
   };
 
   const onSearchChange = (value: string) => {
@@ -117,17 +97,8 @@ const Hiscores = () => {
 
   const onSearch = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (search === '') {
-      return;
-    }
-
-    dispatch(searchHiscores({
-      username: search,
-      filter: hiscoresState.accountType,
-    }));
-
-    AnalyticsService.hsUserSearchEvent(search.toLowerCase());
+    setUsername(search);
+    AnalyticsService.hsUserSearchEvent(username.toLowerCase().trim());
   };
 
   const showMenu = () => {
@@ -145,22 +116,22 @@ const Hiscores = () => {
   };
 
   const meta = {
-    title: `Hiscores | Page ${hiscoresState?.page ?? 1}`,
+    title: `Hiscores | Page ${page}`,
   };
 
   const mobileButtonGroup = (
-    <div className='flex md:hidden'>
-      {hiscoresState.page > 1 &&
+    <div className='flex md:hidden mb-2'>
+      {page > 1 &&
         <Button
-          title={`< Page ${hiscoresState.page - 1}`}
-          onClick={() => onPageClick(hiscoresState.page - 1)}
-          className='flex-1 text-orange'
+          title={`< Page ${page - 1}`}
+          onClick={() => onPageClick(page - 1)}
+          className='flex-1 text-orange mr-1'
         />
       }
       <Button
-        title={`Page ${hiscoresState.page + 1} >`}
-        onClick={() => onPageClick(hiscoresState.page + 1)}
-        className='flex-1 text-orange'
+        title={`Page ${page + 1} >`}
+        onClick={() => onPageClick(page + 1)}
+        className={`flex-1 text-orange ${page > 1 ? 'ml-1' : ''}`}
       />
     </div>
   );
@@ -170,7 +141,7 @@ const Hiscores = () => {
       <DocumentMeta {...meta} />
       <PageHeader>
         <PageTitle
-          title={`Hiscores - Page ${hiscoresState.page}`}
+          title={`Hiscores - Page ${page}`}
           description='View the top cloggers and find your place among their ranks'
         />
       </PageHeader>
@@ -183,26 +154,26 @@ const Hiscores = () => {
           <form className='flex flex-col' onSubmit={(e) => onSearch(e) }>
             <label className='text-white'>Search:</label>
             <Input placeholder='Enter username...' onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.currentTarget.value ?? '') }/>
-            <Button type='submit' title='Search' />
+            <Button type='submit' title='Search' className='mt-1'/>
           </form>
           <label className='hidden md:block text-white'>Change page:</label>
           <Button
-            title={hiscoresState.page > 1 ? `< Page ${hiscoresState.page - 1}` : '< Page 1'}
-            onClick={() => onPageClick(hiscoresState.page - 1)}
-            className='hidden md:block text-orange'
-            disabled={hiscoresState.page == 1}
+            title={page > 1 ? `< Page ${page - 1}` : '< Page 1'}
+            onClick={() => onPageClick(page - 1)}
+            className='hidden md:block text-orange mb-1'
+            disabled={page == 1}
           />
           <Button
-            title={`Page ${hiscoresState.page + 1} >`}
-            onClick={() => onPageClick(hiscoresState.page + 1)}
+            title={`Page ${page + 1} >`}
+            onClick={() => onPageClick(page + 1)}
             className='hidden md:block text-orange'
           />
         </div>
-        {hiscoresState.isLoading ?
+        {isLoading ?
           <Spinner />
           :
           <>
-            <Table data={hiscoresState.data} columns={TABLE_COLUMNS} highlightVal={search.toLowerCase()}/>
+            <Table data={hiscores} columns={TABLE_COLUMNS} highlightVal={search.toLowerCase()}/>
             {mobileButtonGroup}
           </>
         }
