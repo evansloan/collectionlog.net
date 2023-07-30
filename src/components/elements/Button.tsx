@@ -38,7 +38,7 @@ const Button = (props: ButtonProps) => {
   // Wrap the button in an anchor if we should be redirecting outwards
   if (props.externalLink) {
     buttonContent = (
-      <a href={props.externalLink}>
+      <a href={props.externalLink} className='no-underline text-white'>
         {buttonContent}
       </a>
     );

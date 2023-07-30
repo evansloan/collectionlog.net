@@ -5,6 +5,7 @@ exports[`Button component should render with external link "https://example.com"
   className="p-2 btn-standard border-black border-2 text-white text-shadow "
 >
   <a
+    className="no-underline text-white"
     href="https://example.com"
   >
     <div
@@ -21,6 +22,7 @@ exports[`Button component should render with external link "https://runelite.net
   className="p-2 btn-standard border-black border-2 text-white text-shadow "
 >
   <a
+    className="no-underline text-white"
     href="https://runelite.net/"
   >
     <div
