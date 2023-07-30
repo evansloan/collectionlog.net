@@ -1,54 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button component should render with external link "https://example.com" 1`] = `
-<a
-  href="https://example.com"
+<button
+  className="p-2 btn-standard border-black border-2 text-white text-shadow "
 >
-  <button
-    className="p-2 btn-standard border-black border-2 text-white text-shadow "
-    externalLink="https://example.com"
-    title="test"
+  <a
+    href="https://example.com"
   >
     <div
       className="flex justify-around items-center"
     >
       test
     </div>
-  </button>
-</a>
+  </a>
+</button>
 `;
 
 exports[`Button component should render with external link "https://runelite.net/" 1`] = `
-<a
-  href="https://runelite.net/"
+<button
+  className="p-2 btn-standard border-black border-2 text-white text-shadow "
 >
-  <button
-    className="p-2 btn-standard border-black border-2 text-white text-shadow "
-    externalLink="https://runelite.net/"
-    title="test"
+  <a
+    href="https://runelite.net/"
   >
     <div
       className="flex justify-around items-center"
     >
       test
     </div>
-  </button>
-</a>
+  </a>
+</button>
 `;
 
 exports[`Button component should render with icon "discord" 1`] = `
 <button
   className="p-2 btn-standard border-black border-2 text-white text-shadow "
-  icon="discord.png"
-  iconAlt="discord"
-  title="test"
 >
   <div
     className="flex justify-around items-center"
   >
     <img
       alt="discord"
-      className="w-[50px]"
+      className="w-[40px]"
       src="discord.png"
     />
     test
@@ -59,16 +52,13 @@ exports[`Button component should render with icon "discord" 1`] = `
 exports[`Button component should render with icon "github" 1`] = `
 <button
   className="p-2 btn-standard border-black border-2 text-white text-shadow "
-  icon="github.png"
-  iconAlt="github"
-  title="test"
 >
   <div
     className="flex justify-around items-center"
   >
     <img
       alt="github"
-      className="w-[50px]"
+      className="w-[40px]"
       src="github.png"
     />
     test
@@ -79,7 +69,6 @@ exports[`Button component should render with icon "github" 1`] = `
 exports[`Button component should render with title "Search" 1`] = `
 <button
   className="p-2 btn-standard border-black border-2 text-white text-shadow "
-  title="Search"
 >
   <div
     className="flex justify-around items-center"
@@ -92,7 +81,6 @@ exports[`Button component should render with title "Search" 1`] = `
 exports[`Button component should render with title "Show Options" 1`] = `
 <button
   className="p-2 btn-standard border-black border-2 text-white text-shadow "
-  title="Show Options"
 >
   <div
     className="flex justify-around items-center"
