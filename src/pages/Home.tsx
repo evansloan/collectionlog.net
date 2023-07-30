@@ -143,7 +143,7 @@ const Home = () => {
                 <Button
                   type='button'
                   icon={discordIcon}
-                  className='block w-1/4 m-auto bg-[#6A5ACD] hover:bg-[#6d67b6] text-lg'
+                  className='block w-1/3 m-auto bg-[#6A5ACD] hover:bg-[#6d67b6] text-lg'
                   title='Open in Discord'
                   externalLink={discordUrl}
                 />
@@ -153,7 +153,7 @@ const Home = () => {
                 <Button
                   type='button'
                   icon={githubIcon}
-                  className='block w-1/4 m-auto bg-black hover:bg-gray-500 text-lg'
+                  className='block w-1/3 m-auto bg-black hover:bg-gray-500 text-lg'
                   title='View on GitHub'
                   externalLink={gitHubUrl}
                 />
