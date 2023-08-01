@@ -46,7 +46,7 @@ const Button = (props: ButtonProps) => {
 
   return (
     <button
-      type={props.type}
+      {...props}
       className={`p-2 ${buttonClass} border-2 text-white text-shadow ${props.className ?? ''}`}
     >
       {buttonContent}
