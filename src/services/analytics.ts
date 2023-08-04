@@ -15,10 +15,14 @@ class AnalyticsService {
   private static readonly ACTION_TAB_CHANGE = 'tab_change';
   private static readonly ACTION_PAGE_CHANGE = 'page_change';
   private static readonly ACTION_USER_SEARCH = 'user_search';
+  private static readonly ACTION_DISCORD = 'discord';
+  private static readonly ACTION_GITHUB = 'github';
+  private static readonly ACTION_TWITCH = 'twitch';
   private static readonly CATEGORY_INTERACTION = 'interaction';
   private static readonly CATEGORY_SEARCH = 'search';
   private static readonly EVENT_COLLECTION_LOG = 'collection_log';
   private static readonly EVENT_HISCORES = 'hiscores';
+  private static readonly EVENT_EXTERNAL = 'external';
 
   private static isInitialized = false;
 
@@ -65,6 +69,7 @@ class AnalyticsService {
    *
    * @param action Event action
    * @param label Event label
+   * @param category Event category
    */
   private static collectionLogEvent(action: string, label: string, category: string = this.CATEGORY_INTERACTION) {
     this.sendEvent(this.EVENT_COLLECTION_LOG, {
@@ -97,9 +102,52 @@ class AnalyticsService {
    *
    * @param action Event action
    * @param label Event label
+   * @param category Event category
    */
   private static hiscoresEvent(action: string, label: EventLabel, category: string = this.CATEGORY_INTERACTION) {
     this.sendEvent(this.EVENT_HISCORES, {
+      category,
+      action,
+      label,
+    });
+  }
+
+  /**
+   * Send discord naviagtion event to GA
+   *
+   * @param loc Location of link on collectionlog.net (header, contribute page)
+   */
+  public static discordNavEvent(loc: string) {
+    this.externalEvent(this.ACTION_DISCORD, loc);
+  }
+
+  /**
+   * Send twitch navigation event to GA
+   *
+   * @param username Twitch user navigated to
+   */
+  public static twitchNavEvent(username: string) {
+    this.externalEvent(this.ACTION_TWITCH, username);
+  }
+
+  /**
+   * Send github navigation event to GA
+   *
+   * @param loc Location of link on collectionlog.net (footer, contribute page)
+   */
+  public static githubNavEvent(loc: string) {
+    this.externalEvent(this.ACTION_GITHUB, loc);
+  }
+
+  /**
+   * Send external event to GA
+   *
+   * @param action Event action
+   * @param label Event label
+   * @param category Event category
+   */
+  private static externalEvent(action: string, label: EventLabel, category: string = this.CATEGORY_INTERACTION) {
+    this.sendEvent(this.EVENT_EXTERNAL, {
       category,
       action,
       label,

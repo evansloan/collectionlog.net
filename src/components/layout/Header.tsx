@@ -195,7 +195,7 @@ const Header = () => {
           <Link to='/'>Home</Link>
           <Link to='/hiscores/1'>Hiscores</Link>
           <div className='flex'>
-            <a href={discordUrl}>Join the Log Hunters Discord server</a>
+            <a href={discordUrl} onClick={() => AnalyticsService.discordNavEvent('header')}>Join the Log Hunters Discord server</a>
             <img className='w-[25px] ml-2' src={discordIcon} />
           </div>
         </DropDown>

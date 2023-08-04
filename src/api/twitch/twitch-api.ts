@@ -55,6 +55,10 @@ export default class TwitchAPI {
     }
 
     const url = 'streams';
+    const headers = {
+      Authorization: `Bearer ${this.accessToken}`,
+      'Client-Id': TwitchAPI.CLIENT_ID,
+    };
     const params = {
       game_id: TwitchAPI.GAME_ID,
       type: 'live',
@@ -63,10 +67,7 @@ export default class TwitchAPI {
 
     let res = await TwitchAPI.axiosInstance.get(url, {
       params,
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-        'Client-Id': TwitchAPI.CLIENT_ID,
-      },
+      headers,
     });
 
     const streams = res.data.data as any[];
@@ -75,10 +76,7 @@ export default class TwitchAPI {
       params.after = res.data.pagination.cursor;
       res = await TwitchAPI.axiosInstance.get(url, {
         params,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-          'Client-Id': TwitchAPI.CLIENT_ID,
-        },
+        headers,
       });
 
       streams.push(...res.data.data);
