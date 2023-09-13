@@ -1,39 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Button component should render with external link "https://example.com" 1`] = `
-<a
-  href="https://example.com"
+<button
+  className="p-2 btn-standard border-black border-2 text-white text-shadow "
+  externalLink="https://example.com"
+  title="test"
 >
-  <button
-    className="p-2 btn-standard border-black border-2 text-white text-shadow "
-    externalLink="https://example.com"
-    title="test"
+  <a
+    className="no-underline text-white"
+    href="https://example.com"
   >
     <div
       className="flex justify-around items-center"
     >
       test
     </div>
-  </button>
-</a>
+  </a>
+</button>
 `;
 
 exports[`Button component should render with external link "https://runelite.net/" 1`] = `
-<a
-  href="https://runelite.net/"
+<button
+  className="p-2 btn-standard border-black border-2 text-white text-shadow "
+  externalLink="https://runelite.net/"
+  title="test"
 >
-  <button
-    className="p-2 btn-standard border-black border-2 text-white text-shadow "
-    externalLink="https://runelite.net/"
-    title="test"
+  <a
+    className="no-underline text-white"
+    href="https://runelite.net/"
   >
     <div
       className="flex justify-around items-center"
     >
       test
     </div>
-  </button>
-</a>
+  </a>
+</button>
 `;
 
 exports[`Button component should render with icon "discord" 1`] = `
@@ -48,7 +50,7 @@ exports[`Button component should render with icon "discord" 1`] = `
   >
     <img
       alt="discord"
-      className="w-[50px]"
+      className="w-[40px]"
       src="discord.png"
     />
     test
@@ -68,7 +70,7 @@ exports[`Button component should render with icon "github" 1`] = `
   >
     <img
       alt="github"
-      className="w-[50px]"
+      className="w-[40px]"
       src="github.png"
     />
     test

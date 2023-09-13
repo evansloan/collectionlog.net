@@ -26,30 +26,32 @@ const Button = (props: ButtonProps) => {
     buttonClass = 'btn-cutout bg-grey hover:bg-dark-red border-accent hover:border-darker-red';
   }
 
-  let buttonDom = (
-    <button
-      {...props}
-      className={`p-2 ${buttonClass} border-2 text-white text-shadow ${props.className ?? ''}`}
-    >
-      <div className='flex justify-around items-center'>
-        {props.icon &&
-          <img src={props.icon} alt={props.iconAlt} className='w-[50px]'/>
-        }
-        {props.title}
-      </div>
-    </button>
+  let buttonContent = (
+    <div className='flex justify-around items-center'>
+      {props.icon &&
+        <img src={props.icon} alt={props.iconAlt} className='w-[40px]' />
+      }
+      {props.title}
+    </div>
   );
 
   // Wrap the button in an anchor if we should be redirecting outwards
   if (props.externalLink) {
-    buttonDom = (
-      <a href={props.externalLink}>
-        {buttonDom}
+    buttonContent = (
+      <a href={props.externalLink} className='no-underline text-white'>
+        {buttonContent}
       </a>
     );
   }
 
-  return buttonDom;
+  return (
+    <button
+      {...props}
+      className={`p-2 ${buttonClass} border-2 text-white text-shadow ${props.className ?? ''}`}
+    >
+      {buttonContent}
+    </button>
+  );
 };
 
 export default Button;

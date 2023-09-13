@@ -1,4 +1,5 @@
 import { gitHubUrl, pluginUrl } from '../../app/constants';
+import AnalyticsService from '../../services/analytics';
 
 const Footer = () => {
   return (
@@ -15,7 +16,7 @@ const Footer = () => {
       </p>
       <p>
         Have a problem or found a bug? Submit an issue on {' '}
-        <a href={gitHubUrl + '/issues/new/choose'}>GitHub</a>
+        <a href={gitHubUrl + '/issues/new/choose'} onClick={() => AnalyticsService.githubNavEvent('footer')}>GitHub</a>
       </p>
     </footer>
   );

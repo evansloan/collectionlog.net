@@ -15,6 +15,7 @@ import {
   Tabs,
 } from '../components/elements';
 import { PageContainer, PageHeader } from '../components/layout';
+import AnalyticsService from '../services/analytics';
 import { formatDate } from '../utils';
 
 const Home = () => {
@@ -86,7 +87,12 @@ const Home = () => {
                     :
                     streams.map((stream, i) => {
                       return (
-                        <a key={`${stream.title}-${i}`} className='w-1/4 text-center no-underline' href={`https://twitch.tv/${stream.user_login}`}>
+                        <a
+                          key={`${stream.title}-${i}`}
+                          className='w-1/4 text-center no-underline'
+                          href={`https://twitch.tv/${stream.user_login}`}
+                          onClick={() => AnalyticsService.twitchNavEvent(stream.user_name)}
+                        >
                           <img className='m-auto' src={stream.thumbnail_url.replace(/{width}/g, '150').replace(/{height}/g, '100')} />
                           <h4 className='px-2 text-orange font-bold overflow-hidden text-ellipsis whitespace-nowrap'>{stream.title}</h4>
                           <p>{stream.user_name}</p>
@@ -143,9 +149,10 @@ const Home = () => {
                 <Button
                   type='button'
                   icon={discordIcon}
-                  className='block w-1/4 m-auto bg-[#6A5ACD] hover:bg-[#6d67b6] text-lg'
+                  className='block w-1/3 m-auto bg-[#6A5ACD] hover:bg-[#6d67b6] text-lg'
                   title='Open in Discord'
                   externalLink={discordUrl}
+                  onClick={() => AnalyticsService.discordNavEvent('contribute')}
                 />
               </div>
               <div className='flex-1'>
@@ -153,9 +160,10 @@ const Home = () => {
                 <Button
                   type='button'
                   icon={githubIcon}
-                  className='block w-1/4 m-auto bg-black hover:bg-gray-500 text-lg'
+                  className='block w-1/3 m-auto bg-black hover:bg-gray-500 text-lg'
                   title='View on GitHub'
                   externalLink={gitHubUrl}
+                  onClick={() => AnalyticsService.githubNavEvent('contribute')}
                 />
               </div>
             </div>

@@ -64,7 +64,7 @@ const Log = () => {
       tab,
       page: paramsPage,
     });
-    updateUrl(`/${URL_PATH}/${params.username}/${openView.page}`);
+    updateUrl(`/${URL_PATH}/${params.username}/${paramsPage}`);
 
     AnalyticsService.clTabChangeEvent(openView);
   }, [collectionLog]);
