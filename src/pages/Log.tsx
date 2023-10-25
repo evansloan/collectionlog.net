@@ -87,8 +87,6 @@ const Log = () => {
     obtainedClass = 'text-red';
   }
 
-  const explicitlyCountedUniques = collectionLog?.countObtainedUniques();
-
   const onTabClick = (tabName: string) => {
     const pages = Object.keys(collectionLog?.getPages(tabName) ?? []);
     setOpenView({
@@ -195,11 +193,6 @@ const Log = () => {
               {collectionLog && collectionLog?.getUniqueItems() < expectedMaxUniqueItems &&
                 <p className='text-lg font-bold text-center text-yellow'>
                   New unique items have been added to Old School RuneScape! Please re-upload collection log data.
-                </p>
-              }
-              {collectionLog && collectionLog?.getUniqueObtained() !== explicitlyCountedUniques &&
-                <p className='text-lg font-bold text-center text-yellow'>
-                  Total obtained does not match specific items collected. Please re-upload collection log data.
                 </p>
               }
             </PageHeader>
