@@ -39,6 +39,9 @@ const Home = () => {
   return (
     <PageContainer>
       <DocumentMeta {...meta} />
+      <h3 className='text-yellow text-center'>
+        Collection log uploads are currently disabled
+      </h3>
       <PageHeader>
         <PageTitle
           title='collectionlog.net'
