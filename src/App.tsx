@@ -7,6 +7,9 @@ import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client
 
 import { Hiscores, Home, Log } from './pages';
 import { Footer, Header } from './components/layout';
+import ChangeLog from './pages/ChangeLog';
+import QuickStart from './pages/QuickStart';
+import FAQ from './pages/FAQ';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,6 +37,9 @@ const App = () => (
         <Route path='/log/:username/:pageName' element={<Log />} />
         <Route path='/hiscores' element={<Hiscores />} />
         <Route path='/hiscores/:page' element={<Hiscores />} />
+        <Route path='/change-log' element={<ChangeLog />} />
+        <Route path='/quick-start' element={<QuickStart />} />
+        <Route path='/faq' element={<FAQ />} />
       </Routes>
       <Footer />
     </BrowserRouter>
