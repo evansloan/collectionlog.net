@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavLink component should render with name "Hiscores", icon {"blurDataURL": "data:image/png;base64,imagedata", "height": 40, "src": "/img.jpg", "width": 40}, href "/hiscores" 1`] = `
+<a
+  className="flex items-center gap-1 p-2 text-lg text-white no-underline hover:bg-accent hover:text-rs-orange hover:transition-colors"
+  href="/hiscores"
+>
+  <img
+    alt=""
+    data-nimg="1"
+    decoding="async"
+    height={20}
+    loading="lazy"
+    onError={[Function]}
+    onLoad={[Function]}
+    src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+    srcSet="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+    style={
+      {
+        "color": "transparent",
+      }
+    }
+    width={20}
+  />
+  Hiscores
+</a>
+`;
+
+exports[`NavLink component should render with name "Home", icon {"blurDataURL": "data:image/png;base64,imagedata", "height": 40, "src": "/img.jpg", "width": 40}, href "/home" 1`] = `
+<a
+  className="flex items-center gap-1 p-2 text-lg text-white no-underline hover:bg-accent hover:text-rs-orange hover:transition-colors"
+  href="/home"
+>
+  <img
+    alt=""
+    data-nimg="1"
+    decoding="async"
+    height={20}
+    loading="lazy"
+    onError={[Function]}
+    onLoad={[Function]}
+    src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+    srcSet="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+    style={
+      {
+        "color": "transparent",
+      }
+    }
+    width={20}
+  />
+  Home
+</a>
+`;
+
+exports[`NavLink component should render with name "Join the Log Hunters Discord server", icon {"blurDataURL": "data:image/png;base64,imagedata", "height": 40, "src": "/img.jpg", "width": 40}, href "https://discord.gg/loghunters" 1`] = `
+<a
+  className="flex items-center gap-1 p-2 text-lg text-white no-underline hover:bg-accent hover:text-rs-orange hover:transition-colors"
+  href="https://discord.gg/loghunters"
+>
+  <img
+    alt=""
+    data-nimg="1"
+    decoding="async"
+    height={20}
+    loading="lazy"
+    onError={[Function]}
+    onLoad={[Function]}
+    src="/_next/image?url=%2Fimg.jpg&w=48&q=75"
+    srcSet="/_next/image?url=%2Fimg.jpg&w=32&q=75 1x, /_next/image?url=%2Fimg.jpg&w=48&q=75 2x"
+    style={
+      {
+        "color": "transparent",
+      }
+    }
+    width={20}
+  />
+  Join the Log Hunters Discord server
+</a>
+`;
