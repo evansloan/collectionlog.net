@@ -1,13 +1,13 @@
 # Contributing
 
 ## Project setup
-1. Install the [Yarn package manager](https://yarnpkg.com/getting-started/install)
+1. Install [Node.js](https://nodejs.org/en/download/current)
 2. Clone the repository `git clone https://github.com/evansloan/collectionlog.net && cd collectionlog.net`
-3. Install dependencies `yarn install`
-4. Run the project `yarn start`
+3. Install dependencies `npm install`
+4. Run the project `npm run dev`
 
 ## Code style/standards
-* ESLint is configured to try to keep things in a uniform style. Before committing or submitting a PR, make sure to run `yarn run lint` and `yarn run lint:fix` to catch and correct any style issues.
+* ESLint is configured to try to keep things in a uniform style. Before committing or submitting a PR, make sure to run `npm run lint` and `npm run lint:fix` to catch and correct any style issues.
 
 ### VSCode
 * The [ESLint extension](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) is highly recommended. It will show any style inconsistencies as errors to make them easier to find/fix.
@@ -36,7 +36,7 @@ When creating new components or change existing functionality of components it i
 ### Executing all tests locally
 To locally execute tests, open a terminal and run the following command:
 ```bash
-yarn test
+npm run test
 ```
 
 This will activate watch mode, allowing tests to be quickly rerun as changes are made. To execute all tests at once, press 'a'.
@@ -44,6 +44,6 @@ This will activate watch mode, allowing tests to be quickly rerun as changes are
 ### Updating snapshots
 If a component is modified, the corresponding snapshots must also be updated to reflect these changes. After making modifications, open a terminal and run the following command: 
 ```bash
-yarn test
+npm run test
 ```
 This will activate watch mode, to update snapshots, press 'u'. This will replace the old snapshot with a new one that reflects the modifications made. After this, tests can be rerun to confirm that everything is functioning as intended.
