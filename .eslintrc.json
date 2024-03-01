@@ -1,3 +1,82 @@
 {
-  "extends": ["next/core-web-vitals", "prettier"]
+  "extends": [
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "rules": {
+    "arrow-parens": [
+      "error",
+      "always"
+    ],
+    "brace-style": [
+      "error",
+      "1tbs"
+    ],
+    "comma-dangle": [
+      "off"
+    ],
+    "curly": [
+      "error",
+      "all"
+    ],
+    "dot-location": [
+      "error",
+      "property"
+    ],
+    "jsx-quotes": [
+      "error",
+      "prefer-single"
+    ],
+    "max-len": [
+      "off"
+    ],
+    "multiline-comment-style": [
+      "off"
+    ],
+    "no-case-declarations": [
+      "off"
+    ],
+    "no-explicit-any": [
+      "off"
+    ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
+    "no-multi-spaces": [
+      "error",
+      {
+        "ignoreEOLComments": true
+      }
+    ],
+    "no-trailing-spaces": [
+      "error"
+    ],
+    "no-unused-vars": [
+      "off"
+    ],
+    "object-curly-spacing": [
+      "off"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "no-duplicate-imports": [
+      "error"
+    ],
+    "semi": [
+      "off"
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
+  }
 }
