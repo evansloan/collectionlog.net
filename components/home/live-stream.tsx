@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React from 'react';
 
 import {
@@ -20,7 +21,7 @@ const LiveStream = ({ stream }: LiveStreamProps) => {
       className='border-2 no-underline hover:bg-accent'
     >
       <div className='text-center'>
-        <img
+        <Image
           className='m-auto w-full'
           src={stream.thumbnail_url
             .replace(/{width}/g, '320')

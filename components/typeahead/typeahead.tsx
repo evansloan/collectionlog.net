@@ -70,9 +70,9 @@ const Typeahead = <T,>({
     }
 
     setResults(matchedResults);
-  }, [filterResults, typeaheadCache.results, typeaheadValue]);
+  }, [filterResults, maxResults, typeaheadCache.results, typeaheadValue]);
 
-  const typeaheadSearch = async () => {
+  const typeaheadSearch = useCallback(async () => {
     if (!typeaheadValue.trim().length) {
       return setResults([]);
     }
@@ -92,7 +92,13 @@ const Typeahead = <T,>({
     }
 
     filterTypeahead();
-  };
+  }, [
+    fetchResults,
+    filterTypeahead,
+    typeaheadCache.searchLength,
+    typeaheadCache.searchQuery,
+    typeaheadValue,
+  ]);
 
   const onTypeaheadValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTypeaheadValue(e.currentTarget.value);
@@ -119,9 +125,9 @@ const Typeahead = <T,>({
     );
 
     return () => clearTimeout(debounce);
-  }, [typeaheadValue]);
+  }, [debounceTime, typeaheadSearch, typeaheadValue]);
 
-  useEffect(() => filterTypeahead(), [typeaheadCache]);
+  useEffect(() => filterTypeahead(), [filterTypeahead, typeaheadCache]);
 
   return (
     <>
