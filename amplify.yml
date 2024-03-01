@@ -3,15 +3,17 @@ frontend:
   phases:
     preBuild:
       commands:
-        - yarn install
+        - npm ci
     build:
       commands:
-        - REACT_APP_GOOGLE_ANALYTICS_ID=${REACT_APP_GOOGLE_ANALYTICS_ID}
-        - REACT_APP_TWITCH_CLIENT_SECRET=${REACT_APP_TWITCH_CLIENT_SECRET}
-        - REACT_APP_TWITCH_CLIENT_ID=${REACT_APP_TWITCH_CLIENT_ID}
-        - yarn run build
+        - COLLECTION_LOG_API_HOST=${COLLECTION_LOG_API_HOST}
+        - GOOGLE_ANALYTICS_ID=${GOOGLE_ANALYTICS_ID}
+        - TWITCH_CLIENT_SECRET=${TWITCH_CLIENT_SECRET}
+        - TWITCH_CLIENT_ID=${TWITCH_CLIENT_ID}
+        - GITHUB_PAT=${GITHUB_PAT}
+        - npm run build
   artifacts:
-    baseDirectory: build
+    baseDirectory: .next
     files:
       - '**/*'
   cache:
