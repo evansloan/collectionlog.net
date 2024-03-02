@@ -1,11 +1,12 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
-import React, { useContext } from 'react';
 
 import AccountIcon from '@/components/account-icon';
 import UserTypeahead from '@/components/typeahead/user-typeahead';
 import { Button } from '@/components/ui/button';
+import RankIcon from '@/components/rank-icon';
 import { CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Tooltip,
@@ -15,7 +16,7 @@ import {
 } from '@/components/ui/tooltip';
 import { formatAccountType } from '@/lib/collection-log-helpers';
 import { useCollectionlogContext } from '@/lib/providers/collection-log-provider';
-import { cn } from '@/lib/utils';
+import { cn, formatInt } from '@/lib/utils';
 
 import searchIcon from '@/assets/images/search.png';
 
@@ -71,9 +72,11 @@ const CollectionLogHeader = ({
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <p>
-                  Rank: <span className='text-white'>#{defaultRankValue}</span>
-                </p>
+                <div className='flex items-center gap-x-1'>
+                  Rank: {' '}
+                  <span className='text-white'>#{formatInt(defaultRankValue)}</span>
+                  <RankIcon rankType={defaultRankType} width={15} />
+                </div>
               </TooltipTrigger>
               <TooltipContent className='text-lg'>
                 {Object.keys(ranks).map((rankType, i) => {
