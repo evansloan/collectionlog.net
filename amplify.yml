@@ -6,11 +6,10 @@ frontend:
         - npm ci
     build:
       commands:
-        - COLLECTION_LOG_API_HOST=${COLLECTION_LOG_API_HOST}
-        - TWITCH_CLIENT_SECRET=${TWITCH_CLIENT_SECRET}
-        - TWITCH_CLIENT_ID=${TWITCH_CLIENT_ID}
-        - GITHUB_PAT=${GITHUB_PAT}
-        - GA_MEASUREMENT_ID=${GITHUB_MEASUREMENT_ID}
+        - env | grep -e COLLECTION_LOG_API_HOST >> .env.production
+        - env | grep -e TWITCH_CLIENT_SECRET -e TWITCH_CLIENT_ID >> .env.production
+        - env | grep -e GITHUB_PAT >> .env.production
+        - env | grep -e GA_MEASUREMENT_ID >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
