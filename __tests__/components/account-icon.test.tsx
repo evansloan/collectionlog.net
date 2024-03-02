@@ -13,7 +13,7 @@ describe(`${AccountIcon.displayName} component`, () => {
     'UNRANKED_GROUP_IRONMAN',
   ];
 
-  test.each(accountTypes)('should render with title %p', (accountType) => {
+  test.each(accountTypes)('should render with "$accountType" icon', (accountType) => {
     const render = renderer
       .create(<AccountIcon accountType={accountType} />)
       .toJSON();
