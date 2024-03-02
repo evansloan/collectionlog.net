@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 import Navbar from '@/components/navbar';
 import { GITHUB_URL, PLUGIN_URL } from '@/lib/constants';
@@ -36,6 +37,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </footer>
       </body>
+      <GoogleAnalytics gaId={process.env.GA_MEASUREMENT_ID ?? ''} />
     </html>
   );
 };
