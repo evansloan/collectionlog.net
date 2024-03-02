@@ -92,9 +92,8 @@ export const sortAlphabetical = (vals: string[]): string[] => {
   });
 };
 
-export const sortKeys = (unordered: { [k: string]: any }) => {
-  return Object.keys(unordered)
-    .sort()
+export const sortKeys = <T>(unordered: { [k: string]: T }) => {
+  return sortAlphabetical(Object.keys(unordered))
     .reduce((obj: { [k: string]: any }, key) => {
       obj[key] = unordered[key];
       return obj;
