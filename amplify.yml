@@ -11,6 +11,7 @@ frontend:
         - TWITCH_CLIENT_SECRET=${TWITCH_CLIENT_SECRET}
         - TWITCH_CLIENT_ID=${TWITCH_CLIENT_ID}
         - GITHUB_PAT=${GITHUB_PAT}
+        - GA_MEASUREMENT_ID=${GITHUB_MEASUREMENT_ID}
         - npm run build
   artifacts:
     baseDirectory: .next
