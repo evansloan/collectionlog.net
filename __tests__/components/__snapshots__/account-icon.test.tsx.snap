@@ -1,90 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountIcon component should render with title "GROUP_IRONMAN" 1`] = `
-<img
-  alt="GROUP_IRONMAN icon"
-  className="icon-shadow"
-  data-nimg="1"
-  decoding="async"
-  height={15}
-  loading="lazy"
-  onError={[Function]}
-  onLoad={[Function]}
-  src="/_next/image?url=%2Fimg.jpg&w=32&q=75"
-  srcSet="/_next/image?url=%2Fimg.jpg&w=16&q=75 1x, /_next/image?url=%2Fimg.jpg&w=32&q=75 2x"
-  style={
-    {
-      "color": "transparent",
-    }
-  }
-  width={15}
-/>
-`;
-
-exports[`AccountIcon component should render with title "HARDCORE_GROUP_IRONMAN" 1`] = `
-<img
-  alt="HARDCORE_GROUP_IRONMAN icon"
-  className="icon-shadow"
-  data-nimg="1"
-  decoding="async"
-  height={15}
-  loading="lazy"
-  onError={[Function]}
-  onLoad={[Function]}
-  src="/_next/image?url=%2Fimg.jpg&w=32&q=75"
-  srcSet="/_next/image?url=%2Fimg.jpg&w=16&q=75 1x, /_next/image?url=%2Fimg.jpg&w=32&q=75 2x"
-  style={
-    {
-      "color": "transparent",
-    }
-  }
-  width={15}
-/>
-`;
-
-exports[`AccountIcon component should render with title "HARDCORE_IRONMAN" 1`] = `
-<img
-  alt="HARDCORE_IRONMAN icon"
-  className="icon-shadow"
-  data-nimg="1"
-  decoding="async"
-  height={15}
-  loading="lazy"
-  onError={[Function]}
-  onLoad={[Function]}
-  src="/_next/image?url=%2Fimg.jpg&w=32&q=75"
-  srcSet="/_next/image?url=%2Fimg.jpg&w=16&q=75 1x, /_next/image?url=%2Fimg.jpg&w=32&q=75 2x"
-  style={
-    {
-      "color": "transparent",
-    }
-  }
-  width={15}
-/>
-`;
-
-exports[`AccountIcon component should render with title "IRONMAN" 1`] = `
-<img
-  alt="IRONMAN icon"
-  className="icon-shadow"
-  data-nimg="1"
-  decoding="async"
-  height={15}
-  loading="lazy"
-  onError={[Function]}
-  onLoad={[Function]}
-  src="/_next/image?url=%2Fimg.jpg&w=32&q=75"
-  srcSet="/_next/image?url=%2Fimg.jpg&w=16&q=75 1x, /_next/image?url=%2Fimg.jpg&w=32&q=75 2x"
-  style={
-    {
-      "color": "transparent",
-    }
-  }
-  width={15}
-/>
-`;
-
-exports[`AccountIcon component should render with title "NORMAL" 1`] = `
+exports[`AccountIcon component should render with "$accountType" icon 1`] = `
 <img
   alt="NORMAL icon"
   className="icon-shadow"
@@ -105,7 +21,49 @@ exports[`AccountIcon component should render with title "NORMAL" 1`] = `
 />
 `;
 
-exports[`AccountIcon component should render with title "ULTIMATE_IRONMAN" 1`] = `
+exports[`AccountIcon component should render with "$accountType" icon 2`] = `
+<img
+  alt="IRONMAN icon"
+  className="icon-shadow"
+  data-nimg="1"
+  decoding="async"
+  height={15}
+  loading="lazy"
+  onError={[Function]}
+  onLoad={[Function]}
+  src="/_next/image?url=%2Fimg.jpg&w=32&q=75"
+  srcSet="/_next/image?url=%2Fimg.jpg&w=16&q=75 1x, /_next/image?url=%2Fimg.jpg&w=32&q=75 2x"
+  style={
+    {
+      "color": "transparent",
+    }
+  }
+  width={15}
+/>
+`;
+
+exports[`AccountIcon component should render with "$accountType" icon 3`] = `
+<img
+  alt="HARDCORE_IRONMAN icon"
+  className="icon-shadow"
+  data-nimg="1"
+  decoding="async"
+  height={15}
+  loading="lazy"
+  onError={[Function]}
+  onLoad={[Function]}
+  src="/_next/image?url=%2Fimg.jpg&w=32&q=75"
+  srcSet="/_next/image?url=%2Fimg.jpg&w=16&q=75 1x, /_next/image?url=%2Fimg.jpg&w=32&q=75 2x"
+  style={
+    {
+      "color": "transparent",
+    }
+  }
+  width={15}
+/>
+`;
+
+exports[`AccountIcon component should render with "$accountType" icon 4`] = `
 <img
   alt="ULTIMATE_IRONMAN icon"
   className="icon-shadow"
@@ -126,7 +84,49 @@ exports[`AccountIcon component should render with title "ULTIMATE_IRONMAN" 1`] =
 />
 `;
 
-exports[`AccountIcon component should render with title "UNRANKED_GROUP_IRONMAN" 1`] = `
+exports[`AccountIcon component should render with "$accountType" icon 5`] = `
+<img
+  alt="GROUP_IRONMAN icon"
+  className="icon-shadow"
+  data-nimg="1"
+  decoding="async"
+  height={15}
+  loading="lazy"
+  onError={[Function]}
+  onLoad={[Function]}
+  src="/_next/image?url=%2Fimg.jpg&w=32&q=75"
+  srcSet="/_next/image?url=%2Fimg.jpg&w=16&q=75 1x, /_next/image?url=%2Fimg.jpg&w=32&q=75 2x"
+  style={
+    {
+      "color": "transparent",
+    }
+  }
+  width={15}
+/>
+`;
+
+exports[`AccountIcon component should render with "$accountType" icon 6`] = `
+<img
+  alt="HARDCORE_GROUP_IRONMAN icon"
+  className="icon-shadow"
+  data-nimg="1"
+  decoding="async"
+  height={15}
+  loading="lazy"
+  onError={[Function]}
+  onLoad={[Function]}
+  src="/_next/image?url=%2Fimg.jpg&w=32&q=75"
+  srcSet="/_next/image?url=%2Fimg.jpg&w=16&q=75 1x, /_next/image?url=%2Fimg.jpg&w=32&q=75 2x"
+  style={
+    {
+      "color": "transparent",
+    }
+  }
+  width={15}
+/>
+`;
+
+exports[`AccountIcon component should render with "$accountType" icon 7`] = `
 <img
   alt="UNRANKED_GROUP_IRONMAN icon"
   className="icon-shadow"
