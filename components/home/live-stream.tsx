@@ -21,7 +21,7 @@ const LiveStream = ({ stream }: LiveStreamProps) => {
       className='border-2 no-underline hover:bg-accent'
     >
       <div className='text-center'>
-        <Image
+        <img
           className='m-auto w-full'
           src={stream.thumbnail_url
             .replace(/{width}/g, '320')
