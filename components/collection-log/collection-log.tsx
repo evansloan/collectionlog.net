@@ -1,11 +1,11 @@
 'use client';
 
-import CollectionLogProvider from '@/lib/providers/collection-log-provider';
 import React, { useState } from 'react';
 
 import {
   CollectionLogContent,
   CollectionLogHeader,
+  CollectionLogProvider,
   CollectionLogSearchContent,
 } from '@/components/collection-log';
 import { Card, CardContent } from '@/components/ui/card';

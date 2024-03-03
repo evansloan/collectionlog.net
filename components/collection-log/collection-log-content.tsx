@@ -8,7 +8,7 @@ import {
 } from '@/components/collection-log';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCollectionLogView } from '@/lib/hooks';
-import { useCollectionlogContext } from '@/lib/providers/collection-log-provider';
+import { useCollectionlogContext } from '@/components/collection-log/collection-log-provider';
 import { replaceUrl } from '@/lib/utils';
 
 interface CollectionLogContentProps {

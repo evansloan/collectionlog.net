@@ -7,6 +7,7 @@ import {
   CollectionLogHeader,
   CollectionLogItems,
   CollectionLogPageList,
+  CollectionLogProvider,
 } from '@/components/collection-log';
 import { UserTypeahead } from '@/components/typeahead';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,6 @@ import {
   sortCollectionLog,
 } from '@/lib/collection-log-helpers';
 import { useCollectionLogView } from '@/lib/hooks';
-import CollectionLogProvider from '@/lib/providers/collection-log-provider';
 import { replaceUrl } from '@/lib/utils';
 
 interface CompareContentProps {

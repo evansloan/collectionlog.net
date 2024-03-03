@@ -15,7 +15,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { formatAccountType } from '@/lib/collection-log-helpers';
-import { useCollectionlogContext } from '@/lib/providers/collection-log-provider';
+import { useCollectionlogContext } from '@/components/collection-log/collection-log-provider';
 import { cn, formatInt } from '@/lib/utils';
 
 import searchIcon from '@/assets/images/search.png';
