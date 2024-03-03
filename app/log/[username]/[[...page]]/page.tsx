@@ -14,9 +14,9 @@ interface PageProps {
   };
 }
 
-export const generateMetadata = async ({
+export const generateMetadata = ({
   params: { username },
-}: PageProps): Promise<Metadata> => ({
+}: PageProps): Metadata => ({
   title: `${decodeURI(username)} | Collection Log`,
   description: `View ${decodeURI(username)}'s collection log on collectionlog.net`
 });

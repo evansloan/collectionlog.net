@@ -1,5 +1,8 @@
-import { sortCollectionLog } from '@/lib/collection-log-helpers';
+'use client';
+
 import React, { createContext, ReactNode, useContext, useState } from 'react';
+
+import { sortCollectionLog } from '@/lib/collection-log-helpers';
 
 export const CollectionLogContext = createContext<CollectionLog | undefined>(
   undefined

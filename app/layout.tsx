@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 import Navbar from '@/components/navbar';
@@ -8,7 +8,22 @@ import { GITHUB_URL, PLUGIN_URL } from '@/lib/constants';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://collectionlog.net'),
+  alternates: {
+    canonical: '/',
+  },
   title: 'Collection Log',
+  description: 'Share your OSRS Collection Log progress',
+  openGraph: {
+    images: ['/logo.png'],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: {
+    media: '#493F35',
+    color: '#FFFFFF',
+  },
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {

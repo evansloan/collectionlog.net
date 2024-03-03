@@ -22,7 +22,7 @@ export const generateMetadata = async ({
   searchParams: { page },
 }: PageProps): Promise<Metadata> => ({
   title: `${parseInt(page ?? '1')} | Collection Log Hiscores`,
-  description: '',
+  description: 'View the top cloggers on collectionlog.net',
 });
 
 const Page = async ({
