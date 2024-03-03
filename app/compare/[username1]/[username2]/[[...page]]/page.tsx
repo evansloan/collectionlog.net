@@ -16,6 +16,7 @@ export const generateMetadata = async ({
   params: { username1, username2 },
 }: PageProps): Promise<Metadata> => ({
   title: `${decodeURI(username1)} - ${decodeURI(username2)} | Collection Log`,
+  description: `View ${decodeURI(username1)}'s and ${username2}'s collection log on collectionlog.net`,
 });
 
 const Page = async ({ params: { username1, username2, page } }: PageProps) => {

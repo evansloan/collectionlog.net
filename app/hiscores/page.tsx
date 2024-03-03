@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import React from 'react';
 
 import { Hiscores } from '@/components/hiscores';
@@ -16,6 +17,13 @@ interface PageProps {
     username?: string;
   };
 }
+
+export const generateMetadata = async ({
+  searchParams: { page },
+}: PageProps): Promise<Metadata> => ({
+  title: `${parseInt(page ?? '1')} | Collection Log Hiscores`,
+  description: '',
+});
 
 const Page = async ({
   searchParams: { page, accountType, username },
