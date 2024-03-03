@@ -209,6 +209,11 @@
     width: 10px;
     margin: auto;
   }
+
+  .popover-trigger-w {
+    width: var(--radix-popover-trigger-width);
+    max-height: var(--radix-popover-content-available-height);
+  }
 }
 
 @font-face {

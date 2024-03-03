@@ -28,8 +28,8 @@ const Settings = () => {
         </DialogHeader>
         <div className='h-full p-2 shadow-log'>
           <div className='grid h-full grid-cols-5 items-center gap-2 border border-light p-2'>
-            <p className='col-span-3 text-lg'>Theme color</p>
-            <ThemeToggle className='col-span-2' />
+            <p className='col-span-2 md:col-span-3 text-lg'>Theme color</p>
+            <ThemeToggle className='col-span-3 md:col-span-2' />
           </div>
         </div>
       </DialogContent>

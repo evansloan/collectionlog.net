@@ -29,7 +29,7 @@ const ThemeToggle = ({ className }: ThemeToggleProps) => {
           <ChevronDown className='ml-2 h-6 w-6 shrink-0' />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-full p-0'>
+      <PopoverContent>
         <Command>
           <CommandGroup>
             {themeValues.map((value) => (
