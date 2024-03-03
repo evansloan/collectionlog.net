@@ -13,6 +13,16 @@ import {
   UserSettingsResponse,
 } from './responses';
 
+class APIException extends Error {
+  constructor(
+    public code: number,
+    message: string,
+    options?: ErrorOptions
+  ) {
+    super(message, options);
+  }
+}
+
 class CollectionLogAPI {
   private static readonly BASE_URL = 'https://api.collectionlog.net';
   private static readonly COLLECTION_LOG_ENDPOINT = 'collectionlog';
@@ -58,9 +68,11 @@ class CollectionLogAPI {
     const response = await fetch(url, config);
     if (!response.ok) {
       const error = (await response.json()) as BaseResponse;
-      throw new Error(`${response.status}: ${error.error}`, {
-        cause: response.url,
-      });
+      throw new APIException(
+        response.status,
+        `${response.status}: ${error.error}`,
+        { cause: response.url }
+      );
     }
 
     return await response.json();
@@ -341,4 +353,4 @@ class CollectionLogAPI {
   };
 }
 
-export { CollectionLogAPI };
+export { APIException, CollectionLogAPI };

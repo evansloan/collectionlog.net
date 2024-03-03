@@ -6,7 +6,10 @@ import { CollectionLog } from '@/components/collection-log';
 import Item from '@/components/item';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { CollectionLogAPI } from '@/lib/api/collection-log/collection-log-api';
+import {
+  APIException,
+  CollectionLogAPI,
+} from '@/lib/api/collection-log/collection-log-api';
 import { getFullCollectionLog } from '@/lib/collection-log-helpers';
 
 interface PageProps {
@@ -30,7 +33,11 @@ const fetchCollectionLogData = async (username: string) => {
       recentItems: await CollectionLogAPI.getRecentItems(username),
     };
   } catch (e) {
-    return notFound();
+    if (e instanceof APIException && e.code === 404) {
+      return notFound();
+    }
+
+    throw e;
   }
 };
 
@@ -40,12 +47,8 @@ const Page = async ({ params: { username, page } }: PageProps) => {
     page = decodeURI(page);
   }
 
-  const {
-    collectionLog,
-    ranks,
-    recentItems,
-    settings,
-  } = await fetchCollectionLogData(username);
+  const { collectionLog, ranks, recentItems, settings } =
+    await fetchCollectionLogData(username);
 
   return (
     <main className='flex flex-col items-center justify-between'>
