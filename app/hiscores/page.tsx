@@ -21,7 +21,7 @@ interface PageProps {
 export const generateMetadata = async ({
   searchParams: { page },
 }: PageProps): Promise<Metadata> => ({
-  title: `${parseInt(page ?? '1')} | Collection Log Hiscores`,
+  title: `Page ${parseInt(page ?? '1')} | Collection Log Hiscores`,
   description: 'View the top cloggers on collectionlog.net',
 });
 
