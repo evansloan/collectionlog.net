@@ -3,6 +3,7 @@ import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 
 import NavLink from '@/components/nav-link';
+import Settings from '@/components/settings';
 import { Button } from '@/components/ui/button';
 import UserTypeahead from '@/components/typeahead/user-typeahead';
 import {
@@ -53,6 +54,7 @@ const Navbar = React.forwardRef<
       <NavLink href={DISCORD_URL} icon={DiscordIcon}>
         Join the Log Hunters Discord server
       </NavLink>
+      <Settings />
     </>
   );
 
