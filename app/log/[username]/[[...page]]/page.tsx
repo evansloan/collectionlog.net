@@ -1,11 +1,13 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 import { CollectionLog } from '@/components/collection-log';
 import Item from '@/components/item';
 import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { CollectionLogAPI } from '@/lib/api/collection-log/collection-log-api';
+import { getFullCollectionLog } from '@/lib/collection-log-helpers';
 
 interface PageProps {
   params: {
@@ -21,16 +23,29 @@ export const generateMetadata = ({
   description: `View ${decodeURI(username)}'s collection log on collectionlog.net`
 });
 
+const fetchCollectionLogData = async (username: string) => {
+  try {
+    return {
+      ...(await getFullCollectionLog(username)),
+      recentItems: await CollectionLogAPI.getRecentItems(username),
+    };
+  } catch (e) {
+    return notFound();
+  }
+};
+
 const Page = async ({ params: { username, page } }: PageProps) => {
   username = decodeURI(username);
   if (page) {
     page = decodeURI(page);
   }
 
-  const collectionLog = await CollectionLogAPI.getCollectionLog(username);
-  const recentItems = await CollectionLogAPI.getRecentItems(username);
-  const ranks = await CollectionLogAPI.getRanksByUsername(username);
-  const settings = await CollectionLogAPI.getUserSettings(username);
+  const {
+    collectionLog,
+    ranks,
+    recentItems,
+    settings,
+  } = await fetchCollectionLogData(username);
 
   return (
     <main className='flex flex-col items-center justify-between'>
