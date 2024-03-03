@@ -34,10 +34,10 @@ const ChangeLogSection = ({
             key={release.node_id}
             className='border-b border-b-light py-2 last:border-b-0'
           >
-            <h4 className='text-lg font-bold text-white'>
+            <h4 className='text-lg font-bold text-rs-yellow'>
               {release.name} - {formatDate(release.created_at, locale)}
             </h4>
-            <ReactMarkdown className='ml-2'>{release.body}</ReactMarkdown>
+            <ReactMarkdown>{release.body}</ReactMarkdown>
           </div>
         ))}
       </AccordionContent>

@@ -131,6 +131,7 @@
   }
 
   ul {
+    @apply ml-4;
     list-style-type: '*';
   }
 
