@@ -56,6 +56,7 @@ const config = {
         active: 'hsl(var(--active))',
         light: 'hsl(var(--light))',
         lighter: 'hsl(var(--lighter))',
+        lightest: 'hsl(var(--lightest))',
         'rs-green': 'var(--rs-green)',
         'rs-orange': 'var(--rs-orange)',
         'rs-red': 'var(--rs-red)',

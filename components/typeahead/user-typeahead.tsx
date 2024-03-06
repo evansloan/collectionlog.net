@@ -77,7 +77,7 @@ const UserTypeahead = ({
   };
 
   const className = usePopover
-    ? 'rounded-none border-b-rs-orange border-b-2 sm:w-2/3 md:w-1/2 lg:w-1/3 text-center text-lg'
+    ? 'sm:w-2/3 md:w-1/2 lg:w-1/3 text-center text-lg'
     : '';
 
   const typeahead = (
@@ -103,7 +103,7 @@ const UserTypeahead = ({
           <SheetTrigger asChild>{children}</SheetTrigger>
           <SheetContent
             side='top'
-            className='flex flex-col items-center border-0 bg-transparent p-0'
+            className='flex flex-col items-center border-0 bg-transparent p-2'
           >
             {typeahead}
           </SheetContent>

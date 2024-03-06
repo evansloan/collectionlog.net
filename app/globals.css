@@ -34,6 +34,7 @@
 
     --light: 35 12% 30%;
     --lighter: 30 13% 30%;
+    --lightest: 30 13% 40%;
 
     --border: 0 0% 0%;
     --input: 33 15% 15%;
@@ -94,6 +95,7 @@
 
     --light: 0 0% 17%;
     --lighter: 0 0% 20%;
+    --lightest: 0 0% 30%;
 
     --border: 0 0% 0%;
     --input: 0 0% 9%;
@@ -197,6 +199,34 @@
 
   button.btn-primary:hover {
     background: var(--btn-primary-accent);
+  }
+
+  .btn-shadow {
+    @apply bg-light;
+    box-shadow: inset -1px 0 5px -1px hsl(var(--background));
+  }
+
+  .btn-shadow:before, .btn-shadow:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+  }
+  .btn-shadow:before {
+    top: 0;
+    @apply bg-lightest;
+    box-shadow: 0 0 0 0 hsl(var(--lightest));
+  }
+
+  .btn-shadow:after {
+    bottom: 0;
+    box-shadow: 10px 0 25px -20px black;
+  }
+
+  .btn-shadow:hover {
+    @apply bg-lightest;
   }
 
   .icon-shadow {
