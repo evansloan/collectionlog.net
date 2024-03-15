@@ -190,43 +190,14 @@
   }
 
   button.btn-primary {
+    @apply shadow-button;
     background: var(--btn-primary);
     border-radius: 5px;
-    box-shadow: inset 4px 4px 5px -3px rgba(255, 255, 255, 0.15),
-    inset -4px -4px 5px -3px rgba(0, 0, 0, 0.15);
     color: white;
   }
 
   button.btn-primary:hover {
     background: var(--btn-primary-accent);
-  }
-
-  .btn-shadow {
-    @apply bg-light;
-    box-shadow: inset -1px 0 5px -1px hsl(var(--background));
-  }
-
-  .btn-shadow:before, .btn-shadow:after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 2px;
-  }
-  .btn-shadow:before {
-    top: 0;
-    @apply bg-lightest;
-    box-shadow: 0 0 0 0 hsl(var(--lightest));
-  }
-
-  .btn-shadow:after {
-    bottom: 0;
-    box-shadow: 10px 0 25px -20px black;
-  }
-
-  .btn-shadow:hover {
-    @apply bg-lightest;
   }
 
   .icon-shadow {

@@ -71,6 +71,7 @@ const config = {
       boxShadow: {
         log: 'inset 0px 2px 0px 0px rgba(0, 0, 0, 0.2)',
         icon: 'drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 black)',
+        button: 'inset 4px 4px 5px -3px rgba(255, 255, 255, 0.15), inset -4px -4px 5px -3px rgba(0, 0, 0, 0.15)'
       },
       keyframes: {
         'accordion-down': {
