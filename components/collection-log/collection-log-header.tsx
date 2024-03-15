@@ -17,6 +17,7 @@ import { formatAccountType } from '@/lib/collection-log-helpers';
 import { useCollectionlogContext } from '@/components/providers/collection-log-provider';
 import { cn, formatInt } from '@/lib/utils';
 
+import compareIcon from '@/assets/images/collectionlog-sm.png';
 import searchIcon from '@/assets/images/search.png';
 
 interface CollectionLogHeaderProps {
@@ -89,7 +90,7 @@ const CollectionLogHeader = ({
                         className='flex flex-col gap-2'
                       >
                         <p>
-                          {formatAccountType(rankType as RankType)}: #{rank}
+                          {formatAccountType(rankType as RankType)}: #{formatInt(rank)}
                         </p>
                       </div>
                     );
@@ -111,7 +112,10 @@ const CollectionLogHeader = ({
               maxResults={15}
               usePopover
             >
-              <Button className='hidden w-full lg:flex'>Compare</Button>
+              <Button className='hidden lg:flex w-full justify-center'>
+                <Image src={compareIcon} alt='compare icon' className='flex-shrink-0' />
+                Compare
+              </Button>
             </UserTypeahead>
           </div>
           <div className='!mb-2 w-11/12 sm:w-1/2 md:hidden md:w-full'>
