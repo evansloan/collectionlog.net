@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   title: 'Collection Log',
   description: 'Share your OSRS Collection Log progress',
   openGraph: {
-    images: ['/logo.png'],
+    images: ['/logo512.png'],
   },
 };
 
