@@ -3,6 +3,7 @@ import Image, { StaticImageData } from 'next/image';
 
 import { cn } from '@/lib/utils';
 
+import all from '@/assets/images/stats.png';
 import groupIronman from '@/assets/images/group_ironman.png';
 import hardcoreGroupIronman from '@/assets/images/hardcore_group_ironman.png';
 import hardcoreIronman from '@/assets/images/hardcore_ironman.png';
@@ -11,7 +12,8 @@ import normal from '@/assets/images/normal.png';
 import ultimateIronman from '@/assets/images/ultimate_ironman.png';
 import unrankedGroupIronman from '@/assets/images/unranked_group_ironman.png';
 
-const ICON_MAP: { [key in AccountType]: StaticImageData } = {
+const ICON_MAP: { [key in AccountType | RankType]: StaticImageData } = {
+  ALL: all,
   GROUP_IRONMAN: groupIronman,
   HARDCORE_GROUP_IRONMAN: hardcoreGroupIronman,
   HARDCORE_IRONMAN: hardcoreIronman,
@@ -25,7 +27,7 @@ const HEIGHT_DEFAULT = 15;
 const WIDTH_DEFAULT = 15;
 
 interface AccountIconProps {
-  accountType: AccountType;
+  accountType: AccountType | RankType;
   height?: number;
   width?: number;
   className?: string;

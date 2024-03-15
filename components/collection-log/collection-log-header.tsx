@@ -6,7 +6,6 @@ import Image from 'next/image';
 import AccountIcon from '@/components/account-icon';
 import UserTypeahead from '@/components/typeahead/user-typeahead';
 import { Button } from '@/components/ui/button';
-import RankIcon from '@/components/rank-icon';
 import { CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Tooltip,
@@ -15,7 +14,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { formatAccountType } from '@/lib/collection-log-helpers';
-import { useCollectionlogContext } from '@/components/collection-log/collection-log-provider';
+import { useCollectionlogContext } from '@/components/providers/collection-log-provider';
 import { cn, formatInt } from '@/lib/utils';
 
 import searchIcon from '@/assets/images/search.png';
@@ -43,8 +42,8 @@ const CollectionLogHeader = ({
 
   const buttonWrapperClass = 'hidden w-1/5 md:block lg:w-1/12 !-mt-2';
   const searchButton = (
-    <Button className='flex w-full justify-around' onClick={onSearchClick}>
-      <Image src={searchIcon} alt='search icon' />
+    <Button className='flex w-full justify-center' onClick={onSearchClick}>
+      <Image src={searchIcon} alt='search icon' className='flex-shrink-0' />
       {isSearchOpen ? 'Back' : 'Search'}
     </Button>
   );
@@ -57,7 +56,7 @@ const CollectionLogHeader = ({
       )}
     >
       {includeSearch && (
-        <div className={`${buttonWrapperClass}`}>{searchButton}</div>
+        <div className={buttonWrapperClass}>{searchButton}</div>
       )}
       <div className='!mt-0 items-center'>
         <CardTitle className='flex items-center justify-center gap-2'>
@@ -73,9 +72,11 @@ const CollectionLogHeader = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className='flex items-center gap-x-1'>
-                  Rank: {' '}
-                  <span className='text-white'>#{formatInt(defaultRankValue)}</span>
-                  <RankIcon rankType={defaultRankType} width={15} />
+                  Rank:{' '}
+                  <span className='text-white'>
+                    #{formatInt(defaultRankValue)}
+                  </span>
+                  <AccountIcon accountType={defaultRankType} width={15} />
                 </div>
               </TooltipTrigger>
               <TooltipContent className='text-lg'>
@@ -115,7 +116,7 @@ const CollectionLogHeader = ({
               <Button className='hidden w-full lg:flex'>Compare</Button>
             </UserTypeahead>
           </div>
-          <div className='!mb-2 w-full sm:w-2/3 md:hidden md:w-full'>
+          <div className='!mb-2 w-11/12 sm:w-1/2 md:hidden md:w-full'>
             {searchButton}
           </div>
         </>
