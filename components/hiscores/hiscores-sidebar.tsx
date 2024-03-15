@@ -149,14 +149,14 @@ const HiscoresSidebar = ({
           </PopoverContent>
         </Popover>
       </div>
-      <div className='border-b border-light pb-4'>
+      <div className='flex flex-col items-center border-b border-light pb-4'>
         <UserTypeahead
           onResultClick={(result) => onSearch(result.username)}
           inputProps={{
             placeholder: 'Search users...',
           }}
           containerProps={{
-            className: 'lg:w-full mt-1',
+            className: 'md:w-full lg:w-full mt-1',
           }}
         />
       </div>

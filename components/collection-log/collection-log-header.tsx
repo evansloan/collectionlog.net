@@ -104,9 +104,7 @@ const CollectionLogHeader = ({
         <>
           <div className={buttonWrapperClass}>
             <UserTypeahead
-              navigateTo={async (username2) => {
-                return `/compare/${username}/${username2}`;
-              }}
+              navigateTo={(username2) => `/compare/${username}/${username2}`}
               inputProps={{
                 placeholder: 'Search user to compare with...',
               }}

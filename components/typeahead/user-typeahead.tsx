@@ -1,6 +1,7 @@
 'use client';
 
 import { InputProps } from '@/components/ui/input';
+import Link from 'next/link';
 import React, { ChangeEvent, HTMLAttributes, ReactNode, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -11,7 +12,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 
 interface UserTypeaheadProps {
   children?: ReactNode;
-  navigateTo?: (username: string) => Promise<string>;
+  navigateTo?: (username: string) => string;
   onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onResultClick?: (result: User) => void;
   usePopover?: boolean;
@@ -44,10 +45,6 @@ const UserTypeahead = ({
     if (onResultClick) {
       onResultClick(user);
     }
-
-    if (navigateTo) {
-      return router.push(await navigateTo(user.username));
-    }
   };
 
   const onTypeaheadSubmit = async (users: User[]) => {
@@ -55,17 +52,38 @@ const UserTypeahead = ({
     setIsOpen(false);
 
     if (navigateTo) {
-      router.push(await navigateTo(username));
+      router.push(navigateTo(username));
     }
   };
 
   const renderResults = (user: User, i: number) => {
     const bg = i % 2 ? 'bg-light' : 'bg-card';
+    const className = `flex w-full justify-center border-0 text-white no-underline ${bg} p-2 text-lg transition-all hover:bg-accent`;
+    const key = `typeahead-${user.username}-${i}`;
+    const result = (
+      <div className='flex items-center gap-2'>
+        <AccountIcon accountType={user.accountType} />
+        <p>{user.username}</p>
+      </div>
+    );
+
+    if (navigateTo) {
+      return (
+        <Link
+          key={key}
+          href={navigateTo(user.username)}
+          className={className}
+          onClick={() => onClick(user)}
+        >
+          {result}
+        </Link>
+      );
+    }
+
     return (
       <button
         key={`typeahead-${user.username}-${i}`}
-        className={`flex w-full justify-center border-0 ${bg} p-2 text-lg transition-all hover:bg-accent`}
-        type='button'
+        className={className}
         onClick={() => onClick(user)}
       >
         <div className='flex items-center gap-2'>

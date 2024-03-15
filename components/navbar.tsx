@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
@@ -29,10 +31,7 @@ const Navbar = React.forwardRef<
         Home
       </NavLink>
       <UserTypeahead
-        navigateTo={async (username) => {
-          'use server';
-          return `/log/${username}`;
-        }}
+        navigateTo={(username) => `/log/${username}`}
         inputProps={{
           placeholder: 'Search users...',
         }}

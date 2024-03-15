@@ -56,6 +56,10 @@ const Typeahead = <T,>({
   const [isLoading, setIsLoading] = useState(false);
 
   const filterTypeahead = useCallback(() => {
+    if (!typeaheadValue.trim().length) {
+      return;
+    }
+
     const matchedResults: T[] = [];
     const max = maxResults ?? MAX_RESULTS;
 
@@ -74,6 +78,7 @@ const Typeahead = <T,>({
 
   const typeaheadSearch = useCallback(async () => {
     if (!typeaheadValue.trim().length) {
+      console.log('no results');
       return setResults([]);
     }
 
@@ -84,6 +89,7 @@ const Typeahead = <T,>({
       setIsLoading(true);
       const typeaheadResults = await fetchResults(typeaheadValue);
       setIsLoading(false);
+
       return setTypeaheadCache({
         results: typeaheadResults,
         searchQuery: typeaheadValue,
