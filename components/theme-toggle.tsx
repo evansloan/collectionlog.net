@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 import { useTheme } from 'next-themes';
 
@@ -14,11 +14,17 @@ interface ThemeToggleProps {
 }
 
 const ThemeToggle = ({ className }: ThemeToggleProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const themeValues = ['dark', 'light', 'system'];
 
+  const onThemeSelect = (value: string) => {
+    setTheme(value);
+    setIsOpen(false);
+  };
+
   return (
-    <Popover>
+    <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
         <Button
           role='combobox'
@@ -37,7 +43,7 @@ const ThemeToggle = ({ className }: ThemeToggleProps) => {
                 className='flex justify-between text-lg'
                 key={value}
                 value={value}
-                onSelect={() => setTheme(value)}
+                onSelect={() => onThemeSelect(value)}
               >
                 {toTitleCase(value)}
                 <Check
