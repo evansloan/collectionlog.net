@@ -1,6 +1,6 @@
 'use client';
 
-import { useCollectionlogContext } from '@/components/collection-log/collection-log-provider';
+import { useCollectionlogContext } from '@/components/providers/collection-log-provider';
 import React, { useCallback, useState } from 'react';
 import { debounce } from 'next/dist/server/utils';
 
