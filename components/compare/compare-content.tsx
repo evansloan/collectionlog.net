@@ -123,7 +123,7 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
         </CollectionLogProvider>
         <div className='col-span-2 flex flex-col items-center justify-around border-b-4 xl:flex-row'>
           <UserTypeahead
-            navigateTo={async (username) => `/compare/${username}/${username2}`}
+            navigateTo={(username) => `/compare/${username}/${username2}`}
             usePopover
           >
             <Button>
@@ -132,7 +132,7 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
             </Button>
           </UserTypeahead>
           <UserTypeahead
-            navigateTo={async (username) => `/compare/${username1}/${username}`}
+            navigateTo={(username) => `/compare/${username1}/${username}`}
             usePopover
           >
             <Button>
