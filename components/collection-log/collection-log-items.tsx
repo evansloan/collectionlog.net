@@ -52,7 +52,7 @@ const CollectionLogItems = ({
           </p>
         ))}
       </div>
-      <div className='scroll-log grid flex-1 grid-cols-2 content-start gap-y-4 overflow-y-scroll px-2 py-3 shadow-log sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6'>
+      <div className='scroll-log grid flex-1 grid-cols-2 content-start gap-y-4 overflow-y-auto px-2 py-3 shadow-log sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6'>
         {items.map((item, i) => (
           <Item
             key={`${item.name}-log-${i}`}

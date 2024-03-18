@@ -43,7 +43,7 @@ const CollectionLogPageList = ({
       </Button>
       <div
         className={cn(
-          `scroll-log-dark ${mobileDisplayClass} h-full flex-col overflow-y-scroll border-r border-black shadow-log md:col-span-1 md:flex`,
+          `scroll-log-dark ${mobileDisplayClass} h-full flex-col overflow-y-auto border-r border-black shadow-log md:col-span-1 md:flex`,
           className
         )}
       >
