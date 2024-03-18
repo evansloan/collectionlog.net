@@ -145,6 +145,12 @@
     @apply pl-2;
   }
 
+  code {
+    @apply bg-background p-1;
+    font-size: 12px;
+    font-family: monospace;
+  }
+
   ::-webkit-scrollbar {
     width: 10px;
   }
