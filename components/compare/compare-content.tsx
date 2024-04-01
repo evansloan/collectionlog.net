@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import {
@@ -12,6 +12,7 @@ import {
 import { UserTypeahead } from '@/components/typeahead';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   CollectionLogFull,
@@ -44,6 +45,9 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
     sortCollectionLog(collectionLog)
   );
 
+  const container1Ref = useRef<HTMLDivElement>(null);
+  const container2Ref = useRef<HTMLDivElement>(null);
+
   const { tabs: tabs1 } = collectionLog1;
   const { tabs: tabs2 } = collectionLog2;
 
@@ -65,6 +69,8 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
     updateViewByPage: updateViewByPage2,
   } = useCollectionLogView(collectionLog2, startPage);
 
+  const [syncScroll, setSyncScroll] = useState(true);
+
   const onTabClick = (tabName: string) => {
     updateViewByTab1(tabName);
     updateViewByTab2(tabName);
@@ -73,6 +79,24 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
   const onPageClick = (pageName: string) => {
     updateViewByPage1(pageName);
     updateViewByPage2(pageName);
+  };
+
+  const onContainerScroll = (
+    containerRef: RefObject<HTMLDivElement>,
+    scrollValue: number
+  ) => {
+    if (!containerRef.current) {
+      return;
+    }
+
+    if (!syncScroll) {
+      return;
+    }
+
+    containerRef.current.scrollTo({
+      top: scrollValue,
+      behavior: 'smooth'
+    });
   };
 
   useEffect(() => {
@@ -121,25 +145,34 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
             defaultRankType={settings1.displayRank}
           />
         </CollectionLogProvider>
-        <div className='col-span-2 flex flex-col items-center justify-around border-b-4 xl:flex-row'>
-          <UserTypeahead
-            navigateTo={(username) => `/compare/${username}/${username2}`}
-            usePopover
-          >
-            <Button>
-              <ChevronLeft className='h-4 w-4' />
-              Change user 1
-            </Button>
-          </UserTypeahead>
-          <UserTypeahead
-            navigateTo={(username) => `/compare/${username1}/${username}`}
-            usePopover
-          >
-            <Button>
-              Change user 2
-              <ChevronRight className='h-4 w-4' />
-            </Button>
-          </UserTypeahead>
+        <div className='col-span-2 flex flex-col items-center gap-y-2 border-b-4 py-2'>
+          <div className='flex flex-col gap-x-2 xl:flex-row'>
+            <UserTypeahead
+              navigateTo={(username) => `/compare/${username}/${username2}`}
+              usePopover
+            >
+              <Button>
+                <ChevronLeft className='h-4 w-4' />
+                Change user 1
+              </Button>
+            </UserTypeahead>
+            <UserTypeahead
+              navigateTo={(username) => `/compare/${username1}/${username}`}
+              usePopover
+            >
+              <Button>
+                Change user 2
+                <ChevronRight className='h-4 w-4' />
+              </Button>
+            </UserTypeahead>
+          </div>
+          <div className='flex items-center gap-x-1'>
+            <Checkbox
+              checked={syncScroll}
+              onCheckedChange={() => setSyncScroll(!syncScroll)}
+            />
+            <p>Scroll items simultaneously</p>
+          </div>
         </div>
         <CollectionLogProvider collectionLog={collectionLog2}>
           <CollectionLogHeader
@@ -172,6 +205,10 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
                 className='col-span-3'
                 activeOpenView={openView1}
                 showQuantity={settings1.showQuantity}
+                onScroll={(e) =>
+                  onContainerScroll(container2Ref, e.currentTarget.scrollTop)
+                }
+                ref={container1Ref}
               />
               <CollectionLogPageList
                 className='col-span-8 border-x text-center md:col-span-2'
@@ -184,6 +221,10 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
                 className='col-span-3'
                 activeOpenView={openView2}
                 showQuantity={settings2.showQuantity}
+                onScroll={(e) =>
+                  onContainerScroll(container1Ref, e.currentTarget.scrollTop)
+                }
+                ref={container2Ref}
               />
             </TabsContent>
           ))}
