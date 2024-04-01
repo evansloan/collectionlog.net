@@ -4,17 +4,17 @@ import Item from '@/components/item';
 import { OpenView } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
-interface CollectionLogItemsProps {
+interface CollectionLogItemsProps extends React.InputHTMLAttributes<HTMLDivElement> {
   activeOpenView: OpenView;
   showQuantity: boolean;
-  className?: string;
 }
 
-const CollectionLogItems = ({
+const CollectionLogItems = React.forwardRef<HTMLDivElement, CollectionLogItemsProps>(({
   activeOpenView,
   showQuantity,
   className,
-}: CollectionLogItemsProps) => {
+  onScroll,
+}, ref) => {
   const {
     page: {
       name: pageName,
@@ -35,7 +35,7 @@ const CollectionLogItems = ({
     <div
       className={cn(
         'col-span-4 flex h-full flex-col overflow-hidden md:col-span-3',
-        className
+        className,
       )}
     >
       <div className='border-b border-b-lighter px-2 text-rs-orange shadow-log '>
@@ -52,7 +52,11 @@ const CollectionLogItems = ({
           </p>
         ))}
       </div>
-      <div className='scroll-log grid flex-1 grid-cols-2 content-start gap-y-4 overflow-y-auto px-2 py-3 shadow-log sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6'>
+      <div
+        className='scroll-log grid flex-1 grid-cols-2 content-start gap-y-4 overflow-y-auto px-2 py-3 shadow-log sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6'
+        onScroll={onScroll}
+        ref={ref}
+      >
         {items.map((item, i) => (
           <Item
             key={`${item.name}-log-${i}`}
@@ -66,6 +70,7 @@ const CollectionLogItems = ({
       </div>
     </div>
   );
-};
+});
+CollectionLogItems.displayName = 'CollectionLogItems';
 
 export default CollectionLogItems;
