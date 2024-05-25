@@ -3,12 +3,14 @@
 import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
+import Loading from '@/app/loading';
 import {
   CollectionLogHeader,
   CollectionLogItems,
   CollectionLogPageList,
-  CollectionLogProvider,
 } from '@/components/collection-log';
+import CollectionLogProvider from '@/components/providers/collection-log-provider';
+import { useLoadingContext } from '@/components/providers/loading-provider';
 import { UserTypeahead } from '@/components/typeahead';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -28,6 +30,7 @@ interface CompareContentProps {
 }
 
 const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
+  const { isLoading, setIsLoading } = useLoadingContext();
   const {
     collectionLog: collectionLog1,
     collectionLog: { username: username1 },
@@ -103,6 +106,10 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
     replaceUrl(`/compare/${username1}/${username2}/${activePageName}`);
   }, [activePageName, username1, username2]);
 
+  useEffect(() => {
+    setIsLoading(false)
+  }, [setIsLoading])
+
   const customPageHighlight = (pageName: string) => {
     // TODO: I don't like any of this
     const page1 = tabs1[activeTabName][pageName];
@@ -136,101 +143,112 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
   };
 
   return (
-    <Card className='mb-2 w-full flex-row border-0 border-b-2 border-t-2 border-black md:border-4'>
-      <div className='grid grid-cols-8'>
-        <CollectionLogProvider collectionLog={collectionLog1}>
-          <CollectionLogHeader
-            className='col-span-3'
-            ranks={ranks1}
-            defaultRankType={settings1.displayRank}
-          />
-        </CollectionLogProvider>
-        <div className='col-span-2 flex flex-col items-center gap-y-2 border-b-4 py-2'>
-          <div className='flex flex-col gap-x-2 xl:flex-row'>
-            <UserTypeahead
-              navigateTo={(username) => `/compare/${username}/${username2}`}
-              usePopover
-            >
-              <Button>
-                <ChevronLeft className='h-4 w-4' />
-                Change user 1
-              </Button>
-            </UserTypeahead>
-            <UserTypeahead
-              navigateTo={(username) => `/compare/${username1}/${username}`}
-              usePopover
-            >
-              <Button>
-                Change user 2
-                <ChevronRight className='h-4 w-4' />
-              </Button>
-            </UserTypeahead>
-          </div>
-          <div className='flex items-center gap-x-1'>
-            <Checkbox
-              checked={syncScroll}
-              onCheckedChange={() => setSyncScroll(!syncScroll)}
-            />
-            <p>Scroll items simultaneously</p>
-          </div>
-        </div>
-        <CollectionLogProvider collectionLog={collectionLog2}>
-          <CollectionLogHeader
-            className='col-span-3'
-            ranks={ranks2}
-            defaultRankType={settings2.displayRank}
-          />
-        </CollectionLogProvider>
-      </div>
-      <CardContent>
-        <Tabs defaultValue={activeTabName}>
-          <TabsList className='flex w-full flex-col md:grid md:w-full md:grid-cols-5 md:gap-2 lg:gap-x-12'>
-            {tabNames.map((tabName, i) => (
-              <TabsTrigger
-                key={`${tabName}-trigger-${i}`}
-                value={tabName}
-                onClick={(e) => onTabClick(e.currentTarget.innerText)}
-              >
-                {tabName}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-          {tabNames.map((tabName, i) => (
-            <TabsContent
-              key={`${tabName}-content-${i}`}
-              value={tabName}
-              className='flex overflow-hidden md:grid md:h-[550px] md:grid-cols-8'
-            >
-              <CollectionLogItems
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Card className='mb-2 w-full flex-row border-0 border-b-2 border-t-2 border-black md:border-4'>
+          <div className='grid grid-cols-8'>
+            <CollectionLogProvider collectionLog={collectionLog1}>
+              <CollectionLogHeader
                 className='col-span-3'
-                activeOpenView={openView1}
-                showQuantity={settings1.showQuantity}
-                onScroll={(e) =>
-                  onContainerScroll(container2Ref, e.currentTarget.scrollTop)
-                }
-                ref={container1Ref}
+                ranks={ranks1}
+                defaultRankType={settings1.displayRank}
               />
-              <CollectionLogPageList
-                className='col-span-8 border-x text-center md:col-span-2'
-                activePageName={activePageName}
-                tab={tabs1[activeTabName]}
-                pageClickHandler={onPageClick}
-                customHighlight={customPageHighlight}
-              />
-              <CollectionLogItems
+            </CollectionLogProvider>
+            <div className='col-span-2 flex flex-col items-center gap-y-2 border-b-4 py-2'>
+              <div className='flex flex-col gap-x-2 xl:flex-row'>
+                <UserTypeahead
+                  navigateTo={(username) => `/compare/${username}/${username2}`}
+                  onResultClick={() => setIsLoading(true)}
+                  usePopover
+                >
+                  <Button>
+                    <ChevronLeft className='h-4 w-4' />
+                    Change user 1
+                  </Button>
+                </UserTypeahead>
+                <UserTypeahead
+                  navigateTo={(username) => `/compare/${username1}/${username}`}
+                  onResultClick={() => setIsLoading(true)}
+                  usePopover
+                >
+                  <Button>
+                    Change user 2
+                    <ChevronRight className='h-4 w-4' />
+                  </Button>
+                </UserTypeahead>
+              </div>
+              <div className='flex items-center gap-x-1'>
+                <Checkbox
+                  checked={syncScroll}
+                  onCheckedChange={() => setSyncScroll(!syncScroll)}
+                />
+                <p>Scroll items simultaneously</p>
+              </div>
+            </div>
+            <CollectionLogProvider collectionLog={collectionLog2}>
+              <CollectionLogHeader
                 className='col-span-3'
-                activeOpenView={openView2}
-                showQuantity={settings2.showQuantity}
-                onScroll={(e) =>
-                  onContainerScroll(container1Ref, e.currentTarget.scrollTop)
-                }
-                ref={container2Ref}
+                ranks={ranks2}
+                defaultRankType={settings2.displayRank}
               />
-            </TabsContent>
-          ))}
-        </Tabs>
-      </CardContent>
-    </Card>
+            </CollectionLogProvider>
+          </div>
+          <CardContent>
+            <Tabs defaultValue={activeTabName}>
+              <TabsList className='flex w-full flex-col md:grid md:w-full md:grid-cols-5 md:gap-2 lg:gap-x-12'>
+                {tabNames.map((tabName, i) => (
+                  <TabsTrigger
+                    key={`${tabName}-trigger-${i}`}
+                    value={tabName}
+                    onClick={(e) => onTabClick(e.currentTarget.innerText)}
+                  >
+                    {tabName}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+              {tabNames.map((tabName, i) => (
+                <TabsContent
+                  key={`${tabName}-content-${i}`}
+                  value={tabName}
+                  className='flex overflow-hidden md:grid md:h-[550px] md:grid-cols-8'
+                >
+                  <CollectionLogItems
+                    className='col-span-3'
+                    activeOpenView={openView1}
+                    showQuantity={settings1.showQuantity}
+                    onScroll={(e) =>
+                      onContainerScroll(
+                        container2Ref,
+                        e.currentTarget.scrollTop
+                      )
+                    }
+                    ref={container1Ref}
+                  />
+                  <CollectionLogPageList
+                    className='col-span-8 border-x text-center md:col-span-2'
+                    activePageName={activePageName}
+                    tab={tabs1[activeTabName]}
+                    pageClickHandler={onPageClick}
+                    customHighlight={customPageHighlight}
+                  />
+                  <CollectionLogItems
+                    className='col-span-3'
+                    activeOpenView={openView2}
+                    showQuantity={settings2.showQuantity}
+                    onScroll={(e) =>
+                      onContainerScroll(container1Ref, e.currentTarget.scrollTop)
+                    }
+                    ref={container2Ref}
+                  />
+                </TabsContent>
+              ))}
+            </Tabs>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 };
 

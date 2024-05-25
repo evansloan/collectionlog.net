@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/tooltip';
 import { formatAccountType } from '@/lib/collection-log-helpers';
 import { useCollectionlogContext } from '@/components/providers/collection-log-provider';
+import { useLoadingContext } from '@/components/providers/loading-provider';
 import { cn, formatInt } from '@/lib/utils';
 
 import compareIcon from '@/assets/images/collectionlog-sm.png';
@@ -38,6 +39,7 @@ const CollectionLogHeader = ({
   className,
 }: CollectionLogHeaderProps) => {
   const collectionLog = useCollectionlogContext();
+  const { setIsLoading } = useLoadingContext();
   const { username, uniqueObtained, uniqueItems } = collectionLog;
   const defaultRankValue = ranks[defaultRankType];
 
@@ -110,6 +112,7 @@ const CollectionLogHeader = ({
                 placeholder: 'Search user to compare with...',
               }}
               maxResults={15}
+              onResultClick={() => setIsLoading(true)}
               usePopover
             >
               <Button className='hidden lg:flex w-full justify-center'>
