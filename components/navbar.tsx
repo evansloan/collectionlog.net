@@ -3,9 +3,10 @@
 import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import Image from 'next/image';
-
 import NavLink from '@/components/nav-link';
+
 import Settings from '@/components/settings';
+import { useLoadingContext } from '@/components/providers/loading-provider';
 import { Button } from '@/components/ui/button';
 import UserTypeahead from '@/components/typeahead/user-typeahead';
 import {
@@ -25,6 +26,8 @@ const Navbar = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
+  const { setIsLoading } = useLoadingContext();
+
   const navContents = (
     <>
       <NavLink href='/' icon={HomeIcon}>
@@ -36,6 +39,7 @@ const Navbar = React.forwardRef<
           placeholder: 'Search users...',
         }}
         maxResults={15}
+        onResultClick={() => setIsLoading(true)}
         usePopover
       >
         <Button

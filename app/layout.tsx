@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 import Navbar from '@/components/navbar';
-import ThemeProvider from '@/components/providers/theme-provider';
+import RootProvider from '@/components/providers/root-provider';
 import { GITHUB_URL, PLUGIN_URL } from '@/lib/constants';
 
 import './globals.css';
@@ -31,7 +31,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang='en' suppressHydrationWarning>
       <body className='flex h-screen flex-col'>
-        <ThemeProvider>
+        <RootProvider>
           <Navbar />
           <div className='flex flex-1 flex-col items-center'>
             <div className='w-full md:w-10/12'>{children}</div>
@@ -52,7 +52,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
               </p>
             </div>
           </footer>
-        </ThemeProvider>
+        </RootProvider>
       </body>
       <GoogleAnalytics gaId={process.env.GA_MEASUREMENT_ID ?? ''} />
     </html>
