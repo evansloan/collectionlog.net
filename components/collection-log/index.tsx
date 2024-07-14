@@ -3,7 +3,7 @@ import CollectionLogContent from '@/components/collection-log/collection-log-con
 import CollectionLogHeader from '@/components/collection-log/collection-log-header';
 import CollectionLogItems from '@/components/collection-log/collection-log-items';
 import CollectionLogPageList from '@/components/collection-log/collection-log-page-list';
-import CollectionLogProvider from '@/components/providers/collection-log-provider';
+import CollectionLogRecentItems from '@/components/collection-log/collection-log-recent-items';
 import CollectionLogSearchContent from '@/components/collection-log/collection-log-search-content';
 
 export {
@@ -12,6 +12,6 @@ export {
   CollectionLogHeader,
   CollectionLogItems,
   CollectionLogPageList,
-  CollectionLogProvider,
+  CollectionLogRecentItems,
   CollectionLogSearchContent,
 };

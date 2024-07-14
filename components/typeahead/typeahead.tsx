@@ -78,7 +78,6 @@ const Typeahead = <T,>({
 
   const typeaheadSearch = useCallback(async () => {
     if (!typeaheadValue.trim().length) {
-      console.log('no results');
       return setResults([]);
     }
 
