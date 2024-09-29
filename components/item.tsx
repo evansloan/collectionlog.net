@@ -31,7 +31,7 @@ const Item = ({
   height = height ?? HEIGHT_DEFAULT;
 
   const itemIcons = iconsJson as { [key: string]: string };
-  const icon = itemIcons[item.id];
+  const icon = item.id in itemIcons ? itemIcons[item.id] : itemIcons['unknownIcon'];
   const wrapperClass = includeDetails ? 'grid grid-cols-2 sm:grid-cols-3' : '';
   const hoverClass = showHover ? 'group-hover:hidden' : '';
 
