@@ -16,14 +16,12 @@ import { Card, CardContent } from '@/components/ui/card';
 interface CollectionLogProps {
   collectionLog: CollectionLog;
   recentItems: CollectionLogItem[];
-  ranks: Ranks;
   settings: UserSettings;
   startPage?: string;
 }
 
 const CollectionLog = ({
   collectionLog,
-  ranks,
   recentItems,
   settings,
   startPage,
@@ -43,7 +41,6 @@ const CollectionLog = ({
         <>
           <Card className='mb-2 w-full border-0 border-b-2 border-t-2 border-black md:border-4'>
             <CollectionLogHeader
-              ranks={ranks}
               defaultRankType={settings.displayRank}
               includeSearch
               isSearchOpen={isSearchOpen}

@@ -46,7 +46,6 @@ const Page = async ({ params: { username, page } }: PageProps) => {
 
   const {
     collectionLog,
-    ranks,
     recentItems,
     settings
   } = await fetchCollectionLogData(username);
@@ -56,7 +55,6 @@ const Page = async ({ params: { username, page } }: PageProps) => {
       <CollectionLog
         collectionLog={collectionLog}
         recentItems={recentItems}
-        ranks={ranks}
         settings={settings}
         startPage={page}
       />

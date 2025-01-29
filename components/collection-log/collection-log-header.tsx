@@ -7,22 +7,14 @@ import AccountIcon from '@/components/account-icon';
 import UserTypeahead from '@/components/typeahead/user-typeahead';
 import { Button } from '@/components/ui/button';
 import { CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { formatAccountType } from '@/lib/collection-log-helpers';
 import { useCollectionlogContext } from '@/components/providers/collection-log-provider';
 import { useLoadingContext } from '@/components/providers/loading-provider';
-import { cn, formatInt } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 import compareIcon from '@/assets/images/collectionlog-sm.png';
 import searchIcon from '@/assets/images/search.png';
 
 interface CollectionLogHeaderProps {
-  ranks: Ranks;
   defaultRankType: RankType;
   includeSearch?: boolean;
   isSearchOpen?: boolean;
@@ -31,7 +23,6 @@ interface CollectionLogHeaderProps {
 }
 
 const CollectionLogHeader = ({
-  ranks,
   defaultRankType,
   includeSearch,
   isSearchOpen,
@@ -41,7 +32,6 @@ const CollectionLogHeader = ({
   const collectionLog = useCollectionlogContext();
   const { setIsLoading } = useLoadingContext();
   const { username, uniqueObtained, uniqueItems } = collectionLog;
-  const defaultRankValue = ranks[defaultRankType];
 
   const buttonWrapperClass = 'hidden w-1/5 md:block lg:w-1/12 !-mt-2';
   const searchButton = (
@@ -71,36 +61,7 @@ const CollectionLogHeader = ({
           <span className='text-white'>
             {uniqueObtained}/{uniqueItems}
           </span>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className='flex items-center gap-x-1'>
-                  Rank:{' '}
-                  <span className='text-white'>
-                    #{formatInt(defaultRankValue)}
-                  </span>
-                  <AccountIcon accountType={defaultRankType} width={15} />
-                </div>
-              </TooltipTrigger>
-              <TooltipContent className='text-lg'>
-                {Object.keys(ranks).map((rankType, i) => {
-                  const rank = ranks[rankType as RankType];
-                  if (rank) {
-                    return (
-                      <div
-                        key={`${username}-${rankType}-${i}`}
-                        className='flex flex-col gap-2'
-                      >
-                        <p>
-                          {formatAccountType(rankType as RankType)}: #{formatInt(rank)}
-                        </p>
-                      </div>
-                    );
-                  }
-                })}
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+
         </div>
       </div>
       {includeSearch && (

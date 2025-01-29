@@ -34,13 +34,11 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
   const {
     collectionLog: collectionLog1,
     collectionLog: { username: username1 },
-    ranks: ranks1,
     settings: settings1,
   } = data1;
   const {
     collectionLog: collectionLog2,
     collectionLog: { username: username2 },
-    ranks: ranks2,
     settings: settings2,
   } = data2;
 
@@ -152,7 +150,6 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
             <CollectionLogProvider collectionLog={collectionLog1}>
               <CollectionLogHeader
                 className='col-span-3'
-                ranks={ranks1}
                 defaultRankType={settings1.displayRank}
               />
             </CollectionLogProvider>
@@ -190,7 +187,6 @@ const CompareContent = ({ data1, data2, startPage }: CompareContentProps) => {
             <CollectionLogProvider collectionLog={collectionLog2}>
               <CollectionLogHeader
                 className='col-span-3'
-                ranks={ranks2}
                 defaultRankType={settings2.displayRank}
               />
             </CollectionLogProvider>

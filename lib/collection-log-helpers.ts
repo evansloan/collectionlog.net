@@ -59,7 +59,6 @@ export const formatAccountType = (
 
 export interface CollectionLogFull {
   collectionLog: CollectionLog;
-  ranks: Ranks;
   settings: UserSettings;
 }
 
@@ -73,6 +72,5 @@ export const getFullCollectionLog = async (
   username: string
 ): Promise<CollectionLogFull> => ({
   collectionLog: await CollectionLogAPI.getCollectionLog(username),
-  ranks: await CollectionLogAPI.getRanksByUsername(username),
   settings: await CollectionLogAPI.getUserSettings(username),
 });
