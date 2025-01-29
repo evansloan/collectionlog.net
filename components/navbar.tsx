@@ -51,7 +51,7 @@ const Navbar = React.forwardRef<
           Search users
         </Button>
       </UserTypeahead>
-      <NavLink href='/hiscores' icon={StatsIcon}>
+      <NavLink href='https://secure.runescape.com/m=hiscore_oldschool/overall?category_type=1&table=18' icon={StatsIcon}>
         Hiscores
       </NavLink>
       <NavLink href={DISCORD_URL} icon={DiscordIcon}>
